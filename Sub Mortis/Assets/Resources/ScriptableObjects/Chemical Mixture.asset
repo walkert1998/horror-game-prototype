@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d805d763d261b64bb91c4b7c90936e4, type: 3}
+  m_Name: Chemical Mixture
+  m_EditorClassIdentifier: 
+  itemType: 6
+  itemName: Chemical Mixture
+  description: The result of mixing the two chemicals together.
+  horizontalIcon: {fileID: 21300000, guid: ceec6adfefd79754fa6682df070c5f33, type: 3}
+  verticalIcon: {fileID: 0}
+  img: {fileID: 0}
+  size:
+    x: 1
+    y: 1
+  stackable: 0
+  itemCombinationsPossible: []
+  droppedItem: {fileID: 3910845594084752050, guid: 6c7f449a076e91240880c5ed91128e7d, type: 3}
+  onUseSound: {fileID: 8300000, guid: 7f0e0cdc79405ec4ab0f2b3565f6c9e0, type: 3}

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d805d763d261b64bb91c4b7c90936e4, type: 3}
+  m_Name: Chemical B
+  m_EditorClassIdentifier: 
+  itemType: 6
+  itemName: Chemical B
+  description: There's some strange fluid in this vial, the letter 'B' is written
+    on the side of the tube.
+  horizontalIcon: {fileID: 21300000, guid: fd253c81f06f720439094ab07f2d20d9, type: 3}
+  verticalIcon: {fileID: 0}
+  img: {fileID: 0}
+  size:
+    x: 1
+    y: 1
+  stackable: 0
+  itemCombinationsPossible:
+  - otherItemRequired: {fileID: 11400000, guid: 050a65a2ec443ac4883acef6afcd3b4b, type: 2}
+    itemResult: {fileID: 11400000, guid: 1466d8029d5a10d4fbf1960c1bd4673d, type: 2}
+    combinationSound: {fileID: 8300000, guid: 48045094899a8db4891b092d67cbc37d, type: 3}
+  droppedItem: {fileID: 6783777270947363422, guid: c82f4a03bdd24e64fa638d28f4d54530, type: 3}
+  onUseSound: {fileID: 0}

@@ -1,0 +1,398 @@
+fileFormatVersion: 2
+guid: 2d077e4331870d5488a9aba1f3820635
+ModelImporter:
+  serializedVersion: 20101
+  internalIDToNameTable:
+  - first:
+      74: -674322013626746469
+    second: Armature|Armature|modo_Anim|Layer0
+  - first:
+      74: -9126430790197080189
+    second: Armature|FullBodyIK|modo_Anim|Layer0
+  - first:
+      74: -6845944179527340223
+    second: Armature|Goal .001|modo_Anim|Layer0
+  - first:
+      74: 4936101637804931387
+    second: Armature|Goal .002|modo_Anim|Layer0
+  - first:
+      74: -4193462220687733856
+    second: Armature|Goal .003|modo_Anim|Layer0
+  - first:
+      74: -7679237488034853961
+    second: Armature|Goal .004|modo_Anim|Layer0
+  - first:
+      74: 984342436282699658
+    second: Armature|Goal |modo_Anim|Layer0
+  - first:
+      74: 5842343136321159584
+    second: Armature|Goal|modo_Anim|Layer0
+  - first:
+      74: -8945691123924629249
+    second: Armature|Idle
+  - first:
+      74: -3443491706500284577
+    second: Armature|InsertLocator|modo_Anim|Layer0
+  - first:
+      74: -5055184973177046760
+    second: Armature|InsertMesh|modo_Anim|Layer0
+  - first:
+      74: 5182316714303342783
+    second: Armature|Left|modo_Anim|Layer0
+  - first:
+      74: -2255249119787937663
+    second: Armature|PumpLocator|modo_Anim|Layer0
+  - first:
+      74: 5648112422326698263
+    second: Armature|PumpMesh|modo_Anim|Layer0
+  - first:
+      74: 5354074679028855086
+    second: Armature|ReloadLocator|modo_Anim|Layer0
+  - first:
+      74: -6998541461816688412
+    second: Armature|ReloadMesh|modo_Anim|Layer0
+  - first:
+      74: 8455432136336613183
+    second: Armature|Right_Hand|modo_Anim|Layer0
+  - first:
+      74: 4995507440982350003
+    second: Armature|Right|modo_Anim|Layer0
+  - first:
+      74: -6038399204575830546
+    second: Armature|SlugLocator01|modo_Anim|Layer0
+  - first:
+      74: -1155776898074715369
+    second: Armature|SlugLocator02|modo_Anim|Layer0
+  - first:
+      74: 1495220741167579873
+    second: Armature|SlugMesh01|modo_Anim|Layer0
+  - first:
+      74: -3136469886461888236
+    second: Armature|SlugMesh02|modo_Anim|Layer0
+  - first:
+      74: 729982690813574210
+    second: Armature|TriggerLocator|modo_Anim|Layer0
+  - first:
+      74: 6158699724824359816
+    second: Armature|TriggerMesh|modo_Anim|Layer0
+  - first:
+      74: 9126582662310709906
+    second: Armature|WeaponMainLocator|modo_Anim|Layer0
+  - first:
+      74: 5143938534534653311
+    second: Armature|WeaponMainMesh|modo_Anim|Layer0
+  - first:
+      74: 1954555204798764044
+    second: Left|FullBodyIK|modo_Anim|Layer0
+  - first:
+      74: 3788736249930480925
+    second: Left|Goal .001|modo_Anim|Layer0
+  - first:
+      74: 2296751443045510004
+    second: Left|Goal .002|modo_Anim|Layer0
+  - first:
+      74: -8179561964300654492
+    second: Left|Goal .003|modo_Anim|Layer0
+  - first:
+      74: -1765821869859136729
+    second: Left|Goal .004|modo_Anim|Layer0
+  - first:
+      74: -6704895444802452482
+    second: Left|Goal |modo_Anim|Layer0
+  - first:
+      74: 5483539714713925975
+    second: Left|Goal|modo_Anim|Layer0
+  - first:
+      74: -5782954749318338842
+    second: Left|InsertLocator|modo_Anim|Layer0
+  - first:
+      74: -3928116009758207321
+    second: Left|InsertMesh|modo_Anim|Layer0
+  - first:
+      74: 6368471664915752540
+    second: Left|Left|modo_Anim|Layer0
+  - first:
+      74: -278748184554661331
+    second: Left|PumpLocator|modo_Anim|Layer0
+  - first:
+      74: -7921931036377847129
+    second: Left|PumpMesh|modo_Anim|Layer0
+  - first:
+      74: -1823028859280107685
+    second: Left|ReloadLocator|modo_Anim|Layer0
+  - first:
+      74: 7955290625776088188
+    second: Left|ReloadMesh|modo_Anim|Layer0
+  - first:
+      74: 4158122770409630569
+    second: Left|Right_Hand|modo_Anim|Layer0
+  - first:
+      74: -5546190468986422258
+    second: Left|Right|modo_Anim|Layer0
+  - first:
+      74: -1621618332264899582
+    second: Left|SlugLocator01|modo_Anim|Layer0
+  - first:
+      74: 3057571520610967784
+    second: Left|SlugLocator02|modo_Anim|Layer0
+  - first:
+      74: -6509979744534142073
+    second: Left|SlugMesh01|modo_Anim|Layer0
+  - first:
+      74: 6379228694517539439
+    second: Left|SlugMesh02|modo_Anim|Layer0
+  - first:
+      74: -2361464883710640462
+    second: Left|TriggerLocator|modo_Anim|Layer0
+  - first:
+      74: 7243188351809631544
+    second: Left|TriggerMesh|modo_Anim|Layer0
+  - first:
+      74: 7299102950507428981
+    second: Left|WeaponMainLocator|modo_Anim|Layer0
+  - first:
+      74: 7009653372100725762
+    second: Left|WeaponMainMesh|modo_Anim|Layer0
+  - first:
+      74: 1357017787008192010
+    second: Right|FullBodyIK|modo_Anim|Layer0
+  - first:
+      74: 1135092866997907964
+    second: Right|Goal .001|modo_Anim|Layer0
+  - first:
+      74: -5723571239087145626
+    second: Right|Goal .002|modo_Anim|Layer0
+  - first:
+      74: -268255730479524501
+    second: Right|Goal .003|modo_Anim|Layer0
+  - first:
+      74: -4620866821616164985
+    second: Right|Goal .004|modo_Anim|Layer0
+  - first:
+      74: -4703611549813043019
+    second: Right|Goal |modo_Anim|Layer0
+  - first:
+      74: -4263651135145295712
+    second: Right|Goal|modo_Anim|Layer0
+  - first:
+      74: -5409451460214150809
+    second: Right|InsertLocator|modo_Anim|Layer0
+  - first:
+      74: 5444079731779694749
+    second: Right|InsertMesh|modo_Anim|Layer0
+  - first:
+      74: -6902242706664585232
+    second: Right|Left|modo_Anim|Layer0
+  - first:
+      74: -5115879258834919392
+    second: Right|PumpLocator|modo_Anim|Layer0
+  - first:
+      74: -4568616243738934045
+    second: Right|PumpMesh|modo_Anim|Layer0
+  - first:
+      74: 5688983356867941969
+    second: Right|ReloadLocator|modo_Anim|Layer0
+  - first:
+      74: -772390952292172747
+    second: Right|ReloadMesh|modo_Anim|Layer0
+  - first:
+      74: 3327157501109996845
+    second: Right|Right_Hand|modo_Anim|Layer0
+  - first:
+      74: -7047104115427396692
+    second: Right|Right|modo_Anim|Layer0
+  - first:
+      74: 4650576947997916973
+    second: Right|SlugLocator01|modo_Anim|Layer0
+  - first:
+      74: -4906394223508906904
+    second: Right|SlugLocator02|modo_Anim|Layer0
+  - first:
+      74: 3341848438619169033
+    second: Right|SlugMesh01|modo_Anim|Layer0
+  - first:
+      74: -6543716155108641270
+    second: Right|SlugMesh02|modo_Anim|Layer0
+  - first:
+      74: -5649047707413069066
+    second: Right|TriggerLocator|modo_Anim|Layer0
+  - first:
+      74: -1578342793927718099
+    second: Right|TriggerMesh|modo_Anim|Layer0
+  - first:
+      74: 3177220668138935753
+    second: Right|WeaponMainLocator|modo_Anim|Layer0
+  - first:
+      74: 1551606660036886878
+    second: Right|WeaponMainMesh|modo_Anim|Layer0
+  - first:
+      74: -8608040729879635482
+    second: FullBodyIK|FullBodyIK|modo_Anim|Layer0
+  - first:
+      74: 7628653970464036113
+    second: FullBodyIK|Goal .001|modo_Anim|Layer0
+  - first:
+      74: -7503299989334370269
+    second: FullBodyIK|Goal .002|modo_Anim|Layer0
+  - first:
+      74: 8997226960226336167
+    second: FullBodyIK|Goal .003|modo_Anim|Layer0
+  - first:
+      74: 8558455118470655521
+    second: FullBodyIK|Goal .004|modo_Anim|Layer0
+  - first:
+      74: 3737050950617579386
+    second: FullBodyIK|Goal |modo_Anim|Layer0
+  - first:
+      74: 6889950758921148195
+    second: FullBodyIK|Goal|modo_Anim|Layer0
+  - first:
+      74: 3156700260706730454
+    second: FullBodyIK|InsertLocator|modo_Anim|Layer0
+  - first:
+      74: -2575736696402297558
+    second: FullBodyIK|InsertMesh|modo_Anim|Layer0
+  - first:
+      74: 8450468059850205513
+    second: FullBodyIK|Left|modo_Anim|Layer0
+  - first:
+      74: 6054947401411144544
+    second: FullBodyIK|PumpLocator|modo_Anim|Layer0
+  - first:
+      74: 3331747675420649583
+    second: FullBodyIK|PumpMesh|modo_Anim|Layer0
+  - first:
+      74: 8091646554893102053
+    second: FullBodyIK|ReloadLocator|modo_Anim|Layer0
+  - first:
+      74: -2670468124958693295
+    second: FullBodyIK|ReloadMesh|modo_Anim|Layer0
+  - first:
+      74: -5357847821262639230
+    second: FullBodyIK|Right_Hand|modo_Anim|Layer0
+  - first:
+      74: -1577403089794788691
+    second: FullBodyIK|Right|modo_Anim|Layer0
+  - first:
+      74: 7267181589614150535
+    second: FullBodyIK|SlugLocator01|modo_Anim|Layer0
+  - first:
+      74: 3257522318928717629
+    second: FullBodyIK|SlugLocator02|modo_Anim|Layer0
+  - first:
+      74: -668359156085359754
+    second: FullBodyIK|SlugMesh01|modo_Anim|Layer0
+  - first:
+      74: 2923454898347786288
+    second: FullBodyIK|SlugMesh02|modo_Anim|Layer0
+  - first:
+      74: 7741393680390089362
+    second: FullBodyIK|TriggerLocator|modo_Anim|Layer0
+  - first:
+      74: 9016375022646760782
+    second: FullBodyIK|TriggerMesh|modo_Anim|Layer0
+  - first:
+      74: -6999159085164457930
+    second: FullBodyIK|WeaponMainLocator|modo_Anim|Layer0
+  - first:
+      74: -8256335625289184079
+    second: FullBodyIK|WeaponMainMesh|modo_Anim|Layer0
+  - first:
+      74: -7453387558714718212
+    second: Armature|Shoot
+  externalObjects: {}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

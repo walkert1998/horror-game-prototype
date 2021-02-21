@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &674076107320313154
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 674076107320313156}
+  - component: {fileID: 674076107320313155}
+  m_Layer: 0
+  m_Name: Readme
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &674076107320313156
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674076107320313154}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.827, y: 0.962, z: 30.878836}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &674076107320313155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674076107320313154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5500fb0b0686acd44a8802e40aea80ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noteName: progress_report.pdf
+  noteContent: 'Progress Report
+
+
+    October 17, 2021
+
+
+    We''ve encountered some
+    small issues with progress. It appears there is more wreckage then previously
+    thought, probably being pushed in by the last storm. This obstacle will likely
+    add another week of work, which could allow greater risk of exposure.
+
+
+    Due
+    to the civil strife present in the city, more violent thugs have been intruding
+    on the perimeter, the homeless population appears to be getting especially aggressive,
+    possibly out of desperation.
+
+
+    The intrusions are depleting the men''s munitions,
+    which are very hard to replace currently. In order to secure supplies we have
+    had to discreetly raid local stores.
+
+
+    The lack of supplies combined with
+    the recent disappearances in the lower levels have made our work far more difficult.
+    We are attempting to speed up progress any way possible, and get out of the city
+    ASAP.
+
+
+    -M'
