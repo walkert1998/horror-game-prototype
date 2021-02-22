@@ -22,7 +22,6 @@ public class PhonePickup : MonoBehaviour
     public void PickupPhone()
     {
         phone.SetActive(true);
-        //HelpText._DisplayHelpText("[F] Turn On Flashlight");
         InventoryManager.ActivatePhone_Static();
         Destroy(this);
     }

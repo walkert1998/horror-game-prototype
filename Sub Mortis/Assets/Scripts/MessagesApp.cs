@@ -15,9 +15,14 @@ public class MessagesApp : MonoBehaviour
     public GameObject playerMessagePrefab;
     public Transform messagesScroll;
     public Transform conversationScroll;
+    public GameObject notificationDisplay;
+    public TMP_Text notificationText;
+    public int unopenedItems = 0;
     // Start is called before the first frame update
     void Start()
     {
+        notificationDisplay.SetActive(false);
+        notificationText.text = "";
         PopulateMessages();
     }
 
@@ -25,9 +30,15 @@ public class MessagesApp : MonoBehaviour
     {
         if (!conversations.Contains(newConversation))
         {
+            unopenedItems++;
+            notificationDisplay.SetActive(true);
+            notificationText.text = unopenedItems.ToString();
             conversations.Add(newConversation);
             //Notification.DisplayNewNotification(newConversation.messages[0].messageContent, AppNotificationType.Messages);
         }
+        unopenedItems++;
+        notificationDisplay.SetActive(true);
+        notificationText.text = unopenedItems.ToString();
         GameObject reminder = Instantiate(conversationPrefab, conversationScroll);
         reminder.GetComponentInChildren<TMP_Text>().text = newConversation.contactName;
         reminder.GetComponent<Button>().onClick.AddListener(
@@ -92,5 +103,12 @@ public class MessagesApp : MonoBehaviour
             //displayedReminder.GetComponentInChildren<TMP_Text>().text = message.messageContent;
             AddNewMessage(message);
         }
+    }
+
+    public void ClearUnopenedItems()
+    {
+        unopenedItems = 0;
+        notificationDisplay.SetActive(false);
+        notificationText.text = "";
     }
 }

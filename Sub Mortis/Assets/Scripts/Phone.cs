@@ -25,7 +25,12 @@ public class Phone : MonoBehaviour
     public GameObject cameraScreen;
     public GameObject messagesApp;
     public GameObject currentScreen;
+    public GameObject lastOpenedApp;
     public PhoneCamera phoneCamera;
+    public PicturesApp picturesApplication;
+    public NotesApp notesApplication;
+    public RemindersScreen remindersApplication;
+    public MessagesApp messagesApplication;
     public PhoneUIOrientation[] uiElements;
     public FirstPersonController firstPersonController;
     // Start is called before the first frame update
@@ -61,6 +66,11 @@ public class Phone : MonoBehaviour
             else
             {
                 Debug.Log(lastFocusState);
+                DynamicCursor.ChangeCursor_Static(CursorType.None);
+                firstPersonController.GetMouseLook().SetCursorLock(false);
+                Tooltip.HideToolTip_Static();
+                firstPersonController.m_CanMove = true;
+                firstPersonController.m_CanLook = false;
                 if (lastFocusState.Equals(PhoneFocusState.HorizontalFocused))
                 {
                     FocusHorizontal();
@@ -69,15 +79,6 @@ public class Phone : MonoBehaviour
                 {
                     FocusVertical();
                 }
-                DynamicCursor.ChangeCursor_Static(CursorType.None);
-                firstPersonController.GetMouseLook().SetCursorLock(false);
-                Tooltip.HideToolTip_Static();
-                firstPersonController.m_CanMove = true;
-                firstPersonController.m_CanLook = false;
-            }
-            if (HelpText.TextVisible())
-            {
-                HelpText.HideHelpText();
             }
         }
         if (Input.GetMouseButtonDown(1))
@@ -127,6 +128,20 @@ public class Phone : MonoBehaviour
     {
         focused = true;
         horizontal = true;
+        if (lastOpenedApp != null)
+        {
+            if (lastOpenedApp == cameraScreen)
+            {
+                DisplayCameraApp();
+            }
+            else
+            {
+                currentScreen.SetActive(false);
+                currentScreen = lastOpenedApp;
+                currentScreen.SetActive(true);
+                PlayerInteraction.LockInteraction();
+            }
+        }
         focusState = PhoneFocusState.HorizontalFocused;
         lastFocusState = focusState;
         transform.localPosition = horizontalFocusedPosition;
@@ -139,7 +154,6 @@ public class Phone : MonoBehaviour
         {
             rect.localRotation = Quaternion.Euler(0, 0, 0);
         }
-        PlayerInteraction.LockInteraction();
     }
 
     public void FocusVertical()
@@ -213,6 +227,7 @@ public class Phone : MonoBehaviour
         firstPersonController.m_CanLook = false;
         currentScreen.SetActive(false);
         currentScreen = homeScreen;
+        lastOpenedApp = currentScreen;
         currentScreen.SetActive(true);
         //homeScreen.SetActive(true);
         //widgetScreen.SetActive(false);
@@ -228,6 +243,7 @@ public class Phone : MonoBehaviour
         firstPersonController.m_CanMove = true;
         firstPersonController.m_CanLook = true;
         currentScreen = cameraScreen;
+        lastOpenedApp = currentScreen;
         phoneCamera.ActivateCamera();
         currentScreen.SetActive(true);
         //cameraScreen.SetActive(true);
@@ -240,6 +256,7 @@ public class Phone : MonoBehaviour
     {
         currentScreen.SetActive(false);
         currentScreen = inventoryScreen;
+        lastOpenedApp = currentScreen;
         currentScreen.SetActive(true);
         //cameraScreen.SetActive(true);
         //homeScreen.SetActive(false);
@@ -251,7 +268,9 @@ public class Phone : MonoBehaviour
     {
         currentScreen.SetActive(false);
         currentScreen = notesApp;
+        lastOpenedApp = currentScreen;
         currentScreen.SetActive(true);
+        notesApplication.ClearUnopenedItems();
         //cameraScreen.SetActive(true);
         //homeScreen.SetActive(false);
         //widgetScreen.SetActive(false);
@@ -262,7 +281,9 @@ public class Phone : MonoBehaviour
     {
         currentScreen.SetActive(false);
         currentScreen = remindersApp;
+        lastOpenedApp = currentScreen;
         currentScreen.SetActive(true);
+        remindersApplication.ClearUnopenedItems();
         //cameraScreen.SetActive(true);
         //homeScreen.SetActive(false);
         //widgetScreen.SetActive(false);
@@ -273,14 +294,18 @@ public class Phone : MonoBehaviour
     {
         currentScreen.SetActive(false);
         currentScreen = picturesApp;
+        lastOpenedApp = currentScreen;
         currentScreen.SetActive(true);
+        picturesApplication.ClearUnopenedItems();
     }
 
     public void DisplayMessages()
     {
         currentScreen.SetActive(false);
         currentScreen = messagesApp;
+        lastOpenedApp = currentScreen;
         currentScreen.SetActive(true);
+        messagesApplication.ClearUnopenedItems();
     }
 }
 

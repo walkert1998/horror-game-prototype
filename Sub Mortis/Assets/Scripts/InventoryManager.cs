@@ -7,7 +7,7 @@ public class InventoryManager : MonoBehaviour
 {
     private static InventoryManager instance;
     public bool inventoryOpen;
-    public bool hasPhone;
+    public static bool hasPhone;
     public bool phoneBlocked;
     [SerializeField]
     private InventoryView playerInventory;

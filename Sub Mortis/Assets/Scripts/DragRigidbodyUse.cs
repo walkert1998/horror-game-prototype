@@ -58,6 +58,8 @@ public class DragRigidbodyUse : MonoBehaviour
 	public TagsClass Tags = new TagsClass();
 	public LayerMask included;
 
+	public List<KeyCode> hints;
+
 	public FirstPersonController controller;
 
 	private float PickupRange = 3f;
@@ -70,6 +72,8 @@ public class DragRigidbodyUse : MonoBehaviour
 	public bool isObjectHeld;
 	private bool tryPickupObject;
 
+	private bool neverPickedUpBefore = true;
+
 	private bool rotating;
 
 	Vector3 originalScreenTargetPosition;
@@ -77,6 +81,9 @@ public class DragRigidbodyUse : MonoBehaviour
 
 	void Start()
 	{
+		hints = new List<KeyCode>();
+		hints.Add(KeyCode.Mouse1);
+		hints.Add(KeyCode.R);
 		isObjectHeld = false;
 		tryPickupObject = false;
 		rotating = false;
@@ -163,11 +170,12 @@ public class DragRigidbodyUse : MonoBehaviour
 
     private void RotateHeldObject()
 	{
-		objectHeld.transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")), Space.World);
-		//objectHeld.transform.Rotate(playerCam.transform.up, Input.GetAxis("Mouse X") * 2.0f, Space.World);
-	}
+        //objectHeld.transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")), Space.World);
+        objectHeld.transform.Rotate(playerCam.transform.up, Input.GetAxis("Mouse X") * 2.0f, Space.World);
+        objectHeld.transform.Rotate(playerCam.transform.right, Input.GetAxis("Mouse Y") * 2.0f, Space.World);
+    }
 
-    private void tryPickObject()
+	private void tryPickObject()
 	{
 		Ray playerAim = playerCam.GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 		RaycastHit hit;
@@ -263,6 +271,11 @@ public class DragRigidbodyUse : MonoBehaviour
 			{
 				controller.m_CanLook = false;
 				controller.GetMouseLook().SetCursorLock(false);
+			}
+			else if (neverPickedUpBefore)
+            {
+				HelpText._DisplayHelpText("[Right-Click] to throw item. Hold [R] and move mouse to rotate. Use [Scrollwheel Up/Down] to move object further away/closer.", KeyCode.Mouse1, hints, 1.0f);
+				neverPickedUpBefore = false;
 			}
 		}
 	}

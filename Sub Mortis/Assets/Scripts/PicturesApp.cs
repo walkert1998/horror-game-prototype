@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,9 @@ public class PicturesApp : MonoBehaviour
 {
     public GameObject imagePreviewPrefab;
     public GameObject imageZoomView;
+    public GameObject notificationDisplay;
+    public TMP_Text notificationText;
+    public int unopenedItems = 0;
     public Transform pictureGrid;
     public RawImage selectedPicture;
     public int currentPictureIndex = 0;
@@ -15,6 +19,8 @@ public class PicturesApp : MonoBehaviour
     void Start()
     {
         imageZoomView.SetActive(false);
+        notificationDisplay.SetActive(false);
+        notificationText.text = "";
     }
 
     // Update is called once per frame
@@ -30,6 +36,9 @@ public class PicturesApp : MonoBehaviour
         //if (gameObject.activeSelf)
         //{
             Notification.DisplayNewNotification("1 new Picture!", AppNotificationType.Pictures);
+        unopenedItems++;
+        notificationDisplay.SetActive(true);
+        notificationText.text = unopenedItems.ToString();
         //}
         GameObject newPicture = Instantiate(imagePreviewPrefab, pictureGrid);
         newPicture.GetComponentInChildren<RawImage>().texture = picture;
@@ -87,5 +96,12 @@ public class PicturesApp : MonoBehaviour
             currentPictureIndex--;
             SelectPicture(pictures[currentPictureIndex]);
         }
+    }
+
+    public void ClearUnopenedItems()
+    {
+        unopenedItems = 0;
+        notificationDisplay.SetActive(false);
+        notificationText.text = "";
     }
 }

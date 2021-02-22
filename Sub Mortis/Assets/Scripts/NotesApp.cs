@@ -20,21 +20,25 @@ public class NotesApp : MonoBehaviour
     public Note activeNote;
     public GameObject notificationIcon;
     public TMP_Text notificationCount;
-    public int unopenedNotes;
+    public GameObject notificationDisplay;
+    public TMP_Text notificationText;
+    public int unopenedItems = 0;
     //public FirstPersonController firstPersonController;
     // Start is called before the first frame update
     void Start()
     {
         //pauseMenu = GetComponent<PauseMenu>();
+        notificationDisplay.SetActive(false);
+        notificationText.text = "";
         PopulateNotes();
         //notePanel.SetActive(false);
         //source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
-    void Update()
-    {
-    }
+    //void Update()
+    //{
+    //}
 
     public void PopulateNotes()
     {
@@ -54,6 +58,9 @@ public class NotesApp : MonoBehaviour
         if (!discoveredNotes.Contains(newNote))
         {
             discoveredNotes.Add(newNote);
+            unopenedItems++;
+            notificationDisplay.SetActive(true);
+            notificationText.text = unopenedItems.ToString();
             if (gameObject.activeSelf)
             {
                 Notification.DisplayNewNotification("1 new Note!", AppNotificationType.Notes);
@@ -100,5 +107,12 @@ public class NotesApp : MonoBehaviour
         //firstPersonController.m_CanMove = true;
         noteName.text = "";
         //readingNote = false;
+    }
+
+    public void ClearUnopenedItems()
+    {
+        unopenedItems = 0;
+        notificationDisplay.SetActive(false);
+        notificationText.text = "";
     }
 }

@@ -371,7 +371,7 @@ public class PlayerInteraction : MonoBehaviour {
             //prompt.text = "";
             //Debug.Log("Nothing");
             phoneCamera.StopScan();
-            if (!phoneCamera.cameraActive && weaponManager.currentItem == null)
+            if (!phoneCamera.cameraActive && !InventoryManager.IsInventoryOpen_Static() && weaponManager.currentItem == null)
             {
                 DynamicCursor.ChangeCursor_Static(CursorType.Target);
             }

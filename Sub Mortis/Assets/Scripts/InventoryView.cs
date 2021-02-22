@@ -370,23 +370,31 @@ public class InventoryView : MonoSOObserver
         //Debug.Log("Clicked in");
         //if (Input.GetMouseButton(0))
         //{
+        Vector3 mousePosition = Input.mousePosition;
+        Tooltip.HideToolTip_Static();
+        GridHighlight selectedSlot = SelectedSlot.GetSelectedSlot_static();
         while (!Input.GetMouseButtonDown(0))
         {
-            Tooltip.HideToolTip_Static();
-            Vector3 mousePosition = Input.mousePosition;
             if (Input.GetMouseButtonDown(1) && movingItem.item.size.x != movingItem.item.size.y)
             {
                 ToggleOrientation();
             }
+            //if (mousePosition != Input.mousePosition)
+            //{
+                Vector2 pos;
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(transform as RectTransform, Input.mousePosition, transform.parent.GetComponent<Canvas>().worldCamera, out pos);
+                movingObject.transform.position = transform.TransformPoint(pos);
+            //}
+            //mousePosition = Input.mousePosition;
             //worldPosition.z = itemsGrid.localPosition.z;
-            Vector2 pos;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(transform as RectTransform, Input.mousePosition, transform.parent.GetComponent<Canvas>().worldCamera, out pos);
-            movingObject.transform.position = transform.TransformPoint(pos);
             //movingObject.transform.localPosition = new Vector3(mousePosition.x, mousePosition.y, mousePosition.z);
             //movingObject.transform.position = new Vector3(worldPosition.x, worldPosition.y, movingObject.transform.position.z);
             //movingObject.transform.position = new Vector3(mousePosition.x, mousePosition.y, movingObject.transform.position.z);
-            //Debug.Log(mousePosition + " " + movingObject.transform.localPosition);
-            DetectOpenSlots();
+            if (selectedSlot != SelectedSlot.GetSelectedSlot_static())
+            {
+                DetectOpenSlots();
+            }
+            selectedSlot = SelectedSlot.GetSelectedSlot_static();
             yield return null;
         }
         RepositionMovingObject();

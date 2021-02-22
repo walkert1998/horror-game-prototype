@@ -12,25 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec4678c99b73e1445a80501998ee8083, type: 3}
   m_Name: PlayerInventory
   m_EditorClassIdentifier: 
-  items:
-  - item: {fileID: 11400000, guid: 1466d8029d5a10d4fbf1960c1bd4673d, type: 2}
-    quantity: 1
-    position:
-      x: 0
-      y: 0
-    orientation: 0
-  - item: {fileID: 11400000, guid: 7407073de1978cf4798f7ba61ede95ec, type: 2}
-    quantity: 1
-    position:
-      x: 0
-      y: 1
-    orientation: 0
-  - item: {fileID: 11400000, guid: 4fac7dee5bd69824793aa2e6b4a0d5ab, type: 2}
-    quantity: 1
-    position:
-      x: 0
-      y: 2
-    orientation: 0
+  items: []
   size:
     x: 4
     y: 6

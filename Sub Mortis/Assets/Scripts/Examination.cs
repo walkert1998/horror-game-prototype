@@ -9,12 +9,14 @@ public class Examination : MonoBehaviour
     public FirstPersonController controller;
     private static Examination instance;
     public GameObject blurUI;
+    public bool neverExaminedBefore;
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
         blurUI.SetActive(false);
         examineText.text = "";
+        neverExaminedBefore = true;
     }
 
     // Update is called once per frame
@@ -37,6 +39,10 @@ public class Examination : MonoBehaviour
     private void SetExamineTextUntilClick(string text)
     {
         StopAllCoroutines();
+        if (neverExaminedBefore)
+        {
+            text += "\n[Press any key to close the examine view]";
+        }
         StartCoroutine(DisplayTextUntilClick(text));
     }
 
@@ -50,6 +56,7 @@ public class Examination : MonoBehaviour
         examineText.text = text;
         yield return new WaitForSeconds(seconds);
         examineText.text = "";
+        neverExaminedBefore = false;
     }
 
     private IEnumerator DisplayTextUntilClick(string text)
@@ -66,6 +73,7 @@ public class Examination : MonoBehaviour
         {
             yield return null;
         }
+        neverExaminedBefore = false;
         examineText.text = "";
         //blurUI.SetActive(false);
         PlayerInteraction.UnlockInteraction();
