@@ -26,6 +26,7 @@ public class ComputerInteraction : MonoBehaviour
     FirstPersonController controller;
     public NotesApp notesApp;
     public bool locked = false;
+    public static bool usingComputer;
     AudioSource source;
     public AudioClip unlockDoorSound;
     // Start is called before the first frame update
@@ -36,6 +37,7 @@ public class ComputerInteraction : MonoBehaviour
         textFileReader.SetActive(false);
         doorControlsScreen.SetActive(false);
         mainUIScreen.SetActive(false);
+        usingComputer = false;
         controller = GetComponent<FirstPersonController>();
         source = controller.GetComponent<AudioSource>();
         passwordButton.onClick.AddListener(
@@ -162,6 +164,7 @@ public class ComputerInteraction : MonoBehaviour
     {
         PlayerInteraction.LockInteraction();
         DynamicCursor.ChangeCursor_Static(CursorType.None);
+        usingComputer = true;
         controller.m_CanMove = false;
         controller.m_CanLook = false;
         controller.GetMouseLook().SetCursorLock(false);
@@ -195,6 +198,7 @@ public class ComputerInteraction : MonoBehaviour
         controller.m_CanMove = true;
         controller.m_CanLook = true;
         controller.GetMouseLook().SetCursorLock(true);
+        usingComputer = false;
         PlayerInteraction.UnlockInteraction();
     }
 

@@ -29,7 +29,7 @@ public class TutorialSequence : MonoBehaviour
     IEnumerator Tutorial()
     {
         yield return new WaitForSeconds(1.0f);
-        HelpText._DisplayHelpText("Use [W] [A] [S] [D] to move", KeyCode.W, movementKeys, 1.0f);
+        HelpText._DisplayHelpText("Move mouse to look around, and use [W][A][S][D] to move.", KeyCode.W, movementKeys, 1.0f);
         while (HelpText.TextVisible())
         {
             yield return null;
@@ -39,7 +39,7 @@ public class TutorialSequence : MonoBehaviour
         {
             yield return null;
         }
-        HelpText._DisplayHelpText("Press [F] toggle the phones flashlight.", KeyCode.F, null, 1.0f);
+        HelpText._DisplayHelpText("Press [F] to toggle the phones flashlight.", KeyCode.F, null, 1.0f);
         while (!Input.GetKeyDown(KeyCode.F))
         {
             yield return null;

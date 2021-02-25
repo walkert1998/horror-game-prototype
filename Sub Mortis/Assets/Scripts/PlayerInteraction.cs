@@ -14,6 +14,7 @@ public class PlayerInteraction : MonoBehaviour {
     public DragRigidbodyUse dragInteraction;
     public GameMenu menu;
     public static bool interactionBlocked = false;
+    public bool interactionBlocked_nonS = false;
 
     // Use this for initialization
     void Start ()
@@ -27,10 +28,12 @@ public class PlayerInteraction : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        interactionBlocked_nonS = interactionBlocked;
         //if (menu.gamePaused)
         //{
         //    return;
         //}
+        RaycastHit hit = new RaycastHit();
         if (interactionBlocked)
         {
             return;
@@ -39,7 +42,6 @@ public class PlayerInteraction : MonoBehaviour {
         //{
         //    return;
         //}
-        RaycastHit hit = new RaycastHit();
         //if (!GetComponent<Stamina>().knockedDown)
         //{
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward), out hit, distance, excluded))
@@ -47,15 +49,22 @@ public class PlayerInteraction : MonoBehaviour {
             Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward) * distance, Color.green);
             GameObject hitObject = hit.collider.gameObject;
             //Debug.Log(hit.collider.gameObject.name);
-            if (phoneCamera.cameraActive && !phoneCamera.scanning)
+            if (phoneCamera.cameraActive)
             {
-                if (hitObject.GetComponent<QRCode>() && !hitObject.GetComponent<QRCode>().scanned)
+                if (!phoneCamera.scanning)
                 {
-                    phoneCamera.StartScanning(hitObject.GetComponent<QRCode>());
+                    if (hitObject.GetComponent<QRCode>() && !hitObject.GetComponent<QRCode>().scanned)
+                    {
+                        phoneCamera.StartScanning(hitObject.GetComponent<QRCode>());
+                    }
+                    else
+                    {
+                        phoneCamera.StopScan();
+                        return;
+                    }
                 }
                 else
                 {
-                    phoneCamera.StopScan();
                     return;
                 }
             }
@@ -107,7 +116,7 @@ public class PlayerInteraction : MonoBehaviour {
                 //if (gameSettings.GetInteractionPrompts())
                 //prompt.text = "Read " + hitObject.GetComponent<Note>().noteName;
                 DynamicCursor.ChangeCursor_Static(CursorType.Pickup);
-                if (Input.GetMouseButtonDown(0) && !noteReader.readingNote)
+                if (Input.GetMouseButtonDown(0) && !NoteReader.readingNote)
                 {
                     noteReader.ReadNote(hitObject.GetComponent<Note>());
                 }
@@ -376,7 +385,7 @@ public class PlayerInteraction : MonoBehaviour {
                 DynamicCursor.ChangeCursor_Static(CursorType.Target);
             }
             //DynamicCursor.HideCursor_Static();
-            PlayerInteraction.UnlockInteraction();
+            //PlayerInteraction.UnlockInteraction();
             weaponManager.ToggleHighlightCursor(false);
         }
         //}
@@ -414,12 +423,12 @@ public class PlayerInteraction : MonoBehaviour {
     public static void LockInteraction()
     {
         interactionBlocked = true;
-        //Debug.Log("Locking");
+        Debug.Log("Locking " + interactionBlocked);
     }
 
     public static void UnlockInteraction()
     {
         interactionBlocked = false;
-        //Debug.Log("Unlocking");
+        Debug.Log("Unlocking " + interactionBlocked);
     }
 }

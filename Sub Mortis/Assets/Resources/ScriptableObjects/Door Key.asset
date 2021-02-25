@@ -23,5 +23,6 @@ MonoBehaviour:
     y: 1
   stackable: 0
   itemCombinationsPossible: []
+  destroyOnUse: 1
   droppedItem: {fileID: 7919322548841177001, guid: 64cfc0656a0151748a54dd97926b154b, type: 3}
   onUseSound: {fileID: 8300000, guid: fa85678fbcd49894387a19052139aca2, type: 3}

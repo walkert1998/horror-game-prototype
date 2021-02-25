@@ -608,5 +608,22 @@ public class InventoryView : MonoSOObserver
         {
             RepositionMovingObject();
         }
+        if (weaponManager.currentItem != null && weaponManager.currentWeapon == null)
+        {
+            weaponManager.equippedItemCursor.gameObject.SetActive(true);
+        }
+    }
+
+    public void OpenView()
+    {
+        if (weaponManager.currentItem != null && weaponManager.currentWeapon == null)
+        {
+            weaponManager.equippedItemCursor.gameObject.SetActive(false);
+        }
+    }
+
+    public void ClearInventory()
+    {
+        inventory.items = new List<StoredItem>();
     }
 }

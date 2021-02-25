@@ -152,8 +152,11 @@ public class PhoneCamera : MonoBehaviour
 
     public void DeactivateCamera()
     {
-        PlayerInteraction.LockInteraction();
-        DynamicCursor.ChangeCursor_Static(CursorType.None);
+        if (phone.focused)
+        {
+            PlayerInteraction.LockInteraction();
+            DynamicCursor.ChangeCursor_Static(CursorType.None);
+        }
         cameraActive = false;
         myCamera.enabled = false;
         myCamera.fieldOfView = 80;

@@ -11,7 +11,7 @@ public class NoteReader : MonoBehaviour
     public TMP_Text noteContent;
     public TMP_Text pageCount;
     public TMP_Text noteName;
-    public bool readingNote;
+    public static bool readingNote;
     //PauseMenu pauseMenu;
     AudioSource source;
     public AudioClip openNoteSound;
@@ -25,6 +25,7 @@ public class NoteReader : MonoBehaviour
     {
         //pauseMenu = GetComponent<PauseMenu>();
         notePanel.SetActive(false);
+        readingNote = false;
         source = GetComponent<AudioSource>();
     }
 
@@ -96,5 +97,10 @@ public class NoteReader : MonoBehaviour
             pageCount.text = currentPage + "/" + noteContent.textInfo.pageCount;
             //noteContent.text = noteContent.textInfo.pageInfo.GetValue(currentPage).ToString();
         }
+    }
+
+    public static bool ReadingNote()
+    {
+        return readingNote;
     }
 }

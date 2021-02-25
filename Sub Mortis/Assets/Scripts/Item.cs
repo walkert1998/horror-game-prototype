@@ -18,6 +18,7 @@ public class Item : ScriptableObject
     public IntPair size;
     public bool stackable;
     public List<ItemCombination> itemCombinationsPossible;
+    public bool destroyOnUse;
     [Header("Item Model")]
     public GameObject droppedItem;
     [Header("Sounds")]

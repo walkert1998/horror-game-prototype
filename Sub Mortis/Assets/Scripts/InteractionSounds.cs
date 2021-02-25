@@ -78,11 +78,7 @@ public class InteractionSounds : MonoBehaviour
             }
             else if (hingeJoint.limits.max - hingeJoint.angle <= 1 && !atMax)
             {
-                source.Stop();
-                source.clip = maxLimitSound;
-                //source.volume = rb.angularVelocity.y / 2;
-                source.Play();
-                atMax = true;
+                PlayMaxSound();
             }
             if (hingeJoint.angle - hingeJoint.limits.min > 1)
             {
@@ -90,11 +86,7 @@ public class InteractionSounds : MonoBehaviour
             }
             else if (hingeJoint.angle - hingeJoint.limits.min <= 1 && !atMin)
             {
-                source.Stop();
-                source.clip = minLimitSound;
-                //source.volume = -rb.angularVelocity.y / 2;
-                source.Play();
-                atMin = true;
+                PlayMinSound();
             }
         }
 
@@ -123,5 +115,21 @@ public class InteractionSounds : MonoBehaviour
                 atMax = false;
             }
         }
+    }
+    public void PlayMaxSound()
+    {
+        source.Stop();
+        source.clip = maxLimitSound;
+        //source.volume = rb.angularVelocity.y / 2;
+        source.Play();
+        atMax = true;
+    }
+    public void PlayMinSound()
+    {
+        source.Stop();
+        source.clip = minLimitSound;
+        //source.volume = -rb.angularVelocity.y / 2;
+        source.Play();
+        atMin = true;
     }
 }

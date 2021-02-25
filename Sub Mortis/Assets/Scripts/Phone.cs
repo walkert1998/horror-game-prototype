@@ -63,7 +63,7 @@ public class Phone : MonoBehaviour
                 //firstPersonController.m_CanMove = true;
                 //firstPersonController.m_CanLook = true;
             }
-            else
+            else if (!PlayerInteraction.interactionBlocked)
             {
                 Debug.Log(lastFocusState);
                 DynamicCursor.ChangeCursor_Static(CursorType.None);
@@ -141,6 +141,13 @@ public class Phone : MonoBehaviour
                 currentScreen.SetActive(true);
                 PlayerInteraction.LockInteraction();
             }
+        }
+        else
+        {
+            currentScreen.SetActive(false);
+            currentScreen = widgetScreen;
+            currentScreen.SetActive(true);
+            PlayerInteraction.LockInteraction();
         }
         focusState = PhoneFocusState.HorizontalFocused;
         lastFocusState = focusState;

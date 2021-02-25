@@ -73,7 +73,7 @@ public class GameMenu : MonoBehaviour
     public void ResumeGame()
     {
         pauseMenuUI.SetActive(false);
-        if (!InventoryManager.IsInventoryOpen_Static())
+        if (!InventoryManager.IsInventoryOpen_Static() && !NoteReader.ReadingNote() && !ComputerInteraction.usingComputer)
         {
             controller.GetMouseLook().SetCursorLock(true);
             DynamicCursor.ChangeCursor_Static(CursorType.Target);
@@ -82,8 +82,8 @@ public class GameMenu : MonoBehaviour
             controller.m_CanMove = true;
             controller.m_CanLook = true;
             PlayerInteraction.UnlockInteraction();
+            Cursor.lockState = CursorLockMode.Locked;
         }
-        Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1.0f;
         gamePaused = false;
     }

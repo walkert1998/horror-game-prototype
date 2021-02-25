@@ -36,7 +36,7 @@ public class HelpText : MonoBehaviour
 
     public static void HideHelpText()
     {
-        Debug.Log("Hiding help text: " + instance.helpTextDisplay.text);
+        //Debug.Log("Hiding help text: " + instance.helpTextDisplay.text);
         instance.helpTextDisplay.text = "";
     }
 
@@ -53,7 +53,7 @@ public class HelpText : MonoBehaviour
             {
                 yield return null;
             }
-            Debug.Log("A key has been pressed");
+            //Debug.Log("A key has been pressed");
         }
         else
         {
@@ -61,9 +61,9 @@ public class HelpText : MonoBehaviour
             {
                 yield return null;
             }
-            Debug.Log(keyPressRequired + " pressed");
+            //Debug.Log(keyPressRequired + " pressed");
         }
-        Debug.Log("Input detected");
+        //Debug.Log("Input detected");
         yield return new WaitForSeconds(time);
         HideHelpText();
         routine = null;
@@ -75,7 +75,7 @@ public class HelpText : MonoBehaviour
         {
             if (Input.GetKeyDown(code))
             {
-                Debug.Log(code.ToString() + " pressed");
+                //Debug.Log(code.ToString() + " pressed");
                 return true;
             }
         }

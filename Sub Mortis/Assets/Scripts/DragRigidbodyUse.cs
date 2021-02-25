@@ -76,6 +76,8 @@ public class DragRigidbodyUse : MonoBehaviour
 
 	private bool rotating;
 
+	HingeJoint hinge;
+
 	Vector3 originalScreenTargetPosition;
 	Vector3 originalRigidbodyPos;
 
@@ -92,6 +94,22 @@ public class DragRigidbodyUse : MonoBehaviour
 
     private void Update()
 	{
+		if (Input.GetButton(GrabButton))
+		{
+			if (!isObjectHeld && !PlayerInteraction.interactionBlocked && !InventoryManager.IsInventoryOpen_Static())
+			{
+				tryPickObject();
+				tryPickupObject = true;
+			}
+			else if (isObjectHeld)
+			{
+				holdObject();
+			}
+		}
+		else if (isObjectHeld)
+		{
+			DropObject();
+		}
 		if (rotating && isObjectHeld)
 		{
 			if (Input.GetKey(KeyCode.R))
@@ -121,7 +139,7 @@ public class DragRigidbodyUse : MonoBehaviour
 			MoveHeldObjectAwayFromPlayer();
 		}
 
-		if (Input.GetKeyDown(KeyCode.R))
+		if (Input.GetKeyDown(KeyCode.R) && objectHeld.GetComponent<ImpactSounds>())
 		{
 			if (ObjectGrab.m_FreezeRotation)
 			{
@@ -129,26 +147,6 @@ public class DragRigidbodyUse : MonoBehaviour
 			}
 			GetComponent<FirstPersonController>().m_CanLook = false;
 			rotating = true;
-		}
-	}
-
-    void FixedUpdate()
-	{
-		if (Input.GetButton(GrabButton))
-		{
-			if (!isObjectHeld && !PlayerInteraction.interactionBlocked)
-			{
-				tryPickObject();
-				tryPickupObject = true;
-			}
-			else if (isObjectHeld)
-			{
-				holdObject();
-			}
-		}
-		else if (isObjectHeld)
-		{
-			DropObject();
 		}
 
 
@@ -158,15 +156,19 @@ public class DragRigidbodyUse : MonoBehaviour
 			objectHeld.GetComponent<Rigidbody>().useGravity = true;
 			ThrowObject();
 		}
-
-		//if (Input.GetButton(UseButton))
-		//{
-		//	isObjectHeld = false;
-		//	tryPickObject();
-		//	tryPickupObject = false;
-		//	Use();
-		//}
 	}
+
+ //   void FixedUpdate()
+	//{
+
+	//	//if (Input.GetButton(UseButton))
+	//	//{
+	//	//	isObjectHeld = false;
+	//	//	tryPickObject();
+	//	//	tryPickupObject = false;
+	//	//	Use();
+	//	//}
+	//}
 
     private void RotateHeldObject()
 	{
@@ -254,20 +256,26 @@ public class DragRigidbodyUse : MonoBehaviour
 			{
 				isObjectHeld = true;
 				PlayerInteraction.LockInteraction();
-				objectHeld.GetComponent<Rigidbody>().useGravity = true;
+				objectHeld.GetComponent<Rigidbody>().useGravity = false;
                 objectHeld.GetComponent<Rigidbody>().freezeRotation = false;
+				hinge = objectHeld.GetComponent<HingeJoint>();
 				/**/
 				PickupRange = DoorGrab.m_DoorPickupRange;
 				ThrowStrength = DoorGrab.m_DoorThrow;
 				distance = hit.distance;
 				maxDistanceGrab = DoorGrab.m_DoorMaxGrab;
-				DynamicCursor.ChangeCursor_Static(CursorType.Drag);
-				DynamicCursor.HideCursor_Static();
+                DynamicCursor.ChangeCursor_Static(CursorType.Drag);
+                DynamicCursor.HideCursor_Static();
 				//originalRigidbodyPos = hit.collider.transform.position;
 				//originalScreenTargetPosition = playerCam.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance));
 			}
 
-			if (objectHeld.GetComponent<HingeJoint>() || objectHeld.GetComponent<ConfigurableJoint>())
+			if (objectHeld.GetComponent<HingeJoint>())
+			{
+				controller.m_CanLook = false;
+                controller.GetMouseLook().SetCursorLock(false);
+            }
+			else if (objectHeld.GetComponent<ConfigurableJoint>())
 			{
 				controller.m_CanLook = false;
 				controller.GetMouseLook().SetCursorLock(false);
@@ -294,24 +302,47 @@ public class DragRigidbodyUse : MonoBehaviour
 		//objectHeld.GetComponent<Rigidbody>().velocity = (objectHeld.transform.position - playerCam.transform.position) * 5;
 	}
 
+	private void RotateHinge(Vector3 mousePosition)
+    {
+		Vector3 move = new Vector3(0,0,0);
+		if (hinge.axis.x == 1)
+		{
+			//move.x = Input.GetAxis("Mouse Y");
+			//move.y = Input.GetAxis("Mouse Y");
+			move.z = -Input.GetAxis("Mouse Y") * 10;
+		}
+		else if (hinge.axis.y == 1)
+		{
+            move.x = 0f;
+			move.y = -Input.GetAxis("Mouse X");
+			move.z = 0f;
+		}
+		else
+		{
+			move = new Vector3(Input.GetAxis("Mouse X"), objectHeld.transform.position.y, 0) * 10;
+		}
+		Debug.Log(move);
+        //objectHeld.GetComponent<Transform>().Rotate(move);
+        objectHeld.GetComponent<Rigidbody>().angularVelocity = move * 2;
+    }
+
 	private void holdObject()
 	{
         Ray playerAim = playerCam.GetComponent<Camera>().ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
-
         if (objectHeld.CompareTag("Door"))
         {
             Vector3 nextPos = playerCam.transform.position + playerAim.direction * distance;
             Vector3 currPos = objectHeld.transform.position;
             objectHeld.GetComponent<Rigidbody>().velocity = (nextPos - currPos) * 10;
+            //RotateHinge(nextPos);
         }
+
         else
         {
             //Debug.Log(objectHeld.GetComponent<Rigidbody>().velocity);
 			Vector3 mousePositionOffset = playerCam.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance)) - originalScreenTargetPosition;
 			objectHeld.GetComponent<Rigidbody>().velocity = (originalRigidbodyPos + mousePositionOffset - objectHeld.transform.position) * 10;
         }
-
-
 
         if (Vector3.Distance(objectHeld.transform.position, playerCam.transform.position) > maxDistanceGrab)
 		{

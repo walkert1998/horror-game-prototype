@@ -23,6 +23,7 @@ public class InventoryManager : MonoBehaviour
         inventoryOpen = false;
         hasPhone = false;
         phoneBlocked = false;
+        playerInventory.ClearInventory();
     }
 
     void Update()
@@ -31,7 +32,7 @@ public class InventoryManager : MonoBehaviour
         {
             if (IsInventoryOpen())
                 HideInventory();
-            else
+            else if (!PlayerInteraction.interactionBlocked)
                 ShowInventory();
         }
     }
@@ -39,8 +40,9 @@ public class InventoryManager : MonoBehaviour
     private void ShowInventory()
     {
         //playerInventory.gameObject.SetActive(true);
+        playerInventory.OpenView();
         inventoryOpen = true;
-        PlayerInteraction.LockInteraction();
+        //PlayerInteraction.LockInteraction();
         //phone.GetComponent<WeaponSway>().enabled = false;
         //Tooltip.HideToolTip_Static();
         //firstPersonController.m_CanMove = false;
@@ -53,7 +55,7 @@ public class InventoryManager : MonoBehaviour
         //playerInventory.gameObject.SetActive(false);
         playerInventory.CloseView();
         inventoryOpen = false;
-        PlayerInteraction.UnlockInteraction();
+        //PlayerInteraction.UnlockInteraction();
         //firstPersonController.GetMouseLook().SetCursorLock(true);
         //Tooltip.HideToolTip_Static();
         //firstPersonController.m_CanMove = true;

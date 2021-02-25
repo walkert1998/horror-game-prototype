@@ -17,8 +17,10 @@ public class GameSettings : MonoBehaviour
     private static CursorSetting cursorSetting;
     private bool interactionPromptsEnabled;
     public Slider volumeSlider;
-    private int fov;
-    private float volume;
+    private static int fov;
+    private static int cursorSettingOption = 0;
+    private static int resolutionIndex = 0;
+    private static float volume;
     public Resolution[] resolutions;
     public TMP_Dropdown resolutionDropDown;
     public TMP_Dropdown cursorSettingDropDown;
@@ -37,6 +39,7 @@ public class GameSettings : MonoBehaviour
         {
             cursorSettingDropDown.ClearOptions();
             PopulateCursorSettingDropdown();
+            cursorSettingDropDown.value = cursorSettingOption;
         }
         headbobEnabled = true;
         gunSmokeEnabled = true;
@@ -81,7 +84,7 @@ public class GameSettings : MonoBehaviour
         options.Add("Interact Only");
         options.Add("Never");
         cursorSettingDropDown.AddOptions(options);
-        cursorSettingDropDown.value = 0;
+        cursorSettingDropDown.value = cursorSettingOption;
         SetCursorSetting();
     }
 
@@ -91,12 +94,15 @@ public class GameSettings : MonoBehaviour
         {
             case 0:
                 cursorSetting = CursorSetting.Always;
+                cursorSettingOption = 0;
                 break;
             case 1:
                 cursorSetting = CursorSetting.InteractOnly;
+                cursorSettingOption = 1;
                 break;
             case 2:
                 cursorSetting = CursorSetting.Never;
+                cursorSettingOption = 2;
                 break;
         }
     }

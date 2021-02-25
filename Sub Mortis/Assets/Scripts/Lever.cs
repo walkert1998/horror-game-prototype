@@ -17,10 +17,6 @@ public class Lever : MonoBehaviour
     }
 
     // Update is called once per frame
-    //void Update()
-    //{
-        
-    //}
 
     private void FixedUpdate()
     {
@@ -36,7 +32,6 @@ public class Lever : MonoBehaviour
         {
             TurnOff();
         }
-        //Debug.Log(joint.angle + " " + onAngle);
         //Debug.Log(Mathf.Abs(onAngle - joint.angle));
     }
 

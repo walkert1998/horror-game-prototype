@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 6
   itemName: Chemical Mixture
-  description: The result of mixing the two chemicals together.
+  description: The result of mixing the two chemicals together. Enough acid to burn
+    through a small amount of metal.
   horizontalIcon: {fileID: 21300000, guid: ceec6adfefd79754fa6682df070c5f33, type: 3}
   verticalIcon: {fileID: 0}
   img: {fileID: 0}
@@ -23,5 +24,6 @@ MonoBehaviour:
     y: 1
   stackable: 0
   itemCombinationsPossible: []
+  destroyOnUse: 1
   droppedItem: {fileID: 3910845594084752050, guid: 6c7f449a076e91240880c5ed91128e7d, type: 3}
   onUseSound: {fileID: 8300000, guid: 7f0e0cdc79405ec4ab0f2b3565f6c9e0, type: 3}

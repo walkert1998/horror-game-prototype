@@ -173,25 +173,28 @@ public class WeaponManager : MonoSOObserver
 
     public void Use()
     {
+        StoredItem itemToDrop = InventoryManager.GetInventoryView_Static().inventory.FindItem(currentItem);
         if (currentItem is Consumable)
         {
-            StoredItem itemToDrop = InventoryManager.GetInventoryView_Static().inventory.FindItem(currentItem);
             currentItem.Use();
             source.PlayOneShot(currentItem.onUseSound);
-            if (itemToDrop.quantity == 1)
+            if (currentItem.destroyOnUse)
             {
-                if (hotkeyItems.Contains(currentItem))
+                if (itemToDrop.quantity == 1)
                 {
-                    Hotkey.RemoveHotkeyItem_static(currentItem);
-                    hotkeyItems[index] = null;
+                    if (hotkeyItems.Contains(currentItem))
+                    {
+                        Hotkey.RemoveHotkeyItem_static(currentItem);
+                        hotkeyItems[index] = null;
+                    }
+                    UnEquipItem();
+                    equippedItemCursor.gameObject.SetActive(false);
+                    InventoryManager.GetInventoryView_Static().inventory.RemoveItem(itemToDrop);
                 }
-                UnEquipItem();
-                equippedItemCursor.gameObject.SetActive(false);
-                InventoryManager.GetInventoryView_Static().inventory.RemoveItem(itemToDrop);
-            }
-            else
-            {
-                InventoryManager.GetInventoryView_Static().inventory.RemoveItemQuantity(itemToDrop.item, 1);
+                else
+                {
+                    InventoryManager.GetInventoryView_Static().inventory.RemoveItemQuantity(itemToDrop.item, 1);
+                }
             }
         }
         else
@@ -207,6 +210,24 @@ public class WeaponManager : MonoSOObserver
                         {
                             source.PlayOneShot(currentItem.onUseSound);
                             shot.transform.SendMessage("Unlock", shot.transform, SendMessageOptions.DontRequireReceiver);
+                            if (currentItem.destroyOnUse)
+                            {
+                                if (itemToDrop.quantity == 1)
+                                {
+                                    if (hotkeyItems.Contains(currentItem))
+                                    {
+                                        Hotkey.RemoveHotkeyItem_static(currentItem);
+                                        hotkeyItems[index] = null;
+                                    }
+                                    UnEquipItem();
+                                    equippedItemCursor.gameObject.SetActive(false);
+                                    InventoryManager.GetInventoryView_Static().inventory.RemoveItem(itemToDrop);
+                                }
+                                else
+                                {
+                                    InventoryManager.GetInventoryView_Static().inventory.RemoveItemQuantity(itemToDrop.item, 1);
+                                }
+                            }
                         }
                         else
                         {
@@ -226,6 +247,24 @@ public class WeaponManager : MonoSOObserver
                         {
                             source.PlayOneShot(currentItem.onUseSound);
                             shot.transform.SendMessage("Interact", currentItem, SendMessageOptions.DontRequireReceiver);
+                            if (currentItem.destroyOnUse)
+                            {
+                                if (itemToDrop.quantity == 1)
+                                {
+                                    if (hotkeyItems.Contains(currentItem))
+                                    {
+                                        Hotkey.RemoveHotkeyItem_static(currentItem);
+                                        hotkeyItems[index] = null;
+                                    }
+                                    UnEquipItem();
+                                    equippedItemCursor.gameObject.SetActive(false);
+                                    InventoryManager.GetInventoryView_Static().inventory.RemoveItem(itemToDrop);
+                                }
+                                else
+                                {
+                                    InventoryManager.GetInventoryView_Static().inventory.RemoveItemQuantity(itemToDrop.item, 1);
+                                }
+                            }
                         }
                         else
                         {
@@ -508,7 +547,10 @@ public class WeaponManager : MonoSOObserver
         else
         {
             equippedItemCursor.sprite = item.horizontalIcon;
-            equippedItemCursor.gameObject.SetActive(true);
+            if (!InventoryManager.IsInventoryOpen_Static())
+            {
+                equippedItemCursor.gameObject.SetActive(true);
+            }
             DynamicCursor.HideCursor_Static();
             ToggleHighlightCursor(false);
         }
