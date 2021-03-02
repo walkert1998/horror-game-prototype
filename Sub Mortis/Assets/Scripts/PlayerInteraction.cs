@@ -247,7 +247,7 @@ public class PlayerInteraction : MonoBehaviour {
                 {
                     if (!hitObject.GetComponent<QRCode>().scanned)
                     {
-                        Examination.SetExamineTextUntilClick_static("QR code, might be something on it.");
+                        Examination.SetExamineTextUntilClick_static("QR code, I should scan it with my phone's camera.");
                     }
                     else
                     {

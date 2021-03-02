@@ -15,7 +15,7 @@ public class Health : MonoBehaviour
     public int bleedAmount = 0;
     public bool playerBleeding = false;
     public float bleedTime = 3.0f;
-    //public HitScreen hitScreen;
+    public HitScreen hitScreen;
     //public Image barImage;
     //AudioSource source;
     //public AudioClip heartbeatSound;
@@ -71,7 +71,10 @@ public class Health : MonoBehaviour
         Debug.Log("Character received " + Amount + " damage");
         //if (gameSettings.GetInteractionPrompts())
         //healthBar.value = currentHealth;
-        //hitScreen.TookDamage();
+        if (hitScreen != null)
+        {
+            hitScreen.TookDamage();
+        }
     }
 
     public void HealCharacter(int Amount)

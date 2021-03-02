@@ -282,7 +282,7 @@ public class DragRigidbodyUse : MonoBehaviour
 			}
 			else if (neverPickedUpBefore)
             {
-				HelpText._DisplayHelpText("[Right-Click] to throw item. Hold [R] and move mouse to rotate. Use [Scrollwheel Up/Down] to move object further away/closer.", KeyCode.Mouse1, hints, 1.0f);
+				HelpText._DisplayHelpText("[Right-Click] to throw item. Hold [R] and move mouse to rotate. Use [Scrollwheel Up/Down] to move object further away/closer.", KeyCode.Mouse1, hints, 3.0f);
 				neverPickedUpBefore = false;
 			}
 		}

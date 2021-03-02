@@ -172,7 +172,7 @@ using Random = UnityEngine.Random;
                 m_CollisionFlags = m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
 
                 ProgressStepCycle(speed);
-                UpdateCameraPosition(speed);
+                //UpdateCameraPosition(speed);
 
             }
             if (m_CanLook)
@@ -270,7 +270,7 @@ using Random = UnityEngine.Random;
             Vector3 newCameraPosition;
             if (!m_UseHeadBob)
             {
-                m_Camera.transform.localPosition = m_OriginalCameraPosition;
+                //m_Camera.transform.localPosition = m_OriginalCameraPosition;
                 return;
             }
             if (m_CharacterController.velocity.magnitude > 0 && m_CharacterController.isGrounded)

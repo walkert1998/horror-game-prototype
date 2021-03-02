@@ -23,7 +23,7 @@ public class Leaning : MonoBehaviour
     void Start()
     {
         //controller = GetComponent<FirstPersonController>();
-        cameraTransform = controller.transform.GetChild(0);
+        //cameraTransform = controller.transform.GetChild(0);
         startingPosition = cameraTransform.localPosition;
         startingRotation = cameraTransform.localRotation;
     }
@@ -31,7 +31,7 @@ public class Leaning : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q) && !PlayerInteraction.interactionBlocked)
         {
             leaningLeft = true;
             leaningRight = false;
@@ -41,7 +41,7 @@ public class Leaning : MonoBehaviour
             leaningLeft = false;
         }
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.E) && !PlayerInteraction.interactionBlocked)
         {
             leaningRight = true;
             leaningLeft = false;
@@ -59,28 +59,29 @@ public class Leaning : MonoBehaviour
         {
             controller.SetRotateZ(leanAmount, leanSpeed * 4);
             CalculateLeanDistance();
-            Vector3 newPos = new Vector3(startingPosition.x - leanDistance, startingPosition.y, startingPosition.z);
+            Vector3 newPos = new Vector3(startingPosition.x - leanDistance, cameraTransform.localPosition.y, startingPosition.z);
             leanPosition = newPos;
             if (leanTimer < leanSpeed)
                 leanTimer += Time.deltaTime * leanSpeed;
-            cameraTransform.localPosition = Vector3.MoveTowards(cameraTransform.localPosition, leanPosition, leanTimer);
+            cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, leanPosition, leanTimer);
         }
         else if (leaningRight)
         {
             controller.SetRotateZ(-leanAmount, leanSpeed * 4);
             CalculateLeanDistance();
-            Vector3 newPos = new Vector3(startingPosition.x + leanDistance, startingPosition.y, startingPosition.z);
+            Vector3 newPos = new Vector3(startingPosition.x + leanDistance, cameraTransform.localPosition.y, startingPosition.z);
             leanPosition = newPos;
             if (leanTimer < leanSpeed)
                 leanTimer += Time.deltaTime * leanSpeed;
-            cameraTransform.localPosition = Vector3.MoveTowards(cameraTransform.localPosition, leanPosition, leanTimer);
+            cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, leanPosition, leanTimer);
         }
         else
         {
             leanTimer = 0f;
             controller.ResetCamRotation();
             controller.SetRotateZ(startingRotation.eulerAngles.z, leanSpeed * 4);
-            cameraTransform.localPosition = Vector3.MoveTowards(cameraTransform.localPosition, startingPosition, Time.deltaTime * leanSpeed);
+            startingPosition = new Vector3(startingPosition.x, cameraTransform.localPosition.y, startingPosition.z);
+            cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, startingPosition, Time.deltaTime * 10);
         }
     }
 

@@ -29,7 +29,7 @@ public class TutorialSequence : MonoBehaviour
     IEnumerator Tutorial()
     {
         yield return new WaitForSeconds(1.0f);
-        HelpText._DisplayHelpText("Move mouse to look around, and use [W][A][S][D] to move.", KeyCode.W, movementKeys, 1.0f);
+        HelpText._DisplayHelpText("Move mouse to look around, and use [W][A][S][D] to move.", KeyCode.W, movementKeys, 2.0f);
         while (HelpText.TextVisible())
         {
             yield return null;
@@ -39,22 +39,22 @@ public class TutorialSequence : MonoBehaviour
         {
             yield return null;
         }
-        HelpText._DisplayHelpText("Press [F] to toggle the phones flashlight.", KeyCode.F, null, 1.0f);
+        HelpText._DisplayHelpText("Press [F] to toggle the phones flashlight.", KeyCode.F, null, 2.0f);
         while (!Input.GetKeyDown(KeyCode.F))
         {
             yield return null;
         }
-        HelpText._DisplayHelpText("Press [TAB] to use the smartphone.", KeyCode.Tab, null, 1.0f);
+        HelpText._DisplayHelpText("Press [TAB] to use the smartphone.", KeyCode.Tab, null, 2.0f);
         while (!Input.GetKeyDown(KeyCode.Tab))
         {
             yield return null;
         }
-        HelpText._DisplayHelpText("The lock screen displays vital info in the form of 'Widgets', such as your health, current objective, and any messages. You can either click the button at the bottom of the lock screen, or press [Q] to navigate to the home screen.", KeyCode.Q, widgetKeys, 1.0f);
+        HelpText._DisplayHelpText("The lock screen displays vital info in the form of 'Widgets', such as your health, current objective, and any messages. You can either click the button at the bottom of the lock screen, or press [Q] to navigate to the home screen.", KeyCode.Q, widgetKeys, 2.0f);
         while (InventoryManager.IsInventoryOpen_Static())
         {
             yield return null;
         }
-        HelpText._DisplayHelpText("Use [Right-Click] to examine objects.", KeyCode.Mouse1, null, 1.0f);
+        HelpText._DisplayHelpText("Use [Right-Click] to examine objects.", KeyCode.Mouse1, null, 2.0f);
         //while (HelpText.TextVisible())
         //{
         //    yield return null;
