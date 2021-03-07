@@ -6,12 +6,15 @@ public class Flashlight : MonoBehaviour
 {
     public bool flashlightOn = false;
     Light lightSource;
+    public Camera lightCamera;
+    public GameObject lightDetectionObject;
     // Start is called before the first frame update
     void Start()
     {
         lightSource = GetComponent<Light>();
         lightSource.enabled = false;
         flashlightOn = false;
+        lightCamera.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -22,10 +25,12 @@ public class Flashlight : MonoBehaviour
             if (flashlightOn)
             {
                 TurnFlashlightOff();
+                lightCamera.gameObject.SetActive(true);
             }
             else
             {
                 TurnFlashlightOn();
+                lightCamera.gameObject.SetActive(false);
                 //if (HelpText.TextVisible())
                 //{
                 //    HelpText.HideHelpText();
@@ -38,12 +43,14 @@ public class Flashlight : MonoBehaviour
     public void TurnFlashlightOn ()
     {
         lightSource.enabled = true;
+        lightDetectionObject.SetActive(false);
         flashlightOn = true;
     }
 
     public void TurnFlashlightOff ()
     {
         lightSource.enabled = false;
+        lightDetectionObject.SetActive(true);
         flashlightOn = false;
     }
 }

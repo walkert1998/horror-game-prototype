@@ -26,7 +26,10 @@ public class PickUp : MonoBehaviour
 
     public void Pickup()
     {
-        source.PlayOneShot(pickUpSound);
+        if (pickUpSound != null)
+        {
+            source.PlayOneShot(pickUpSound);
+        }
         picked_up = true;
         if (playerInventory != null)
         {

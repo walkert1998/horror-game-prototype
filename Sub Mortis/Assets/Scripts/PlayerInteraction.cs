@@ -14,7 +14,8 @@ public class PlayerInteraction : MonoBehaviour {
     public DragRigidbodyUse dragInteraction;
     public GameMenu menu;
     public static bool interactionBlocked = false;
-    public bool interactionBlocked_nonS = false;
+    public bool interactionBlocked_nonStatic = false;
+    RaycastHit hit;
 
     // Use this for initialization
     void Start ()
@@ -23,17 +24,17 @@ public class PlayerInteraction : MonoBehaviour {
         weaponManager = GetComponent<WeaponManager>();
         computerInteraction = GetComponent<ComputerInteraction>();
         UnlockInteraction();
+        hit = new RaycastHit();
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        interactionBlocked_nonS = interactionBlocked;
+        interactionBlocked_nonStatic = interactionBlocked;
         //if (menu.gamePaused)
         //{
         //    return;
         //}
-        RaycastHit hit = new RaycastHit();
         if (interactionBlocked)
         {
             return;
@@ -46,7 +47,7 @@ public class PlayerInteraction : MonoBehaviour {
         //{
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward), out hit, distance, excluded))
         {
-            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward) * distance, Color.green);
+            //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward) * distance, Color.green);
             GameObject hitObject = hit.collider.gameObject;
             //Debug.Log(hit.collider.gameObject.name);
             if (phoneCamera.cameraActive)
@@ -423,12 +424,12 @@ public class PlayerInteraction : MonoBehaviour {
     public static void LockInteraction()
     {
         interactionBlocked = true;
-        Debug.Log("Locking " + interactionBlocked);
+        //Debug.Log("Locking " + interactionBlocked);
     }
 
     public static void UnlockInteraction()
     {
         interactionBlocked = false;
-        Debug.Log("Unlocking " + interactionBlocked);
+        //Debug.Log("Unlocking " + interactionBlocked);
     }
 }

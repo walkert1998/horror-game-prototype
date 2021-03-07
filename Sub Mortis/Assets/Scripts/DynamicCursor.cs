@@ -47,12 +47,12 @@ public class DynamicCursor : MonoBehaviour
             {
                 Cursor.SetCursor(null, hotSpot, cursorMode);
                 staticCursor.sprite = null;
-                Debug.Log("Overriding cursor");
+                //Debug.Log("Overriding cursor");
                 HideCursor();
                 return;
             }
             Cursor.SetCursor(targetCursor, new Vector2(targetCursor.width / 2, targetCursor.height / 2), cursorMode);
-            Debug.Log("Setting cursor to target");
+            //Debug.Log("Setting cursor to target");
             //newSprite = Sprite.Create(targetCursor, staticCursor.gameObject.GetComponent<RectTransform>().rect, new Vector2(0, 0), 1);
             staticCursor.sprite = targetCursorSprite;
             ShowCursor();
@@ -60,7 +60,7 @@ public class DynamicCursor : MonoBehaviour
         else if (type.Equals(CursorType.Examine))
         {
             Cursor.SetCursor(examineCursor, new Vector2(examineCursor.width / 2, examineCursor.height / 2), cursorMode);
-            Debug.Log("Setting cursor to examine");
+            //Debug.Log("Setting cursor to examine");
             //newSprite = Sprite.Create(targetCursor, staticCursor.gameObject.GetComponent<RectTransform>().rect, new Vector2(0, 0), 1);
             staticCursor.sprite = examineCursorSprite;
             ShowCursor();
@@ -68,7 +68,7 @@ public class DynamicCursor : MonoBehaviour
         else if (type.Equals(CursorType.Door))
         {
             Cursor.SetCursor(doorCursor, new Vector2(doorCursor.width / 2, doorCursor.height / 2), cursorMode);
-            Debug.Log("Setting cursor to door");
+            //Debug.Log("Setting cursor to door");
             //newSprite = Sprite.Create(targetCursor, staticCursor.gameObject.GetComponent<RectTransform>().rect, new Vector2(0, 0), 1);
             staticCursor.sprite = doorCursorSprite;
             ShowCursor();
@@ -76,7 +76,7 @@ public class DynamicCursor : MonoBehaviour
         else if (type.Equals(CursorType.Grab))
         {
             Cursor.SetCursor(grabCursor, new Vector2(grabCursor.width / 2, grabCursor.height / 2), cursorMode);
-            Debug.Log("Setting cursor to grab");
+            //Debug.Log("Setting cursor to grab");
             //newSprite = Sprite.Create(targetCursor, staticCursor.gameObject.GetComponent<RectTransform>().rect, new Vector2(0, 0), 1);
             //Debug.Log("Showing cursor");
             staticCursor.sprite = grabCursorSprite;
@@ -85,7 +85,7 @@ public class DynamicCursor : MonoBehaviour
         else if (type.Equals(CursorType.Drag))
         {
             Cursor.SetCursor(dragCursor, new Vector2(dragCursor.width / 2, dragCursor.height / 2), cursorMode);
-            Debug.Log("Setting cursor to drag");
+            //Debug.Log("Setting cursor to drag");
             //newSprite = Sprite.Create(targetCursor, staticCursor.gameObject.GetComponent<RectTransform>().rect, new Vector2(0, 0), 1);
             staticCursor.sprite = dragCursorSprite;
             ShowCursor();
@@ -93,7 +93,7 @@ public class DynamicCursor : MonoBehaviour
         else if (type.Equals(CursorType.Pickup))
         {
             Cursor.SetCursor(pickupCursor, new Vector2(pickupCursor.width / 2, pickupCursor.height / 2), cursorMode);
-            Debug.Log("Setting cursor to pickup");
+            //Debug.Log("Setting cursor to pickup");
             //newSprite = Sprite.Create(targetCursor, staticCursor.gameObject.GetComponent<RectTransform>().rect, new Vector2(0, 0), 1);
             staticCursor.sprite = pickupCursorSprite;
             ShowCursor();
@@ -101,7 +101,7 @@ public class DynamicCursor : MonoBehaviour
         else if (type.Equals(CursorType.Combine))
         {
             Cursor.SetCursor(combineCursor, new Vector2(combineCursor.width / 2, combineCursor.height / 2), cursorMode);
-            Debug.Log("Setting cursor to combine");
+            //Debug.Log("Setting cursor to combine");
             //newSprite = Sprite.Create(targetCursor, staticCursor.gameObject.GetComponent<RectTransform>().rect, new Vector2(0, 0), 1);
             staticCursor.sprite = combineCursorSprite;
             ShowCursor();
@@ -109,7 +109,7 @@ public class DynamicCursor : MonoBehaviour
         else if (type.Equals(CursorType.None))
         {
             Cursor.SetCursor(null, hotSpot, cursorMode);
-            Debug.Log("Setting cursor to none");
+            //Debug.Log("Setting cursor to none");
             //newSprite = Sprite.Create(targetCursor, staticCursor.gameObject.GetComponent<RectTransform>().rect, new Vector2(0, 0), 1);
             staticCursor.sprite = null;
             HideCursor();

@@ -11,6 +11,11 @@ public class Crouch : MonoBehaviour
     Coroutine runningRoutine;
     CharacterController m_CharacterController;
     public Transform playerCam;
+    public Transform playerLightObject;
+    public Vector3 originalLightObjPos;
+    public Vector3 crouchLightObjPos;
+    public float originalLightObjHeight;
+    public float crouchLightObjHeight;
     Vector3 originalCamPosition;
 
     public KeyCode crouchKey = KeyCode.LeftControl;
@@ -21,6 +26,8 @@ public class Crouch : MonoBehaviour
         m_CharacterController = GetComponent<CharacterController>();
         originalHeight = m_CharacterController.height;
         originalCamPosition = playerCam.localPosition;
+        originalLightObjHeight = playerLightObject.localScale.y;
+        originalLightObjPos = playerLightObject.localPosition;
     }
 
     // Update is called once per frame
@@ -59,12 +66,16 @@ public class Crouch : MonoBehaviour
         if (!crouching)
         {
             float cameraDestination = originalCamPosition.y;
+            Vector3 newCameraPos = new Vector3(playerCam.localPosition.x, cameraDestination, playerCam.localPosition.z);
+            Vector3 lightScale = new Vector3(playerLightObject.localScale.x, originalLightObjHeight, playerLightObject.localScale.z);
             while (m_CharacterController.height < originalHeight)
             {
                 m_CharacterController.height = Mathf.Lerp(m_CharacterController.height, originalHeight, Time.deltaTime * 15);
                 m_CharacterController.center = Vector3.down * (originalHeight - m_CharacterController.height) / 2.0f;
-                Vector3 newCameraPos = new Vector3(playerCam.localPosition.x, cameraDestination, playerCam.localPosition.z);
+                newCameraPos.Set(playerCam.localPosition.x, cameraDestination, playerCam.localPosition.z);
                 playerCam.localPosition = Vector3.Lerp(playerCam.localPosition, newCameraPos, Time.deltaTime * 15);
+                playerLightObject.localScale = Vector3.Lerp(playerLightObject.localScale, lightScale, Time.deltaTime * 15);
+                playerLightObject.localPosition = Vector3.Lerp(playerLightObject.localPosition, originalLightObjPos, Time.deltaTime * 15);
                 yield return null;
             }
         }
@@ -72,15 +83,18 @@ public class Crouch : MonoBehaviour
         {
             //playerCam.localPosition = newCameraPos;
             float cameraDestination = -0.2f;
+            Vector3 newCameraPos = new Vector3(playerCam.localPosition.x, cameraDestination, playerCam.localPosition.z);
+            Vector3 lightScale = new Vector3(playerLightObject.localScale.x, crouchLightObjHeight, playerLightObject.localScale.z);
             while ((m_CharacterController.height - m_CrouchHeight) > 0.01)
             {
-                Vector3 newCameraPos = new Vector3(playerCam.localPosition.x, cameraDestination, playerCam.localPosition.z);
+                newCameraPos.Set(playerCam.localPosition.x, cameraDestination, playerCam.localPosition.z);
+                playerLightObject.localScale = Vector3.Lerp(playerLightObject.localScale, lightScale, Time.deltaTime * 15);
                 playerCam.localPosition = Vector3.Lerp(playerCam.localPosition, newCameraPos, Time.deltaTime * 10);
+                playerLightObject.localPosition = Vector3.Lerp(playerLightObject.localPosition, crouchLightObjPos, Time.deltaTime * 15);
                 m_CharacterController.height = Mathf.Lerp(m_CharacterController.height, m_CrouchHeight, Time.deltaTime * 10);
                 m_CharacterController.center = Vector3.down * (originalHeight - m_CharacterController.height) / 2.0f;
                 yield return null;
             }
-            Debug.Log("Finished crouching");
         }
     }
 }

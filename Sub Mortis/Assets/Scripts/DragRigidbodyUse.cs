@@ -61,6 +61,7 @@ public class DragRigidbodyUse : MonoBehaviour
 	public List<KeyCode> hints;
 
 	public FirstPersonController controller;
+	GameObject dragPoint;
 
 	private float PickupRange = 3f;
 	private float ThrowStrength = 50f;
@@ -77,6 +78,7 @@ public class DragRigidbodyUse : MonoBehaviour
 	private bool rotating;
 
 	HingeJoint hinge;
+	ConfigurableJoint configJoint;
 
 	Vector3 originalScreenTargetPosition;
 	Vector3 originalRigidbodyPos;
@@ -226,7 +228,7 @@ public class DragRigidbodyUse : MonoBehaviour
 				maxDistanceGrab = ObjectGrab.m_maxDistanceGrab;
 				originalRigidbodyPos = hit.collider.transform.position;
 				originalScreenTargetPosition = playerCam.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance));
-				DynamicCursor.ChangeCursor_Static(CursorType.Drag);
+				//DynamicCursor.ChangeCursor_Static(CursorType.Drag);
 				DynamicCursor.HideCursor_Static();
 			}
 			if (hit.collider.tag == Tags.m_InteractItemsTag && tryPickupObject)
@@ -249,7 +251,7 @@ public class DragRigidbodyUse : MonoBehaviour
 				maxDistanceGrab = ItemGrab.m_ItemMaxGrab;
 				originalRigidbodyPos = hit.collider.transform.position;
 				originalScreenTargetPosition = playerCam.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance));
-				DynamicCursor.ChangeCursor_Static(CursorType.Drag);
+				//DynamicCursor.ChangeCursor_Static(CursorType.Drag);
 				DynamicCursor.HideCursor_Static();
 			}
 			if (hit.collider.tag == Tags.m_DoorsTag && tryPickupObject)
@@ -264,7 +266,10 @@ public class DragRigidbodyUse : MonoBehaviour
 				ThrowStrength = DoorGrab.m_DoorThrow;
 				distance = hit.distance;
 				maxDistanceGrab = DoorGrab.m_DoorMaxGrab;
-                DynamicCursor.ChangeCursor_Static(CursorType.Drag);
+				dragPoint = new GameObject("Rigidbody dragger");
+				dragPoint.transform.position = hit.point;
+				Rigidbody body = dragPoint.AddComponent<Rigidbody>();
+				//DynamicCursor.ChangeCursor_Static(CursorType.Drag);
                 DynamicCursor.HideCursor_Static();
 				//originalRigidbodyPos = hit.collider.transform.position;
 				//originalScreenTargetPosition = playerCam.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance));
@@ -273,12 +278,14 @@ public class DragRigidbodyUse : MonoBehaviour
 			if (objectHeld.GetComponent<HingeJoint>())
 			{
 				controller.m_CanLook = false;
-                controller.GetMouseLook().SetCursorLock(false);
-            }
+				hinge = objectHeld.GetComponent<HingeJoint>();
+				//controller.GetMouseLook().SetCursorLock(false);
+			}
 			else if (objectHeld.GetComponent<ConfigurableJoint>())
 			{
 				controller.m_CanLook = false;
-				controller.GetMouseLook().SetCursorLock(false);
+				configJoint = objectHeld.GetComponent<ConfigurableJoint>();
+				//controller.GetMouseLook().SetCursorLock(false);
 			}
 			else if (neverPickedUpBefore)
             {
@@ -302,39 +309,56 @@ public class DragRigidbodyUse : MonoBehaviour
 		//objectHeld.GetComponent<Rigidbody>().velocity = (objectHeld.transform.position - playerCam.transform.position) * 5;
 	}
 
-	private void RotateHinge(Vector3 mousePosition)
+	private void RotateWheel()
     {
-		Vector3 move = new Vector3(0,0,0);
+		Vector3 wheelVelocity = new Vector3(0,0,0);
+		objectHeld.GetComponent<Rigidbody>().velocity = wheelVelocity;
+	}
+
+	private void SlideObject()
+    {
+		Vector3 mouseCamDir = playerCam.transform.up * Input.GetAxis("Mouse Y") + playerCam.transform.right * Input.GetAxis("Mouse X");
+		objectHeld.GetComponent<Rigidbody>().velocity = mouseCamDir;
+	}
+
+	private void RotateHinge()
+    {
 		if (hinge.axis.x == 1)
 		{
-			//move.x = Input.GetAxis("Mouse Y");
-			//move.y = Input.GetAxis("Mouse Y");
-			move.z = -Input.GetAxis("Mouse Y") * 10;
+			Vector3 center = Vector3.Scale(objectHeld.transform.position, objectHeld.GetComponent<Renderer>().bounds.center);
+			Vector3 jointBody = Vector3.Normalize(center - hinge.anchor);
+			Vector3 upJointForward = Vector3.Cross(playerCam.transform.up, hinge.axis);
+			Vector3 upAdd = upJointForward * Vector3.Dot(playerCam.transform.up, jointBody);
+			Vector3 up = Vector3.Normalize(upAdd + playerCam.transform.up);
+			Vector3 rightJointForward = Vector3.Cross(playerCam.transform.right, hinge.axis);
+			Vector3 rightAdd = rightJointForward * Vector3.Dot(playerCam.transform.right, jointBody);
+			Vector3 right = Vector3.Normalize(playerCam.transform.right + rightAdd);
+			Vector3 rotVelocity = (up) * Input.GetAxis("Mouse Y") + right * Input.GetAxis("Mouse X");
+			Vector3 pushDir = Vector3.Cross(jointBody, rotVelocity);
+			objectHeld.GetComponent<Rigidbody>().velocity = rotVelocity;
+			//objectHeld.GetComponent<Rigidbody>().velocity.Set(Vector3.Dot(pushDir, objectHeld.GetComponent<HingeJoint>().axis), Vector3.Dot(pushDir, objectHeld.GetComponent<HingeJoint>().axis), Vector3.Dot(pushDir, objectHeld.GetComponent<HingeJoint>().axis));
 		}
 		else if (hinge.axis.y == 1)
 		{
-            move.x = 0f;
-			move.y = -Input.GetAxis("Mouse X");
-			move.z = 0f;
+			objectHeld.GetComponent<Rigidbody>().velocity = (playerCam.transform.up + playerCam.transform.forward) * Input.GetAxis("Mouse Y") + playerCam.transform.right * Input.GetAxis("Mouse X");
 		}
-		else
-		{
-			move = new Vector3(Input.GetAxis("Mouse X"), objectHeld.transform.position.y, 0) * 10;
-		}
-		Debug.Log(move);
-        //objectHeld.GetComponent<Transform>().Rotate(move);
-        objectHeld.GetComponent<Rigidbody>().angularVelocity = move * 2;
     }
 
 	private void holdObject()
 	{
         Ray playerAim = playerCam.GetComponent<Camera>().ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
-        if (objectHeld.CompareTag("Door"))
+        if (hinge)
         {
             Vector3 nextPos = playerCam.transform.position + playerAim.direction * distance;
             Vector3 currPos = objectHeld.transform.position;
-            objectHeld.GetComponent<Rigidbody>().velocity = (nextPos - currPos) * 10;
-            //RotateHinge(nextPos);
+			//objectHeld.GetComponent<Rigidbody>().velocity = (nextPos - currPos) * 10;
+
+			RotateHinge();
+        }
+
+		else if (configJoint)
+        {
+			SlideObject();
         }
 
         else
