@@ -15,15 +15,21 @@ public class GameSettings : MonoBehaviour
     private bool gunSmokeEnabled;
     private bool healthBarEnabled;
     private static CursorSetting cursorSetting;
+    private static VisibilityMeterSetting visibilityMeterSetting;
     private bool interactionPromptsEnabled;
     public Slider volumeSlider;
     private static int fov;
     private static int cursorSettingOption = 0;
+    private static int visibilitySettingOption = 0;
     private static int resolutionIndex = 0;
     private static float volume;
     public Resolution[] resolutions;
     public TMP_Dropdown resolutionDropDown;
     public TMP_Dropdown cursorSettingDropDown;
+    public TMP_Dropdown visibilityMeterSettingDropDown;
+    public Slider visibilityBar;
+    public Image visibilityIcon;
+    public Material visibilityLight;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +46,12 @@ public class GameSettings : MonoBehaviour
             cursorSettingDropDown.ClearOptions();
             PopulateCursorSettingDropdown();
             cursorSettingDropDown.value = cursorSettingOption;
+        }
+        if (visibilityMeterSettingDropDown != null)
+        {
+            visibilityMeterSettingDropDown.ClearOptions();
+            PopulateVisibilitySettingDropdown();
+            visibilityMeterSettingDropDown.value = visibilitySettingOption;
         }
         headbobEnabled = true;
         gunSmokeEnabled = true;
@@ -88,6 +100,17 @@ public class GameSettings : MonoBehaviour
         SetCursorSetting();
     }
 
+    public void PopulateVisibilitySettingDropdown()
+    {
+        List<string> options = new List<string>();
+        options.Add("Lightbulb Icon");
+        options.Add("Small Light Indicator");
+        options.Add("Visibility Bar");
+        visibilityMeterSettingDropDown.AddOptions(options);
+        visibilityMeterSettingDropDown.value = visibilitySettingOption;
+        SetVisibilityMeterSetting();
+    }
+
     public void SetCursorSetting()
     {
         switch (cursorSettingDropDown.value)
@@ -103,6 +126,42 @@ public class GameSettings : MonoBehaviour
             case 2:
                 cursorSetting = CursorSetting.Never;
                 cursorSettingOption = 2;
+                break;
+        }
+    }
+
+    public void SetVisibilityMeterSetting()
+    {
+        switch (visibilityMeterSettingDropDown.value)
+        {
+            case 0:
+                visibilityMeterSetting = VisibilityMeterSetting.Icon;
+                visibilityIcon.gameObject.SetActive(true);
+                visibilityBar.gameObject.SetActive(false);
+                visibilityLight.SetFloat("_EmissiveExposureWeight", 1.0f);
+                visibilityLight.SetFloat("_EmissiveIntensity", 1);
+                Color newColor = visibilityLight.GetColor("_EmissiveColorLDR");
+                visibilityLight.SetColor("_EmissiveColor", newColor * visibilityLight.GetFloat("_EmissiveIntensity"));
+                visibilitySettingOption = 0;
+                Debug.Log(visibilitySettingOption);
+                break;
+            case 1:
+                visibilityMeterSetting = VisibilityMeterSetting.Light;
+                visibilityIcon.gameObject.SetActive(false);
+                visibilityBar.gameObject.SetActive(false);
+                visibilitySettingOption = 1;
+                Debug.Log(visibilitySettingOption);
+                break;
+            case 2:
+                visibilityMeterSetting = VisibilityMeterSetting.Bar;
+                visibilityBar.gameObject.SetActive(true);
+                visibilityIcon.gameObject.SetActive(false);
+                visibilityLight.SetFloat("_EmissiveExposureWeight", 1.0f);
+                visibilityLight.SetFloat("_EmissiveIntensity", 1);
+                newColor = visibilityLight.GetColor("_EmissiveColorLDR");
+                visibilityLight.SetColor("_EmissiveColor", newColor * visibilityLight.GetFloat("_EmissiveIntensity"));
+                visibilitySettingOption = 2;
+                Debug.Log(visibilitySettingOption);
                 break;
         }
     }
@@ -180,6 +239,11 @@ public class GameSettings : MonoBehaviour
     {
         return cursorSetting;
     }
+
+    public static VisibilityMeterSetting GetVisibilityMeterSetting()
+    {
+        return visibilityMeterSetting;
+    }
 }
 
 public enum CursorSetting
@@ -187,4 +251,10 @@ public enum CursorSetting
     Always,
     InteractOnly,
     Never
+}
+public enum VisibilityMeterSetting
+{
+    Bar,
+    Icon,
+    Light
 }

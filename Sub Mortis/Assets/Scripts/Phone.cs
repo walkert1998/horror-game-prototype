@@ -36,7 +36,7 @@ public class Phone : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        uiElements = GetComponentsInChildren<PhoneUIOrientation>();
+        //uiElements = GetComponentsInChildren<PhoneUIOrientation>();
         homeScreen.SetActive(false);
         inventoryScreen.SetActive(false);
         cameraScreen.SetActive(false);

@@ -11,6 +11,7 @@ public class Crouch : MonoBehaviour
     Coroutine runningRoutine;
     CharacterController m_CharacterController;
     public Transform playerCam;
+    public Camera lightCamera;
     public Transform playerLightObject;
     public Vector3 originalLightObjPos;
     public Vector3 crouchLightObjPos;
@@ -76,6 +77,7 @@ public class Crouch : MonoBehaviour
                 playerCam.localPosition = Vector3.Lerp(playerCam.localPosition, newCameraPos, Time.deltaTime * 15);
                 playerLightObject.localScale = Vector3.Lerp(playerLightObject.localScale, lightScale, Time.deltaTime * 15);
                 playerLightObject.localPosition = Vector3.Lerp(playerLightObject.localPosition, originalLightObjPos, Time.deltaTime * 15);
+                lightCamera.farClipPlane = Mathf.Lerp(lightCamera.farClipPlane, 0.9f, Time.deltaTime * 15);
                 yield return null;
             }
         }
@@ -93,6 +95,7 @@ public class Crouch : MonoBehaviour
                 playerLightObject.localPosition = Vector3.Lerp(playerLightObject.localPosition, crouchLightObjPos, Time.deltaTime * 15);
                 m_CharacterController.height = Mathf.Lerp(m_CharacterController.height, m_CrouchHeight, Time.deltaTime * 10);
                 m_CharacterController.center = Vector3.down * (originalHeight - m_CharacterController.height) / 2.0f;
+                lightCamera.farClipPlane = Mathf.Lerp(lightCamera.farClipPlane, 0.36f, Time.deltaTime * 15);
                 yield return null;
             }
         }

@@ -72,12 +72,7 @@ public class PlayerIllumination : MonoBehaviour
             if (lightSource.flashlightOn && !menu.gamePaused)
             {
                 lightLevel = 100;
-                //lightSlider.value = 100;
-                lightIcon.color = visibleColor;
-                //lightIndicator.SetFloat("_EmissiveExposureWeight", 0);
-                //lightIndicator.SetFloat("_EmissiveIntensity", 60);
-                //Color newColor = lightIndicator.GetColor("_EmissiveColorLDR");
-                //lightIndicator.SetColor("_EmissiveColor", newColor*lightIndicator.GetFloat("_EmissiveIntensity"));
+                UpdateLightIndicator(lightLevel);
             }
             else if (!menu.gamePaused && Time.frameCount % 3 == 0)
             {
@@ -111,14 +106,39 @@ public class PlayerIllumination : MonoBehaviour
             //lightLevel += (0.216f * col.r) + (0.7152f * col.g) + (0.0722f * col.b);
         }
         lightLevel = max;
-        float value = Mathf.InverseLerp(10f, 60f, lightLevel);
+        UpdateLightIndicator(lightLevel);
         //lightIndicator.SetFloat("_EmissiveExposureWeight", 1.0f-value);
         //lightIndicator.SetFloat("_EmissiveIntensity", (value * 60) + 1);
         //Color newColor = lightIndicator.GetColor("_EmissiveColorLDR");
         //lightIndicator.SetColor("_EmissiveColor", newColor * lightIndicator.GetFloat("_EmissiveIntensity"));
         //currentColor = new Color(1, 1, 1, value);
-        lightIcon.color = new Color(1, 1, 1, value);
+        //lightIcon.color = new Color(1, 1, 1, value);
         //lightSlider.value = Mathf.RoundToInt(lightLevel);
+    }
+
+    public void UpdateLightIndicator(float level)
+    {
+        switch (GameSettings.GetVisibilityMeterSetting())
+        {
+            case VisibilityMeterSetting.Icon:
+                float value = Mathf.InverseLerp(10f, 60f, level);
+                lightIcon.color = new Color(1, 1, 1, value);
+                break;
+            case VisibilityMeterSetting.Light:
+                value = Mathf.InverseLerp(10f, 60f, level);
+                lightIndicator.SetFloat("_EmissiveExposureWeight", 1.0f - value);
+                lightIndicator.SetFloat("_EmissiveIntensity", (value * 60) + 1);
+                Color newColor = lightIndicator.GetColor("_EmissiveColorLDR");
+                lightIndicator.SetColor("_EmissiveColor", newColor * lightIndicator.GetFloat("_EmissiveIntensity"));
+                break;
+            case VisibilityMeterSetting.Bar:
+                lightSlider.value = Mathf.RoundToInt(level);
+                break;
+        }
+        //if (GameSettings.GetVisibilityMeterSetting().Equals(VisibilityMeterSetting.Bar))
+        //{
+
+        //}
     }
 
     public int Calc()

@@ -1,66 +1,67 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class WheelCrank : MonoBehaviour
 {
-    public int maxThreshold;
-    public int minThreshold;
-    public float currentRotation = 0;
-    public bool minValueReached = false;
-    public bool maxValueReached = false;
-    Rigidbody rigidbody;
-    float lastAngle = 0;
-    int revolutions = 0;
-    // Start is called before the first frame update
-    void Start()
+    public int RotationCount;
+    public int RotationLimit = 3;
+
+    public float rotatedAroundX;
+
+    public Vector3 lastUp;
+
+    public UnityEvent OnMaxRotation;
+
+    public AudioClip rotateSound;
+
+    AudioSource source;
+
+    private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody>();
-        lastAngle = transform.localEulerAngles.x;
+        rotatedAroundX = 0;
+        source = GetComponent<AudioSource>();
+        // initialize
+        lastUp = transform.up;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        float newAngle = transform.localEulerAngles.x;
-        if (lastAngle > newAngle)
-        {
-            DecreaseRotation(Mathf.Abs(newAngle - lastAngle));
-            //currentRotation -= newAngle;
-            Debug.Log(newAngle);
-        }
-        else if (lastAngle < newAngle)
-        {
-            IncreaseRotation(Mathf.Abs(newAngle - lastAngle));
-            //currentRotation += newAngle;
-            Debug.Log(newAngle);
-        }
-        lastAngle = transform.localEulerAngles.x;
-    }
+        var rotationDifference = Vector3.SignedAngle(transform.right, lastUp, transform.up);
 
-    public void IncreaseRotation(float amount)
-    {
-        Debug.Log(amount);
-        if (currentRotation + amount <= maxThreshold)
-        {
-            currentRotation += amount;
-        }
-        else
-        {
-            maxValueReached = true;
-        }
-    }
+        rotatedAroundX += rotationDifference;
+        Debug.DrawRay(transform.position, transform.up * 3.0f, Color.blue);
+        Debug.DrawRay(transform.position, transform.right * 3.0f, Color.red);
+        Debug.DrawRay(transform.position, transform.forward * 3.0f, Color.yellow);
 
-    public void DecreaseRotation(float amount)
-    {
-        Debug.Log(amount);
-        if (currentRotation - amount >= minThreshold)
+        if (rotatedAroundX >= 360.0f)
         {
-            currentRotation -= amount;
+            Debug.Log("One positive rotation done", this);
+
+            RotationCount++;
+            source.PlayOneShot(rotateSound);
+            rotatedAroundX -= 360.0f;
         }
-        else
+        else if (rotatedAroundX <= -360.0f)
         {
-            minValueReached = true;
+            Debug.Log("One negative rotation done", this);
+
+            RotationCount--;
+            source.PlayOneShot(rotateSound);
+
+            rotatedAroundX += 360.0f;
+        }
+
+        // update last rotation
+        lastUp = transform.right;
+
+
+        // check for fire the event
+        if (RotationCount >= RotationLimit)
+        {
+            OnMaxRotation?.Invoke();
+            RotationCount = 0;
         }
     }
 }
