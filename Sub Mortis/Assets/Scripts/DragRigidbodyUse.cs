@@ -79,8 +79,12 @@ public class DragRigidbodyUse : MonoBehaviour
 
 	float lastDist;
 
+	public CursorFollowObject cursor;
+
 	HingeJoint hinge;
 	ConfigurableJoint configJoint;
+	WheelCrank wheelCrank;
+	Lever lever;
 
 	Vector3 originalScreenTargetPosition;
 	Vector3 originalRigidbodyPos;
@@ -263,6 +267,8 @@ public class DragRigidbodyUse : MonoBehaviour
 				objectHeld.GetComponent<Rigidbody>().useGravity = false;
                 objectHeld.GetComponent<Rigidbody>().freezeRotation = false;
 				hinge = objectHeld.GetComponent<HingeJoint>();
+				lever = objectHeld.GetComponent<Lever>();
+				wheelCrank = objectHeld.GetComponent<WheelCrank>();
 				/**/
 				PickupRange = DoorGrab.m_DoorPickupRange;
 				ThrowStrength = DoorGrab.m_DoorThrow;
@@ -278,12 +284,14 @@ public class DragRigidbodyUse : MonoBehaviour
 			{
 				controller.m_CanLook = false;
 				hinge = objectHeld.GetComponent<HingeJoint>();
+				cursor.AssignTarget(objectHeld.GetComponent<CursorConnectPoint>().connectPoint);
 				//controller.GetMouseLook().SetCursorLock(false);
 			}
 			else if (objectHeld.GetComponent<ConfigurableJoint>())
 			{
 				controller.m_CanLook = false;
 				configJoint = objectHeld.GetComponent<ConfigurableJoint>();
+				cursor.AssignTarget(objectHeld.GetComponent<CursorConnectPoint>().connectPoint);
 				//controller.GetMouseLook().SetCursorLock(false);
 			}
 			else if (neverPickedUpBefore)
@@ -322,7 +330,7 @@ public class DragRigidbodyUse : MonoBehaviour
 
 	private void RotateHinge()
     {
-		if (objectHeld.GetComponent<Lever>())
+		if (lever)
 		{
 			Vector3 center = Vector3.Scale(objectHeld.transform.position, objectHeld.GetComponent<Renderer>().bounds.center);
 			Vector3 jointBody = Vector3.Normalize(center - hinge.anchor);
@@ -350,7 +358,7 @@ public class DragRigidbodyUse : MonoBehaviour
         //	}
         //	objectHeld.GetComponent<Rigidbody>().velocity = (playerCam.transform.up + playerCam.transform.forward) * (dirMul * 1.0f) * Input.GetAxis("Mouse Y") + playerCam.transform.right * Input.GetAxis("Mouse X"); ;
         //}
-        else if (objectHeld.GetComponent<WheelCrank>())
+        else if (wheelCrank)
 		{
 			float dist = lastDist - objectHeld.GetComponent<WheelCrank>().rotatedAroundX;
 			Vector3 center = Vector3.Scale(objectHeld.transform.position, objectHeld.GetComponent<Renderer>().bounds.center);
@@ -363,29 +371,30 @@ public class DragRigidbodyUse : MonoBehaviour
             Vector3 right = Vector3.Normalize(playerCam.transform.right + rightAdd);
             Vector3 rotVelocity = (up) * Input.GetAxis("Mouse Y") + right * Input.GetAxis("Mouse X");
             Vector3 pushDir = Vector3.Cross(jointBody, rotVelocity);
-			//Debug.DrawRay(objectHeld.transform.position, upJointForward * distance, Color.green);
-			//Debug.DrawRay(objectHeld.transform.position, rightJointForward * distance, Color.red);
-			//Debug.DrawRay(objectHeld.transform.position, pushDir * distance, Color.blue);
-			//Debug.DrawRay(objectHeld.transform.position, rotVelocity * distance, Color.cyan);
-			//Debug.Log(dist);
-			// Currently blocks player because the crank drops for some reason
-			// Crank should hit max at opposite of rotation limit
-			//if (objectHeld.GetComponent<WheelCrank>().rotatedAroundX + (objectHeld.GetComponent<WheelCrank>().RotationCount * 360.0f) <=  -(objectHeld.GetComponent<WheelCrank>().RotationLimit * 360.0f)
-			//	&& lastDist < dist)
-			//{
-			//	objectHeld.GetComponent<Rigidbody>().velocity = Vector3.zero;
-			//}
-			//else if (objectHeld.GetComponent<WheelCrank>().rotatedAroundX + (objectHeld.GetComponent<WheelCrank>().RotationCount * 360.0f) >= (objectHeld.GetComponent<WheelCrank>().RotationLimit * 360.0f)
-			//	&& lastDist > dist)
-			//{
-			//	objectHeld.GetComponent<Rigidbody>().velocity = Vector3.zero;
-			
-			//}
-			//else
-			//{
-				objectHeld.GetComponent<Rigidbody>().velocity = rotVelocity;
-			//	lastDist = objectHeld.GetComponent<WheelCrank>().rotatedAroundX;
-			//}
+			Vector3 currentPos = objectHeld.transform.position;
+            //Debug.DrawRay(objectHeld.transform.position, upJointForward * distance, Color.green);
+            //Debug.DrawRay(objectHeld.transform.position, rightJointForward * distance, Color.red);
+            //Debug.DrawRay(objectHeld.transform.position, pushDir * distance, Color.blue);
+            //Debug.DrawRay(objectHeld.transform.position, rotVelocity * distance, Color.cyan);
+            //Debug.Log(dist);
+            // Currently blocks player because the crank drops for some reason
+            // Crank should hit max at opposite of rotation limit
+            if (wheelCrank.rotatedAroundX + (wheelCrank.RotationCount * 360.0f) <= -(wheelCrank.RotationLimit * 360.0f) + 20.0f
+                && lastDist < dist)
+            {
+				hinge.useLimits = true;
+			}
+            else if (wheelCrank.rotatedAroundX + (wheelCrank.RotationCount * 360.0f) >= (wheelCrank.RotationLimit * 360.0f)
+                && lastDist > dist)
+			{
+				hinge.useLimits = true;
+			}
+            else
+			{
+				hinge.useLimits = false;
+			}
+			objectHeld.GetComponent<Rigidbody>().velocity = rotVelocity;
+			lastDist = wheelCrank.rotatedAroundX;
 		}
         else if (hinge.axis.y == 1)
 		{
@@ -433,12 +442,22 @@ public class DragRigidbodyUse : MonoBehaviour
 		{
 			controller.m_CanLook = true;
 			controller.GetMouseLook().SetCursorLock(true);
+			if (wheelCrank)
+            {
+				objectHeld.GetComponent<Rigidbody>().velocity = Vector3.zero;
+				wheelCrank = null;
+			}
+			else if (lever)
+            {
+				lever = null;
+            }
 		}
 		tryPickupObject = false;
-        objectHeld.GetComponent<Rigidbody>().useGravity = true;
+        //objectHeld.GetComponent<Rigidbody>().useGravity = true;
         objectHeld.GetComponent<Rigidbody>().freezeRotation = false;
 		objectHeld = null;
 		GetComponent<FirstPersonController>().m_CanLook = true;
+		cursor.AssignTarget(null);
 		DynamicCursor.ChangeCursor_Static(CursorType.Target);
 		DynamicCursor.HideCursor_Static();
 		PlayerInteraction.UnlockInteraction();
@@ -453,9 +472,19 @@ public class DragRigidbodyUse : MonoBehaviour
 			Destroy(dragPoint);
 			dragPoint = null;
 			controller.GetMouseLook().SetCursorLock(true);
+			if (wheelCrank)
+			{
+				objectHeld.GetComponent<Rigidbody>().velocity = Vector3.zero;
+				wheelCrank = null;
+			}
+			else if (lever)
+			{
+				lever = null;
+			}
 		}
 		objectHeld.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * ThrowStrength, ForceMode.Impulse);
         objectHeld.GetComponent<Rigidbody>().freezeRotation = false;
+		cursor.AssignTarget(null);
 		objectHeld = null;
 		GetComponent<FirstPersonController>().m_CanLook = true;
 		DynamicCursor.ChangeCursor_Static(CursorType.Target);

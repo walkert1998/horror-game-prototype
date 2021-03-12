@@ -61,7 +61,7 @@ public class WheelCrank : MonoBehaviour
         if (RotationCount >= RotationLimit)
         {
             OnMaxRotation?.Invoke();
-            RotationCount = 0;
+            RotationCount = RotationLimit;
         }
     }
 }
