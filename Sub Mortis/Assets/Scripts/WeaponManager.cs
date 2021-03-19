@@ -61,7 +61,7 @@ public class WeaponManager : MonoSOObserver
             //weapon_ammo_display.GetComponent<Text>().text = weapons[index].GetComponent<RangedWeapon>().curr + "/" + weapons[index].GetComponent<RangedWeapon>().reserve_ammo;
         }
 
-        if (!InventoryManager.IsInventoryOpen_Static() && !PlayerInteraction.interactionBlocked)
+        if (!InventoryManager.IsInventoryOpen_Static() && controller.m_CanMove && controller.m_CanLook)
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0)
             {
@@ -303,7 +303,10 @@ public class WeaponManager : MonoSOObserver
             currentAmmo--;
             currentWeapon.currentAmmo--;
             //source.PlayOneShot(currentWeapon.gunshotSound);
-            currentModel.GetComponent<Animator>().Play("Shoot");
+            if (currentModel.GetComponent<Animator>())
+            {
+                currentModel.GetComponent<Animator>().Play("Shoot");
+            }
             RaycastHit shot;
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out shot, 100, excluded))
             {
@@ -389,11 +392,15 @@ public class WeaponManager : MonoSOObserver
             //currentAmmo = Mathf.Clamp(currentWeapon.clipSize - currentAmmo, 0, ammoReserve);
             Debug.Log(currentWeapon.currentAmmo);
         }
-        else
+        else if (currentWeapon.canBeReloaded)
         {
             ammoReserve = 0;
             currentAmmo = 0;
             Debug.Log("Ammo Type could not be found");
+        }
+        else
+        {
+            currentAmmo = currentWeapon.currentAmmo;
         }
     }
 
@@ -461,6 +468,20 @@ public class WeaponManager : MonoSOObserver
         GameObject.Destroy(currentModel);
         currentModel = Instantiate(currentWeapon.gameModel, weapon_controller.transform);
         currentModel.transform.localPosition = new Vector3(0,0,0);
+        DynamicCursor.ChangeCursor_Static(CursorType.Target);
+        if (!InventoryManager.IsInventoryOpen_Static() && currentWeapon.twoHanded)
+        {
+            InventoryManager.HidePhone_Static();
+            InventoryManager.BlockPhone_static();
+            PlayerInteraction.LockInteraction();
+        }
+        holstered = false;
+    }
+
+    public void HideWeapon()
+    {
+        currentModel.SetActive(false);
+        //currentModel.transform.localPosition = new Vector3(0, 0, 0);
         holstered = false;
     }
 
@@ -468,12 +489,21 @@ public class WeaponManager : MonoSOObserver
     {
         currentWeapon = newWeapon as RangedWeapon;
         InitializeAmmo();
-        DisplayWeapon();
+        PlayerInteraction.LockInteraction();
+        if (!InventoryManager.IsInventoryOpen_Static() && currentWeapon.twoHanded)
+        {
+            DisplayWeapon();
+        }
         //ammoReserve = currentWeapon.currentAmmo;
     }
 
     public void UnEquipItem()
     {
+        if (currentWeapon.twoHanded)
+        {
+            InventoryManager.ShowPhone_Static();
+            InventoryManager.UnblockPhone_static();
+        }
         currentWeapon = null;
         currentItem = null;
         holstered = true;
@@ -482,6 +512,10 @@ public class WeaponManager : MonoSOObserver
         {
             Destroy(currentModel);
             currentModel = null;
+        }
+        if (!InventoryManager.IsInventoryOpen_Static())
+        {
+            PlayerInteraction.UnlockInteraction();
         }
     }
 
@@ -619,6 +653,11 @@ public class WeaponManager : MonoSOObserver
     {
         currentItem = null;
         currentWeapon = null;
+        if (currentWeapon.twoHanded)
+        {
+            InventoryManager.ShowPhone_Static();
+            InventoryManager.UnblockPhone_static();
+        }
         //ToggleHighlightCursor(false);
     }
 
@@ -628,6 +667,12 @@ public class WeaponManager : MonoSOObserver
         if (currentItem is RangedWeapon)
         {
             currentWeapon = currentItem as RangedWeapon;
+            if (currentWeapon.twoHanded)
+            {
+                InventoryManager.HidePhone_Static();
+                InventoryManager.BlockPhone_static();
+                PlayerInteraction.LockInteraction();
+            }
         }
         else
         {

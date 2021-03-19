@@ -22,6 +22,8 @@ public class Health : MonoBehaviour
     //GameSettings gameSettings;
     public GameObject bloodSpawner;
     public GameObject bloodPool;
+    public GameObject deathScreen;
+    Coroutine runningRoutine;
     // Start is called before the first frame update
     void Start()
     {
@@ -65,16 +67,25 @@ public class Health : MonoBehaviour
     public void DamageCharacter(int Amount)
     {
         if (currentHealth - Amount > 0)
+        {
             currentHealth -= Amount;
+            if (hitScreen != null)
+            {
+                hitScreen.TookDamage();
+            }
+        }
         else
+        {
             currentHealth = 0;
-        Debug.Log("Character received " + Amount + " damage");
+            if (hitScreen && runningRoutine == null)
+            {
+                hitScreen.TookDamage();
+                runningRoutine = StartCoroutine(Die());
+            }
+        }
+        //Debug.Log("Character received " + Amount + " damage");
         //if (gameSettings.GetInteractionPrompts())
         //healthBar.value = currentHealth;
-        if (hitScreen != null)
-        {
-            hitScreen.TookDamage();
-        }
     }
 
     public void HealCharacter(int Amount)
@@ -134,5 +145,18 @@ public class Health : MonoBehaviour
         //barImage.color = Color.red;
         bleedAmount = amount;
         bleedTime = Time.time + 3.0f;
+    }
+
+    IEnumerator Die()
+    {
+        PlayerInteraction.LockInteraction();
+        TransitionScreen.LockPlayer_Static();
+        TransitionScreen.HideUIElements_Static();
+        TransitionScreen.FadeOut_Static(2.0f);
+        yield return new WaitForSeconds(2.0f);
+        //Time.timeScale = 0;
+        DynamicCursor.ChangeCursor_Static(CursorType.None);
+        GetComponent<FirstPersonController>().GetMouseLook().SetCursorLock(false);
+        deathScreen.SetActive(true);
     }
 }

@@ -31,7 +31,7 @@ public class Leaning : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Q) && !PlayerInteraction.interactionBlocked)
+        if (Input.GetKey(KeyCode.Q) && controller.m_CanMove && controller.m_CanLook)
         {
             leaningLeft = true;
             leaningRight = false;
@@ -41,7 +41,7 @@ public class Leaning : MonoBehaviour
             leaningLeft = false;
         }
 
-        if (Input.GetKey(KeyCode.E) && !PlayerInteraction.interactionBlocked)
+        if (Input.GetKey(KeyCode.E) && controller.m_CanMove && controller.m_CanLook)
         {
             leaningRight = true;
             leaningLeft = false;

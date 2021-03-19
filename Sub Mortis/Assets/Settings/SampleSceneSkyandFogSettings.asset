@@ -200,7 +200,7 @@ MonoBehaviour:
     m_Value: 0
   exposure:
     m_OverrideState: 1
-    m_Value: 8
+    m_Value: 2
   multiplier:
     m_OverrideState: 1
     m_Value: 1
@@ -330,10 +330,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953beb541740ddc499d005ee80c9ff29, type: 3}
   m_Name: Fog
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   enabled:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   colorMode:
     m_OverrideState: 1
@@ -352,7 +352,7 @@ MonoBehaviour:
     showEyeDropper: 1
   maxFogDistance:
     m_OverrideState: 1
-    m_Value: 5000
+    m_Value: 300
     min: 0
   mipFogMaxMip:
     m_OverrideState: 1

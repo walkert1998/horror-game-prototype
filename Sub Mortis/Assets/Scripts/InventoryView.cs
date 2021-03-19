@@ -221,7 +221,7 @@ public class InventoryView : MonoSOObserver
                                 Notify();
                             }
                         );
-                        if (weapon.currentAmmo > 0)
+                        if (weapon.currentAmmo > 0 && weapon.canBeReloaded)
                         {
                             buttons[1].onClick.AddListener(
                                 () =>
@@ -608,7 +608,14 @@ public class InventoryView : MonoSOObserver
         {
             RepositionMovingObject();
         }
-        if (weaponManager.currentItem != null && weaponManager.currentWeapon == null)
+        if (weaponManager.currentWeapon != null && weaponManager.currentWeapon.twoHanded)
+        {
+            weaponManager.DisplayWeapon();
+            InventoryManager.HidePhone_Static();
+            InventoryManager.BlockPhone_static();
+            PlayerInteraction.LockInteraction();
+        }
+        else if (weaponManager.currentItem != null)
         {
             weaponManager.equippedItemCursor.gameObject.SetActive(true);
         }
@@ -616,7 +623,11 @@ public class InventoryView : MonoSOObserver
 
     public void OpenView()
     {
-        if (weaponManager.currentItem != null && weaponManager.currentWeapon == null)
+        if (weaponManager.currentWeapon != null && weaponManager.currentWeapon.twoHanded)
+        {
+            weaponManager.HideWeapon();
+        }
+        else if (weaponManager.currentItem != null)
         {
             weaponManager.equippedItemCursor.gameObject.SetActive(false);
         }

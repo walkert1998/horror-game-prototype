@@ -14,6 +14,7 @@ public class TransitionScreen : MonoBehaviour
     Color visible;
     public FirstPersonController controller;
     public List<GameObject> uiElements;
+    public float timetoFade = 3.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,11 +29,11 @@ public class TransitionScreen : MonoBehaviour
     {
         if (fadingOut && screen.color.a < 1)
         {
-            instance.screen.color = Color.Lerp(screen.color, visible, 3 * Time.deltaTime);
+            instance.screen.color = Color.Lerp(screen.color, visible, timetoFade * Time.deltaTime);
         }
         else if (fadingIn && screen.color.a > 0)
         {
-            instance.screen.color = Color.Lerp(screen.color, invisible, 3 * Time.deltaTime);
+            instance.screen.color = Color.Lerp(screen.color, invisible, timetoFade * Time.deltaTime);
         }
     }
 
@@ -64,24 +65,26 @@ public class TransitionScreen : MonoBehaviour
         controller.m_CanLook = true;
     }
 
-    public void FadeOut()
+    public void FadeOut(float time = 3.0f)
     {
         fadingOut = true;
         fadingIn = false;
+        timetoFade = time;
     }
 
-    public void FadeIn()
+    public void FadeIn(float time = 3.0f)
     {
         fadingOut = false;
         fadingIn = true;
+        timetoFade = time;
     }
 
-    public static void FadeOut_Static()
+    public static void FadeOut_Static(float time = 3.0f)
     {
         instance.FadeOut();
     }
 
-    public static void FadeIn_Static()
+    public static void FadeIn_Static(float time = 3.0f)
     {
         instance.FadeIn();
     }

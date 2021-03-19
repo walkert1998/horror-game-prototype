@@ -88,6 +88,18 @@ public class InventoryManager : MonoBehaviour
         phoneBlocked = false;
     }
 
+    private void HidePhone()
+    {
+        phone.GetComponent<Phone>().UnFocus();
+        phone.SetActive(false);
+        Debug.Log("Hiding phone");
+    }
+
+    private void ShowPhone()
+    {
+        phone.gameObject.SetActive(true);
+    }
+
     public static void BlockPhone_static()
     {
         instance.BlockPhone();
@@ -121,5 +133,15 @@ public class InventoryManager : MonoBehaviour
     public static void ActivatePhone_Static()
     {
         instance.ActivatePhone();
+    }
+
+    public static void HidePhone_Static()
+    {
+        instance.HidePhone();
+    }
+
+    public static void ShowPhone_Static()
+    {
+        instance.ShowPhone();
     }
 }

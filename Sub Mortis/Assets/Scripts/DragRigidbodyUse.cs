@@ -81,10 +81,10 @@ public class DragRigidbodyUse : MonoBehaviour
 
 	public CursorFollowObject cursor;
 
-	HingeJoint hinge;
-	ConfigurableJoint configJoint;
-	WheelCrank wheelCrank;
-	Lever lever;
+	public HingeJoint hinge;
+	public ConfigurableJoint configJoint;
+	public WheelCrank wheelCrank;
+	public Lever lever;
 
 	Vector3 originalScreenTargetPosition;
 	Vector3 originalRigidbodyPos;
@@ -379,7 +379,7 @@ public class DragRigidbodyUse : MonoBehaviour
             //Debug.Log(dist);
             // Currently blocks player because the crank drops for some reason
             // Crank should hit max at opposite of rotation limit
-            if (wheelCrank.rotatedAroundX + (wheelCrank.RotationCount * 360.0f) <= -(wheelCrank.RotationLimit * 360.0f) + 20.0f
+            if (wheelCrank.rotatedAroundX + (wheelCrank.RotationCount * 360.0f) <= -(wheelCrank.RotationLimit * 360.0f) - 20.0f
                 && lastDist < dist)
             {
 				hinge.useLimits = true;
@@ -438,23 +438,28 @@ public class DragRigidbodyUse : MonoBehaviour
 	private void DropObject()
 	{
 		isObjectHeld = false;
+		tryPickupObject = false;
+		if (!wheelCrank)
+		{
+			objectHeld.GetComponent<Rigidbody>().useGravity = true;
+		}
+        objectHeld.GetComponent<Rigidbody>().freezeRotation = false;
 		if (objectHeld.GetComponent<HingeJoint>() || objectHeld.GetComponent<ConfigurableJoint>())
 		{
 			controller.m_CanLook = true;
 			controller.GetMouseLook().SetCursorLock(true);
+			hinge = null;
+			configJoint = null;
 			if (wheelCrank)
-            {
+			{
 				objectHeld.GetComponent<Rigidbody>().velocity = Vector3.zero;
 				wheelCrank = null;
 			}
 			else if (lever)
-            {
+			{
 				lever = null;
-            }
+			}
 		}
-		tryPickupObject = false;
-        //objectHeld.GetComponent<Rigidbody>().useGravity = true;
-        objectHeld.GetComponent<Rigidbody>().freezeRotation = false;
 		objectHeld = null;
 		GetComponent<FirstPersonController>().m_CanLook = true;
 		cursor.AssignTarget(null);
@@ -466,11 +471,17 @@ public class DragRigidbodyUse : MonoBehaviour
 	private void ThrowObject()
 	{
 		isObjectHeld = false;
+		if (!wheelCrank)
+		{
+			objectHeld.GetComponent<Rigidbody>().useGravity = true;
+		}
 		if (objectHeld.GetComponent<HingeJoint>() || objectHeld.GetComponent<ConfigurableJoint>())
 		{
 			controller.m_CanLook = true;
 			Destroy(dragPoint);
 			dragPoint = null;
+			hinge = null;
+			configJoint = null;
 			controller.GetMouseLook().SetCursorLock(true);
 			if (wheelCrank)
 			{

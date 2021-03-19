@@ -10,6 +10,7 @@ public class Crouch : MonoBehaviour
     public bool crouched;
     Coroutine runningRoutine;
     CharacterController m_CharacterController;
+    FirstPersonController controller;
     public Transform playerCam;
     public Camera lightCamera;
     public Transform playerLightObject;
@@ -25,6 +26,7 @@ public class Crouch : MonoBehaviour
     {
         crouched = false;
         m_CharacterController = GetComponent<CharacterController>();
+        controller = GetComponent<FirstPersonController>();
         originalHeight = m_CharacterController.height;
         originalCamPosition = playerCam.localPosition;
         originalLightObjHeight = playerLightObject.localScale.y;
@@ -34,7 +36,7 @@ public class Crouch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(crouchKey) && !PlayerInteraction.interactionBlocked)
+        if (Input.GetKeyDown(crouchKey) && controller.m_CanMove)
         {
             if (crouched)
             {

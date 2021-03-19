@@ -56,7 +56,6 @@ public class Examination : MonoBehaviour
         examineText.text = text;
         yield return new WaitForSeconds(seconds);
         examineText.text = "";
-        neverExaminedBefore = false;
     }
 
     private IEnumerator DisplayTextUntilClick(string text)

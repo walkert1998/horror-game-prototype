@@ -29,6 +29,7 @@ public class RangedWeapon : Item
     public int ammoReserve;
     public List<Ammo> ammoTypes;
     public Ammo loadedAmmoType;
+    public bool canBeReloaded = true;
     [Header("Weapon Modifications")]
     public List<WeaponModification> availableModifications;
     public List<WeaponModification> installedModifications;
@@ -36,6 +37,7 @@ public class RangedWeapon : Item
     //protected FirstPersonController controller;
     //MuzzleFlash muzzleFlash;
     [Header("Weapon Model")]
+    public bool twoHanded = false;
     public GameObject gameModel;
     public Animator animator;
     public Vector3 aimPosition;

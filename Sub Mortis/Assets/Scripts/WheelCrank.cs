@@ -10,9 +10,13 @@ public class WheelCrank : MonoBehaviour
 
     public float rotatedAroundX;
 
+    bool minInvoked = false;
+    bool maxInvoked = false;
+
     public Vector3 lastUp;
 
-    public UnityEvent OnMaxRotation;
+    public UnityEvent onMaxRotation;
+    public UnityEvent onMinRotation;
 
     public AudioClip rotateSound;
 
@@ -58,10 +62,21 @@ public class WheelCrank : MonoBehaviour
 
 
         // check for fire the event
-        if (RotationCount >= RotationLimit)
+        if (RotationCount >= RotationLimit && !maxInvoked)
         {
-            OnMaxRotation?.Invoke();
+            onMaxRotation?.Invoke();
+            maxInvoked = true;
+            minInvoked = false;
             RotationCount = RotationLimit;
+        }
+
+        // check for fire the event
+        if (RotationCount <= -RotationLimit && !minInvoked)
+        {
+            onMinRotation?.Invoke();
+            minInvoked = true;
+            maxInvoked = false;
+            RotationCount = -RotationLimit;
         }
     }
 }

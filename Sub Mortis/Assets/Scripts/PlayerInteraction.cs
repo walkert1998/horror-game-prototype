@@ -430,6 +430,6 @@ public class PlayerInteraction : MonoBehaviour {
     public static void UnlockInteraction()
     {
         interactionBlocked = false;
-        //Debug.Log("Unlocking " + interactionBlocked);
+        Debug.Log("Unlocking interaction");
     }
 }
