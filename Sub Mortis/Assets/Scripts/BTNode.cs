@@ -14,6 +14,11 @@ public abstract class BTNode
         }
     }
     public abstract NodeState Evaluate();
+
+    public virtual void Reset()
+    {
+        _nodeState = NodeState.RUNNING;
+    }
 }
 
 public enum NodeState

@@ -134,6 +134,15 @@ public class InventoryView : MonoSOObserver
             Text quantityText = itemView.transform.Find("QuantityText").GetComponent<Text>();
             quantityText.text = "x" + storedItem.quantity;
         }
+        if (item is RangedWeapon)
+        {
+            RangedWeapon wep = item as RangedWeapon;
+            if (!wep.canBeReloaded)
+            {
+                Text ammoText = itemView.transform.Find("QuantityText").GetComponent<Text>();
+                ammoText.text = wep.currentAmmo + "%";
+            }
+        }
         Image img = itemView.GetComponent<Image>();
         if (storedItem.orientation.Equals(ItemOrientation.Horizontal))
         {

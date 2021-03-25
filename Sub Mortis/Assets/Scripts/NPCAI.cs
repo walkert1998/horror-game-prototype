@@ -14,9 +14,11 @@ public class NPCAI : MonoBehaviour
     public NodeSequence patrolSequence;
     public NodeSequence reloadSequence;
     public NodeSelector topNode;
+    public NodeRepeater baseRepeat;
     public Transform currentTarget;
     public Transform patrolTarget;
     public Vector3 lastKnownPosition;
+    public Vector3 targetDestination;
     public float attackRange;
     public int visionAngle;
     public Transform visionTransform;
@@ -34,8 +36,10 @@ public class NPCAI : MonoBehaviour
     public AudioSource source;
     public float visionDistance;
     public bool targetInSight = false;
+    public bool waiting = false;
     public GameObject head;
     public GameObject spine;
+    public int patrolNum;
 
     [Header("Vocal Quips")]
     public NPCQuip npcQuip;
@@ -60,62 +64,47 @@ public class NPCAI : MonoBehaviour
         //    new RangeAttackTask(this)
         //});
         //patrol = new PatrolTask(this, patrolPoints, 0);
+        patrolNum = 0;
         source = GetComponent<AudioSource>();
-        findPoint = new FindNextPointTask(patrolPoints, this);
-        checkForEnemies = new CheckForEnemiesTask(this);
-        rangeAttack = new RangeAttackTask(this);
-        chaseTask = new ChaseTask(this);
-        findCover = new FindCoverTask(this);
-        getLineOfSight = new GetLineOfSightTask(this);
-        reloadWeapon = new ReloadWeaponTask(this);
-        reloadSequence = new NodeSequence(new List<BTNode> { reloadWeapon });
-        attackSequence = new NodeSequence(new List<BTNode> { checkForEnemies, getLineOfSight, rangeAttack });
         if (patrolPoints.Count > 0)
         {
-            patrolTarget = patrolPoints[0];
+            targetDestination = patrolPoints[0].position;
         }
-        //currentTarget = patrolPoints[0];
-        //findPoint.Evaluate();
-        //move = new MoveToTargetTask(this, agent.transform, currentTarget, 1.0f);
-
-        patrolSequence = new NodeSequence(new List<BTNode> { findPoint, new MoveToTargetTask(this, agent.transform, patrolTarget, 1), checkForEnemies });
-        //foreach(BTNode node in patrolSequence.nodes)
-        //{
-        //    Debug.Log(node.ToString());
-        //}
-        topNode = new NodeSelector(new List<BTNode> { patrolSequence, attackSequence, reloadSequence });
+        patrolSequence = new NodeSequence(new List<BTNode> { new FindNextPointTask(patrolPoints, this), new WaitForTimeTask(this, 3.0f),  new MoveToTargetTask(this, agent.stoppingDistance) });
+        topNode = new NodeSelector(new List<BTNode> { patrolSequence });
+        baseRepeat = new NodeRepeater(-1, topNode);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (npcHealth.currentHealth > 0)
-        {
+        //if (npcHealth.currentHealth > 0)
+        //{
             NodeState state = topNode.Evaluate();
-            Debug.Log(agent.destination);
-        }
+            Debug.Log(topNode);
+        //}
         //Debug.Log(state);
         //if (Input.GetKeyDown(KeyCode.O))
         //{
         //    KnockOver();
         //}
-        if (npcHealth.currentHealth <= 0 && agent.enabled)
-        {
-            KnockOver();
-            //source.PlayOneShot(deathQuip);
-            npcQuip.Quip(deathQuip, true);
-            colliders.DisableDamageSensors();
-            this.enabled = false;
-        }
+        //if (npcHealth.currentHealth <= 0 && agent.enabled)
+        //{
+        //    KnockOver();
+        //    //source.PlayOneShot(deathQuip);
+        //    npcQuip.Quip(deathQuip, true);
+        //    colliders.DisableDamageSensors();
+        //    this.enabled = false;
+        //}
     }
 
-    private void LateUpdate()
-    {
-        if (targetInSight)
-        {
-            spine.transform.LookAt(currentTarget);
-        }
-    }
+    //private void LateUpdate()
+    //{
+    //    if (targetInSight)
+    //    {
+    //        spine.transform.LookAt(currentTarget);
+    //    }
+    //}
 
     public List<BTNode> ConstructPatrolSequence()
     {
@@ -123,7 +112,8 @@ public class NPCAI : MonoBehaviour
         Transform previousPoint = patrolPoints[patrolPoints.Count - 1];
         foreach(Transform point in patrolPoints)
         {
-            //patrolNodes.Add(new MoveToTargetTask(this, transform, point, 1.5f));
+            //patrolNodes.Add(new MoveToTargetTask(this, transform, point.position, agent.stoppingDistance));
+            //patrolNodes.Add(new WaitForTimeTask(3.0f));
             previousPoint = point;
         }
         return patrolNodes;

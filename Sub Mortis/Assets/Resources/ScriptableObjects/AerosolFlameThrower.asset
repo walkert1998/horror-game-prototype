@@ -15,7 +15,7 @@ MonoBehaviour:
   itemType: 0
   itemName: Aerosol Flamethrower
   description: An aerosol can, I could combine this with my lighter.
-  horizontalIcon: {fileID: 0}
+  horizontalIcon: {fileID: 21300000, guid: eb5f6e2757c821940b69cf1456f7865a, type: 3}
   verticalIcon: {fileID: 0}
   img: {fileID: 0}
   size:
@@ -28,8 +28,8 @@ MonoBehaviour:
   onUseSound: {fileID: 0}
   damage: 10
   reloadTime: 0
-  timeBetweenShots: 0.2
-  nextShotTime: 16.91412
+  timeBetweenShots: 0.1
+  nextShotTime: 0
   recoil: 0
   base_recoil: 0
   recoil_x: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
   aiming: 0
   running: 0
   clipSize: 100
-  currentAmmo: 0
+  currentAmmo: 100
   ammoReserve: 0
   ammoTypes:
   - {fileID: 11400000, guid: 4deb742c0f15b7e45bf6c14f96920d93, type: 2}
@@ -49,10 +49,12 @@ MonoBehaviour:
   availableModifications: []
   installedModifications: []
   twoHanded: 1
-  gameModel: {fileID: 826504616959196924, guid: b1078da4f9d668e44b6fe09c0a23bedc, type: 3}
+  gameModel: {fileID: 5401733419537137999, guid: 29a93c34ae53cfd4991c5d10fe2f54d8, type: 3}
   animator: {fileID: 0}
   aimPosition: {x: 0, y: -0.1185, z: 0.1433}
+  effectLightPath: Armature/Home/Right_Shoulder/Right_Elbow/Right_Wrist_Start/Right_Wrist_End/AerosolCan/EffectLight
   playerInventory: {fileID: 11400000, guid: 478f58c53971cab41b795dcb1b5d9ab3, type: 2}
+  streamWeapon: 1
   gunshotSound: {fileID: 0}
   unSilencedSound: {fileID: 0}
   silencedSound: {fileID: 0}

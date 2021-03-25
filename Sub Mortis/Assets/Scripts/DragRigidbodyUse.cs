@@ -68,6 +68,8 @@ public class DragRigidbodyUse : MonoBehaviour
 	private float distance = 3f;
 	private float maxDistanceGrab = 4f;
 
+	public float maxSpeed = 3.0f;
+
 	private Ray playerAim;
 	private GameObject objectHeld;
 	public bool isObjectHeld;
@@ -325,8 +327,10 @@ public class DragRigidbodyUse : MonoBehaviour
 	private void SlideObject()
     {
 		Vector3 mouseCamDir = playerCam.transform.up * Input.GetAxis("Mouse Y") + playerCam.transform.right * Input.GetAxis("Mouse X");
-		objectHeld.GetComponent<Rigidbody>().velocity = mouseCamDir;
-	}
+		mouseCamDir = Vector3.ClampMagnitude(mouseCamDir, maxSpeed);
+        objectHeld.GetComponent<Rigidbody>().velocity = mouseCamDir;
+        //objectHeld.GetComponent<Rigidbody>().AddForce(mouseCamDir, ForceMode.Force);
+    }
 
 	private void RotateHinge()
     {
@@ -346,7 +350,9 @@ public class DragRigidbodyUse : MonoBehaviour
 			Debug.DrawRay(objectHeld.transform.position, rightJointForward * distance, Color.red);
 			Debug.DrawRay(objectHeld.transform.position, pushDir * distance, Color.blue);
 			Debug.DrawRay(objectHeld.transform.position, rotVelocity * distance, Color.cyan);
-			objectHeld.GetComponent<Rigidbody>().velocity = rotVelocity;
+			rotVelocity = Vector3.ClampMagnitude(rotVelocity, maxSpeed);
+            objectHeld.GetComponent<Rigidbody>().velocity = rotVelocity;
+            //objectHeld.GetComponent<Rigidbody>().AddForce(rotVelocity);
 			//objectHeld.GetComponent<Rigidbody>().velocity.Set(Vector3.Dot(pushDir, objectHeld.GetComponent<HingeJoint>().axis), Vector3.Dot(pushDir, objectHeld.GetComponent<HingeJoint>().axis), Vector3.Dot(pushDir, objectHeld.GetComponent<HingeJoint>().axis));
 		}
         //else if (true)
@@ -393,13 +399,18 @@ public class DragRigidbodyUse : MonoBehaviour
 			{
 				hinge.useLimits = false;
 			}
-			objectHeld.GetComponent<Rigidbody>().velocity = rotVelocity;
+			rotVelocity = Vector3.ClampMagnitude(rotVelocity, maxSpeed);
+            objectHeld.GetComponent<Rigidbody>().velocity = rotVelocity;
+            //objectHeld.GetComponent<Rigidbody>().AddForce(rotVelocity, ForceMode.VelocityChange);
 			lastDist = wheelCrank.rotatedAroundX;
 		}
-        else if (hinge.axis.y == 1)
+        else
 		{
-			objectHeld.GetComponent<Rigidbody>().velocity = (playerCam.transform.up + playerCam.transform.forward) * Input.GetAxis("Mouse Y") + playerCam.transform.right * Input.GetAxis("Mouse X");
-            
+			Vector3 rotationVel = (playerCam.transform.up + playerCam.transform.forward) * Input.GetAxis("Mouse Y") + playerCam.transform.right * Input.GetAxis("Mouse X");
+			rotationVel = Vector3.ClampMagnitude(rotationVel, maxSpeed);
+            objectHeld.GetComponent<Rigidbody>().velocity = rotationVel;
+            //objectHeld.GetComponent<Rigidbody>().AddForce(rotationVel, ForceMode.VelocityChange);
+
         }
     }
 

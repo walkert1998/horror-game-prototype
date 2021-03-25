@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.VFX;
 using UnityStandardAssets.Characters.FirstPerson;
 
 public class WeaponManager : MonoSOObserver
@@ -21,6 +23,7 @@ public class WeaponManager : MonoSOObserver
     public RangedWeapon currentWeapon;
     public Item currentItem;
     private bool reloading;
+    public bool effectPlaying = false;
     public int ammoReserve;
     public int currentAmmo;
     public Inventory playerInventory;
@@ -36,6 +39,9 @@ public class WeaponManager : MonoSOObserver
     //BackPack backPack;
     FirstPersonController controller;
     public AudioSource source;
+    public VisualEffect visualEffectSpawner;
+    public Light effectLight;
+    public TMP_Text ammoDisplay;
 
     // Use this for initialization
     void Start()
@@ -124,10 +130,35 @@ public class WeaponManager : MonoSOObserver
             if (!holstered && currentWeapon != null)
             {
                 currentWeapon.nextShotTime += Time.deltaTime;
-                if (Input.GetButton("Fire1") && currentWeapon.nextShotTime >= currentWeapon.timeBetweenShots)
+                if (currentWeapon.streamWeapon)
                 {
-                    Fire();
-                    currentWeapon.nextShotTime = 0;
+                    if (Input.GetButtonDown("Fire1"))
+                    {
+                        Debug.Log("Starting flamethrower");
+                        visualEffectSpawner.Play();
+                        effectLight.enabled = true;
+                        effectPlaying = true;
+                    }
+                    if (Input.GetButton("Fire1") && currentWeapon.nextShotTime >= currentWeapon.timeBetweenShots)
+                    {
+                        FireStream();
+                        currentWeapon.nextShotTime = 0;
+                    }
+                    if (Input.GetButtonUp("Fire1"))
+                    {
+                        Debug.Log("Stopping flamethrower");
+                        visualEffectSpawner.Stop();
+                        effectLight.enabled = false;
+                        effectPlaying = false;
+                    }
+                }
+                else
+                {
+                    if (Input.GetButton("Fire1") && currentWeapon.nextShotTime >= currentWeapon.timeBetweenShots)
+                    {
+                        Fire();
+                        currentWeapon.nextShotTime = 0;
+                    }
                 }
                 if (Input.GetButtonDown("Reload") && currentWeapon.currentAmmo < currentWeapon.clipSize)
                 {
@@ -296,6 +327,49 @@ public class WeaponManager : MonoSOObserver
         }
     }
 
+    public void FireStream()
+    {
+        if (currentWeapon.currentAmmo > 0)
+        {
+            effectPlaying = true;
+            currentAmmo--;
+            currentWeapon.currentAmmo--;
+            ammoDisplay.text = currentAmmo.ToString();
+            //source.PlayOneShot(currentWeapon.gunshotSound);
+            //if (currentModel.GetComponent<Animator>())
+            //{
+            //    currentModel.GetComponent<Animator>().Play("Shoot");
+            //}
+            RaycastHit shot;
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out shot, 100, excluded))
+            {
+                shot.transform.SendMessage("DamageCharacter", currentWeapon.loadedAmmoType.damage, SendMessageOptions.DontRequireReceiver);
+                shot.transform.SendMessage("HiddenShot", controller.transform, SendMessageOptions.DontRequireReceiver);
+                Debug.Log(shot.transform.gameObject);
+                //if (currentWeapon.loadedAmmoType.ammoEffect == AmmoEffect.Fire)
+                //{
+                //    shot.transform.gameObject.AddComponent<Fire>();
+                //}
+                /*
+                GameObject.Find("Bigfoot").transform.SendMessage("HiddenShot", transform.position, SendMessageOptions.DontRequireReceiver);
+                if (shot.transform.tag == "Metal")
+                    Instantiate(metalBulletImpact, new Vector3(shot.point.x + 0.01f, shot.point.y + 0.01f, shot.point.z + 0.01f), Quaternion.FromToRotation(Vector3.up, shot.normal));
+                else if (shot.transform.tag == "Wood")
+                    Instantiate(woodBulletImpact, new Vector3(shot.point.x + 0.01f, shot.point.y + 0.01f, shot.point.z + 0.01f), Quaternion.FromToRotation(Vector3.up, shot.normal));
+                else if (shot.transform.gameObject.GetComponent<EnemyController>())
+                    Instantiate(bloodBulletImpact, new Vector3(shot.point.x + 0.01f, shot.point.y + 0.01f, shot.point.z + 0.01f), Quaternion.FromToRotation(Vector3.up, shot.normal));
+                    */
+                //Destroy(shot.transform.gameObject, 50f);
+            }
+            //controller.GetMouseLook().Recoil(currentWeapon.recoil);
+        }
+        else
+        {
+            visualEffectSpawner.Stop();
+            effectLight.enabled = false;
+        }
+    }
+
     public void Fire()
     {
         if (currentWeapon.currentAmmo > 0)
@@ -363,6 +437,7 @@ public class WeaponManager : MonoSOObserver
             //currentAmmo = Mathf.Clamp(currentWeapon.clipSize - currentAmmo, 0, ammoReserve);
             Debug.Log(currentWeapon.currentAmmo);
         }
+        ammoDisplay.text = currentWeapon.currentAmmo.ToString();
         reloading = false;
     }
 
@@ -402,6 +477,7 @@ public class WeaponManager : MonoSOObserver
         {
             currentAmmo = currentWeapon.currentAmmo;
         }
+        ammoDisplay.text = currentWeapon.currentAmmo.ToString();
     }
 
     public void CheckAmmo()
@@ -469,18 +545,28 @@ public class WeaponManager : MonoSOObserver
         currentModel = Instantiate(currentWeapon.gameModel, weapon_controller.transform);
         currentModel.transform.localPosition = new Vector3(0,0,0);
         DynamicCursor.ChangeCursor_Static(CursorType.Target);
+        if (currentWeapon.streamWeapon)
+        {
+            visualEffectSpawner = currentModel.GetComponentInChildren<VisualEffect>();
+            effectLight = currentModel.transform.Find(currentWeapon.effectLightPath).GetComponent<Light>();
+            Debug.Log("Stopping flamethrower");
+            visualEffectSpawner.Stop();
+            effectLight.enabled = false;
+        }
         if (!InventoryManager.IsInventoryOpen_Static() && currentWeapon.twoHanded)
         {
             InventoryManager.HidePhone_Static();
             InventoryManager.BlockPhone_static();
             PlayerInteraction.LockInteraction();
         }
+        ammoDisplay.text = currentWeapon.currentAmmo.ToString();
         holstered = false;
     }
 
     public void HideWeapon()
     {
         currentModel.SetActive(false);
+        ammoDisplay.text = "";
         //currentModel.transform.localPosition = new Vector3(0, 0, 0);
         holstered = false;
     }
@@ -490,7 +576,7 @@ public class WeaponManager : MonoSOObserver
         currentWeapon = newWeapon as RangedWeapon;
         InitializeAmmo();
         PlayerInteraction.LockInteraction();
-        if (!InventoryManager.IsInventoryOpen_Static() && currentWeapon.twoHanded)
+        if (!InventoryManager.IsInventoryOpen_Static())
         {
             DisplayWeapon();
         }
@@ -499,7 +585,7 @@ public class WeaponManager : MonoSOObserver
 
     public void UnEquipItem()
     {
-        if (currentWeapon.twoHanded)
+        if (currentWeapon && currentWeapon.twoHanded)
         {
             InventoryManager.ShowPhone_Static();
             InventoryManager.UnblockPhone_static();
@@ -508,6 +594,7 @@ public class WeaponManager : MonoSOObserver
         currentItem = null;
         holstered = true;
         equippedItemCursor.gameObject.SetActive(false);
+        ammoDisplay.text = "";
         if (currentModel != null)
         {
             Destroy(currentModel);
@@ -534,7 +621,7 @@ public class WeaponManager : MonoSOObserver
             */
             //weapons[selection].SetActive(true);
             //UnEquipWeapon();
-            if (currentItem == hotkeyItems[selection] && !holstered)
+            if (currentItem == hotkeyItems[selection] && !holstered && currentItem != null)
             {
                 //Holster();
                 UnEquipItem();

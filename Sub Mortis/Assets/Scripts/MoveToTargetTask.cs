@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class MoveToTargetTask : BTNode
 {
-    Transform agentPosition;
-    Transform targetPosition;
-    float range;
+    float stoppingDistance;
     NPCAI npcAI;
 
-    public MoveToTargetTask(NPCAI _npcAI, Transform origin, Transform target, float range)
+    public MoveToTargetTask(NPCAI _npcAI, float range)
     {
-        this.npcAI = _npcAI;
-        this.agentPosition = origin;
-        this.targetPosition = target;
-        this.range = range;
+        npcAI = _npcAI;
+        stoppingDistance = range;
     }
 
     public override NodeState Evaluate()
@@ -23,27 +19,27 @@ public class MoveToTargetTask : BTNode
         //{
         //    return NodeState.FAILURE;
         //}
-        //Debug.Log(targetPosition);
-        if (targetPosition == null)
+        //Debug.Log(npcAI.targetDestination);
+        if (npcAI.targetDestination == null)
         {
             return NodeState.FAILURE;
         }
-        float distance = Vector3.Distance(agentPosition.position, targetPosition.position);
-        if (distance > range)
+        float distance = Vector3.Distance(npcAI.transform.position, npcAI.targetDestination);
+        if (distance > stoppingDistance)
         {
-            npcAI.animator.SetBool("WalkingNormal", true);
+            //npcAI.animator.SetBool("WalkingNormal", true);
             //Debug.Log(distance + " " + range);
             npcAI.agent.isStopped = false;
             //Debug.Log(npcAI.agent.destination);
-            bool check = npcAI.agent.SetDestination(targetPosition.position);
+            bool check = npcAI.agent.SetDestination(npcAI.targetDestination);
             //Debug.Log(check);
             return NodeState.RUNNING;
         }
         else
         {
             npcAI.agent.isStopped = true;
-            npcAI.animator.SetBool("WalkingNormal", false);
-            //Debug.Log("Point " + targetPosition + " reached");
+            //npcAI.animator.SetBool("WalkingNormal", false);
+            Debug.Log("Point " + npcAI.targetDestination + " reached");
             return NodeState.SUCCESS;
         }
     }

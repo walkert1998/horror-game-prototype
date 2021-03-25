@@ -14,18 +14,20 @@ public class NodeSelector : BTNode
     {
         foreach (BTNode node in nodes)
         {
-            switch (node.Evaluate())
+            NodeState state = node.Evaluate();
+            Debug.Log(node + " " + state);
+            switch (state)
             {
+                case NodeState.FAILURE:
+                    continue;
                 case NodeState.RUNNING:
                     _nodeState = NodeState.RUNNING;
                     return _nodeState;
                 case NodeState.SUCCESS:
                     _nodeState = NodeState.SUCCESS;
                     return _nodeState;
-                case NodeState.FAILURE:
-                    break;
                 default:
-                    break;
+                    continue;
             }
         }
         _nodeState = NodeState.FAILURE;

@@ -4,42 +4,45 @@ using UnityEngine;
 
 public class FindNextPointTask : BTNode
 {
-    List<Transform> targets;
+    List<Transform> patrolPoints;
     NPCAI npcAI;
     int currTarget;
 
     public FindNextPointTask(List<Transform> targets, NPCAI npcAI)
     {
-        this.targets = targets;
+        patrolPoints = targets;
         this.npcAI = npcAI;
-        this.currTarget = 0;
+        currTarget = 0;
     }
 
     public override NodeState Evaluate()
     {
-        if (npcAI.currentTarget != null || npcAI.patrolPoints.Count <= 0)
+        if (npcAI.patrolPoints.Count <= 0)
         {
             return NodeState.FAILURE;
         }
-        //Debug.Log(npcAI.patrolTarget);
-        float distance = Vector3.Distance(npcAI.transform.position, targets[currTarget].position);
+        float distance = Vector3.Distance(npcAI.transform.position, patrolPoints[currTarget].position);
         if (npcAI.patrolTarget == null)
         {
-            npcAI.patrolTarget = targets[currTarget];
+            npcAI.patrolTarget = patrolPoints[currTarget];
+            npcAI.targetDestination = patrolPoints[currTarget].position;
         }
-        else if (npcAI.patrolTarget != null && npcAI.currentTarget == null)
+        else if (npcAI.patrolTarget != null)
         {
-            if (currTarget == targets.Count)
-            {
-                currTarget = 0;
-            }
-            else if (distance <= 1.0f)
+            npcAI.patrolNum = currTarget;
+            npcAI.patrolTarget = patrolPoints[currTarget];
+            npcAI.targetDestination = patrolPoints[currTarget].position;
+            if (distance <= npcAI.agent.stoppingDistance && !npcAI.waiting)
             {
                 currTarget++;
             }
-            npcAI.patrolTarget = targets[currTarget];
+            if (currTarget == patrolPoints.Count)
+            {
+                currTarget = 0;
+            }
+            Debug.Log(npcAI.patrolTarget);
             return NodeState.SUCCESS;
         }
-        return NodeState.FAILURE;
+        return NodeState.RUNNING;
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 //using UnityStandardAssets.Characters.FirstPerson;
 
 [CreateAssetMenu(menuName = "Items/Create Ranged Weapon")]
@@ -41,10 +42,14 @@ public class RangedWeapon : Item
     public GameObject gameModel;
     public Animator animator;
     public Vector3 aimPosition;
+    [TextArea]
+    public string effectLightPath;
 
-    [Header("Misc")]
     private GameObject main_camera;
+    [Header("Misc")]
     public Inventory playerInventory;
+    [Tooltip("For defining weapons like a flamethrower")]
+    public bool streamWeapon = false;
     //public GameSettings gameSettings;
 
     [Header("Sound Effects")]

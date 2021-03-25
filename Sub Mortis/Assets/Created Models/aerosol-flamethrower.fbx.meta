@@ -1,0 +1,503 @@
+fileFormatVersion: 2
+guid: b46e79716e5ea6b4b9c384f12b232be7
+ModelImporter:
+  serializedVersion: 20101
+  internalIDToNameTable:
+  - first:
+      74: -674322013626746469
+    second: Armature|Armature|modo_Anim|Layer0
+  - first:
+      74: 7561638107201663461
+    second: Armature|Arms|modo_Anim|Layer0
+  - first:
+      74: -8461419662545172125
+    second: Armature|Camera|modo_Anim|Layer0
+  - first:
+      74: 510997725027915699
+    second: Armature|Directional Light|modo_Anim|Layer0
+  - first:
+      74: -9126430790197080189
+    second: Armature|FullBodyIK|modo_Anim|Layer0
+  - first:
+      74: -8945691123924629249
+    second: Armature|Idle
+  - first:
+      74: -53412277677858323
+    second: Armature|Left_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: -929548973799780994
+    second: Armature|Left_ShoulderGoal|modo_Anim|Layer0
+  - first:
+      74: -7275551504016537530
+    second: Armature|Left_WristGoal|modo_Anim|Layer0
+  - first:
+      74: -6565325218363798723
+    second: Armature|Right_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: -769260568770662569
+    second: Armature|Right_ShouldGoal|modo_Anim|Layer0
+  - first:
+      74: -8777147238417640258
+    second: Armature|Right_WristGoal|modo_Anim|Layer0
+  - first:
+      74: -7499751596200592962
+    second: Armature|Texture Group|modo_Anim|Layer0
+  - first:
+      74: -5759269433753491891
+    second: Armature|WeaponLocator|modo_Anim|Layer0
+  - first:
+      74: 530131511672450025
+    second: Arms|Arms|modo_Anim|Layer0
+  - first:
+      74: -8452732006388677165
+    second: Arms|Camera|modo_Anim|Layer0
+  - first:
+      74: 1325920493572591442
+    second: Arms|Directional Light|modo_Anim|Layer0
+  - first:
+      74: -5507896159820066774
+    second: Arms|FullBodyIK|modo_Anim|Layer0
+  - first:
+      74: 6490775341021305621
+    second: Arms|Left_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: -867633717809504396
+    second: Arms|Left_ShoulderGoal|modo_Anim|Layer0
+  - first:
+      74: -1037551828821788554
+    second: Arms|Left_WristGoal|modo_Anim|Layer0
+  - first:
+      74: -8494049508135937947
+    second: Arms|Right_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: -7268434728896282113
+    second: Arms|Right_ShouldGoal|modo_Anim|Layer0
+  - first:
+      74: 8977757354776322423
+    second: Arms|Right_WristGoal|modo_Anim|Layer0
+  - first:
+      74: -1900622469518651438
+    second: Arms|Texture Group|modo_Anim|Layer0
+  - first:
+      74: 1447402616440770393
+    second: Arms|WeaponLocator|modo_Anim|Layer0
+  - first:
+      74: -6206127682424728891
+    second: FullBodyIK|Arms|modo_Anim|Layer0
+  - first:
+      74: 2105691780580608966
+    second: FullBodyIK|Camera|modo_Anim|Layer0
+  - first:
+      74: -4206333794877843217
+    second: FullBodyIK|Directional Light|modo_Anim|Layer0
+  - first:
+      74: -8608040729879635482
+    second: FullBodyIK|FullBodyIK|modo_Anim|Layer0
+  - first:
+      74: 5931122431996545133
+    second: FullBodyIK|Left_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: -5868405193506366630
+    second: FullBodyIK|Left_ShoulderGoal|modo_Anim|Layer0
+  - first:
+      74: -1293931452483839180
+    second: FullBodyIK|Left_WristGoal|modo_Anim|Layer0
+  - first:
+      74: 3946157015420982206
+    second: FullBodyIK|Right_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: 3790442927251526100
+    second: FullBodyIK|Right_ShouldGoal|modo_Anim|Layer0
+  - first:
+      74: 7843139327664329441
+    second: FullBodyIK|Right_WristGoal|modo_Anim|Layer0
+  - first:
+      74: -6379930531616040752
+    second: FullBodyIK|Texture Group|modo_Anim|Layer0
+  - first:
+      74: 9165513072915498459
+    second: FullBodyIK|WeaponLocator|modo_Anim|Layer0
+  - first:
+      74: -610379551310021480
+    second: WeaponLocator|Arms|modo_Anim|Layer0
+  - first:
+      74: -747306394059065436
+    second: WeaponLocator|Camera|modo_Anim|Layer0
+  - first:
+      74: 3551010213921692852
+    second: WeaponLocator|Directional Light|modo_Anim|Layer0
+  - first:
+      74: -626441224907633222
+    second: WeaponLocator|FullBodyIK|modo_Anim|Layer0
+  - first:
+      74: 4762919752696855049
+    second: WeaponLocator|Left_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: 6031100248000231799
+    second: WeaponLocator|Left_ShoulderGoal|modo_Anim|Layer0
+  - first:
+      74: 1248500219960963537
+    second: WeaponLocator|Left_WristGoal|modo_Anim|Layer0
+  - first:
+      74: -2516334715105397517
+    second: WeaponLocator|Right_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: 7996582985595180432
+    second: WeaponLocator|Right_ShouldGoal|modo_Anim|Layer0
+  - first:
+      74: -2492383449685283657
+    second: WeaponLocator|Right_WristGoal|modo_Anim|Layer0
+  - first:
+      74: 5780568824021441928
+    second: WeaponLocator|Texture Group|modo_Anim|Layer0
+  - first:
+      74: -2459613443278571690
+    second: WeaponLocator|WeaponLocator|modo_Anim|Layer0
+  - first:
+      74: 1285392027449115186
+    second: Texture Group|Arms|modo_Anim|Layer0
+  - first:
+      74: -2191147559881984284
+    second: Texture Group|Camera|modo_Anim|Layer0
+  - first:
+      74: -7208597767839529272
+    second: Texture Group|Directional Light|modo_Anim|Layer0
+  - first:
+      74: 4664221568261932274
+    second: Texture Group|FullBodyIK|modo_Anim|Layer0
+  - first:
+      74: 5325153216204877132
+    second: Texture Group|Left_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: 1666772129222789158
+    second: Texture Group|Left_ShoulderGoal|modo_Anim|Layer0
+  - first:
+      74: 6419555307720951356
+    second: Texture Group|Left_WristGoal|modo_Anim|Layer0
+  - first:
+      74: -5719149944673504886
+    second: Texture Group|Right_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: 5980647100202817215
+    second: Texture Group|Right_ShouldGoal|modo_Anim|Layer0
+  - first:
+      74: 4793771406564167837
+    second: Texture Group|Right_WristGoal|modo_Anim|Layer0
+  - first:
+      74: 3281543628609462427
+    second: Texture Group|Texture Group|modo_Anim|Layer0
+  - first:
+      74: -1206507314485905089
+    second: Texture Group|WeaponLocator|modo_Anim|Layer0
+  - first:
+      74: 7535190399890376048
+    second: Right_ElbowGoal|Arms|modo_Anim|Layer0
+  - first:
+      74: 734139526024902243
+    second: Right_ElbowGoal|Camera|modo_Anim|Layer0
+  - first:
+      74: -1942246453998070406
+    second: Right_ElbowGoal|Directional Light|modo_Anim|Layer0
+  - first:
+      74: -6718481660636527977
+    second: Right_ElbowGoal|FullBodyIK|modo_Anim|Layer0
+  - first:
+      74: -7803123367833731871
+    second: Right_ElbowGoal|Left_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: -8939508265780387155
+    second: Right_ElbowGoal|Left_ShoulderGoal|modo_Anim|Layer0
+  - first:
+      74: 7099021698064430582
+    second: Right_ElbowGoal|Left_WristGoal|modo_Anim|Layer0
+  - first:
+      74: 6827556938104738814
+    second: Right_ElbowGoal|Right_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: -8352957089851908653
+    second: Right_ElbowGoal|Right_ShouldGoal|modo_Anim|Layer0
+  - first:
+      74: -5954892967780203801
+    second: Right_ElbowGoal|Right_WristGoal|modo_Anim|Layer0
+  - first:
+      74: -8341631068664613037
+    second: Right_ElbowGoal|Texture Group|modo_Anim|Layer0
+  - first:
+      74: 2945420975950278221
+    second: Right_ElbowGoal|WeaponLocator|modo_Anim|Layer0
+  - first:
+      74: -5333017335040128032
+    second: Left_ElbowGoal|Arms|modo_Anim|Layer0
+  - first:
+      74: -2780650057883926527
+    second: Left_ElbowGoal|Camera|modo_Anim|Layer0
+  - first:
+      74: -5840313927914895947
+    second: Left_ElbowGoal|Directional Light|modo_Anim|Layer0
+  - first:
+      74: -5822588775394982360
+    second: Left_ElbowGoal|FullBodyIK|modo_Anim|Layer0
+  - first:
+      74: 7899338876548264189
+    second: Left_ElbowGoal|Left_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: -6117971060684082498
+    second: Left_ElbowGoal|Left_ShoulderGoal|modo_Anim|Layer0
+  - first:
+      74: -4698029850023555271
+    second: Left_ElbowGoal|Left_WristGoal|modo_Anim|Layer0
+  - first:
+      74: -7562303960544773324
+    second: Left_ElbowGoal|Right_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: -5382987518793476335
+    second: Left_ElbowGoal|Right_ShouldGoal|modo_Anim|Layer0
+  - first:
+      74: 6289665867141705903
+    second: Left_ElbowGoal|Right_WristGoal|modo_Anim|Layer0
+  - first:
+      74: 6998835722722588243
+    second: Left_ElbowGoal|Texture Group|modo_Anim|Layer0
+  - first:
+      74: -7485248088743930188
+    second: Left_ElbowGoal|WeaponLocator|modo_Anim|Layer0
+  - first:
+      74: -1041534452907556757
+    second: Right_WristGoal|Arms|modo_Anim|Layer0
+  - first:
+      74: 5447438251251796428
+    second: Right_WristGoal|Camera|modo_Anim|Layer0
+  - first:
+      74: -5955838299659159141
+    second: Right_WristGoal|Directional Light|modo_Anim|Layer0
+  - first:
+      74: -310946722219181071
+    second: Right_WristGoal|FullBodyIK|modo_Anim|Layer0
+  - first:
+      74: -4236725808468288503
+    second: Right_WristGoal|Left_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: -8394061357289048371
+    second: Right_WristGoal|Left_ShoulderGoal|modo_Anim|Layer0
+  - first:
+      74: -1432109634928660676
+    second: Right_WristGoal|Left_WristGoal|modo_Anim|Layer0
+  - first:
+      74: 7424694562136661880
+    second: Right_WristGoal|Right_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: -3606672046662187016
+    second: Right_WristGoal|Right_ShouldGoal|modo_Anim|Layer0
+  - first:
+      74: 3692707802832363004
+    second: Right_WristGoal|Right_WristGoal|modo_Anim|Layer0
+  - first:
+      74: 4994962509681835636
+    second: Right_WristGoal|Texture Group|modo_Anim|Layer0
+  - first:
+      74: -2619525677603786923
+    second: Right_WristGoal|WeaponLocator|modo_Anim|Layer0
+  - first:
+      74: 5950395395782227303
+    second: Left_WristGoal|Arms|modo_Anim|Layer0
+  - first:
+      74: 216688930507872653
+    second: Left_WristGoal|Camera|modo_Anim|Layer0
+  - first:
+      74: -6105932260840514158
+    second: Left_WristGoal|Directional Light|modo_Anim|Layer0
+  - first:
+      74: 2319008856648320403
+    second: Left_WristGoal|FullBodyIK|modo_Anim|Layer0
+  - first:
+      74: -4854099399716514050
+    second: Left_WristGoal|Left_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: 7538412037565649253
+    second: Left_WristGoal|Left_ShoulderGoal|modo_Anim|Layer0
+  - first:
+      74: 2571327902451286797
+    second: Left_WristGoal|Left_WristGoal|modo_Anim|Layer0
+  - first:
+      74: 1410194908417843132
+    second: Left_WristGoal|Right_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: -4014417801153715874
+    second: Left_WristGoal|Right_ShouldGoal|modo_Anim|Layer0
+  - first:
+      74: 2125988827305923861
+    second: Left_WristGoal|Right_WristGoal|modo_Anim|Layer0
+  - first:
+      74: -585511955669978716
+    second: Left_WristGoal|Texture Group|modo_Anim|Layer0
+  - first:
+      74: 5237436592068896611
+    second: Left_WristGoal|WeaponLocator|modo_Anim|Layer0
+  - first:
+      74: -1464300992235983147
+    second: Left_ShoulderGoal|Arms|modo_Anim|Layer0
+  - first:
+      74: 7309113825776950209
+    second: Left_ShoulderGoal|Camera|modo_Anim|Layer0
+  - first:
+      74: 3477438205905446405
+    second: Left_ShoulderGoal|Directional Light|modo_Anim|Layer0
+  - first:
+      74: -4760200892072173110
+    second: Left_ShoulderGoal|FullBodyIK|modo_Anim|Layer0
+  - first:
+      74: 7349942849467666863
+    second: Left_ShoulderGoal|Left_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: -3751845246633361104
+    second: Left_ShoulderGoal|Left_ShoulderGoal|modo_Anim|Layer0
+  - first:
+      74: -6249582148084378798
+    second: Left_ShoulderGoal|Left_WristGoal|modo_Anim|Layer0
+  - first:
+      74: 7401229542874947270
+    second: Left_ShoulderGoal|Right_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: -8997595573227549446
+    second: Left_ShoulderGoal|Right_ShouldGoal|modo_Anim|Layer0
+  - first:
+      74: 3287573142241786526
+    second: Left_ShoulderGoal|Right_WristGoal|modo_Anim|Layer0
+  - first:
+      74: -4264965144006637009
+    second: Left_ShoulderGoal|Texture Group|modo_Anim|Layer0
+  - first:
+      74: -6181207485968303950
+    second: Left_ShoulderGoal|WeaponLocator|modo_Anim|Layer0
+  - first:
+      74: -3394079549348908795
+    second: Right_ShouldGoal|Arms|modo_Anim|Layer0
+  - first:
+      74: 476972879105774499
+    second: Right_ShouldGoal|Camera|modo_Anim|Layer0
+  - first:
+      74: -968908150548511672
+    second: Right_ShouldGoal|Directional Light|modo_Anim|Layer0
+  - first:
+      74: -9122202897218691682
+    second: Right_ShouldGoal|FullBodyIK|modo_Anim|Layer0
+  - first:
+      74: -8087784207315448527
+    second: Right_ShouldGoal|Left_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: -8692260196941787847
+    second: Right_ShouldGoal|Left_ShoulderGoal|modo_Anim|Layer0
+  - first:
+      74: 2240258880089504184
+    second: Right_ShouldGoal|Left_WristGoal|modo_Anim|Layer0
+  - first:
+      74: 1750777840506718276
+    second: Right_ShouldGoal|Right_ElbowGoal|modo_Anim|Layer0
+  - first:
+      74: -4638281857979046339
+    second: Right_ShouldGoal|Right_ShouldGoal|modo_Anim|Layer0
+  - first:
+      74: 8425276156600592554
+    second: Right_ShouldGoal|Right_WristGoal|modo_Anim|Layer0
+  - first:
+      74: 44286549627557971
+    second: Right_ShouldGoal|Texture Group|modo_Anim|Layer0
+  - first:
+      74: -6604581219327627059
+    second: Right_ShouldGoal|WeaponLocator|modo_Anim|Layer0
+  externalObjects: {}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
