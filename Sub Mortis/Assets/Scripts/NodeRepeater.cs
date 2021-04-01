@@ -17,6 +17,7 @@ public class NodeRepeater : BTNode
     public override NodeState Evaluate()
     {
         NodeState state = childNode.Evaluate();
+        Debug.Log(childNode + " " + state);
         if (loopNumber == -1 && state != NodeState.RUNNING)
         {
             return state;

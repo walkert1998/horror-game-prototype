@@ -8,6 +8,7 @@ public class Inventory : ObservableSO
     public List<StoredItem> items;
     public IntPair size;
     public GameObject assignedCharacter;
+    public bool firstTimePickup = true;
 
     public void AddItem(StoredItem item)
     {
@@ -136,6 +137,11 @@ public class Inventory : ObservableSO
     public bool AddItem(Item item, int itemQuantity=1)
     {
         int totalSize = item.size.x * item.size.y;
+        if (firstTimePickup)
+        {
+            HelpText._DisplayHelpText("You can interact with items you've collected in the 'Items' app on your phone.", KeyCode.None, null, 4.0f);
+            firstTimePickup = false;
+        }
 
         if (FreeSlotsCount() >= totalSize)
         {

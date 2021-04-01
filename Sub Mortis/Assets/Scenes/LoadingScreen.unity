@@ -6815,7 +6815,6 @@ GameObject:
   - component: {fileID: 510261794}
   - component: {fileID: 510261793}
   - component: {fileID: 510261792}
-  - component: {fileID: 510261796}
   - component: {fileID: 510261797}
   m_Layer: 5
   m_Name: Canvas
@@ -6909,22 +6908,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &510261796
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 510261791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 098f80be2751abe4a83041e8f2bce4e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioMixer: {fileID: 24100000, guid: cc69248987160874a93584affb259d8d, type: 2}
-  volumeSlider: {fileID: 0}
-  resolutionDropDown: {fileID: 1544503607}
-  cursorSettingDropDown: {fileID: 0}
 --- !u!114 &510261797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6939,7 +6922,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingBar: {fileID: 1435436905}
   loadingText: {fileID: 659963549}
-  levelToLoad: SampleScene
+  levelToLoad: NewDemo
 --- !u!1 &513384003
 GameObject:
   m_ObjectHideFlags: 0
@@ -21341,7 +21324,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 510261796}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameSettings, Assembly-CSharp
         m_MethodName: ChangeResolution
         m_Mode: 1
@@ -22753,7 +22736,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 510261796}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameSettings, Assembly-CSharp
         m_MethodName: ChangeResolution
         m_Mode: 1
@@ -25584,7 +25567,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 510261796}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameSettings, Assembly-CSharp
         m_MethodName: SetVolume
         m_Mode: 4

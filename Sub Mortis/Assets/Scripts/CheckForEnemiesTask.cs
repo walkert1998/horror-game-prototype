@@ -22,7 +22,7 @@ public class CheckForEnemiesTask : BTNode
         //Debug.Log(angle);
         if (npcAI.npcHealth.currentHealth <= 0)
         {
-            npcAI.animator.SetBool("Alert", false);
+            //npcAI.animator.SetBool("Alert", false);
             return false;
         }
         if (npcAI.currentTarget == null)
@@ -32,85 +32,95 @@ public class CheckForEnemiesTask : BTNode
             {
                 Vector3 direction = hit.transform.position - npcAI.visionTransform.position;
                 float angle = Vector3.Angle(direction, npcAI.visionTransform.forward);
-                if (angle < npcAI.visionAngle * 0.5f)
+                float distance = Vector3.Distance(hit.transform.position, npcAI.visionTransform.position);
+                //Debug.Log(npcAI.playerVisibility.lightLevel / distance);
+                if (Mathf.Abs(angle) <= npcAI.visionAngle * 0.5f)
                 {
                     RaycastHit ray;
                     if (Physics.Raycast(npcAI.visionTransform.position, direction, out ray, npcAI.visionDistance))
                     {
                         Debug.DrawRay(npcAI.visionTransform.position, direction * 4, Color.red);
-                        if (ray.collider.GetComponent<Health>() && ray.collider.GetComponent<Health>().currentHealth > 0)
+                        if (ray.collider.GetComponent<Health>() && ray.collider.transform.root != npcAI.transform)
                         {
                             //if (npcOpinion.IsHostileCharacter(ray.collider.gameObject))
                             //{
-                            npcAI.SetTarget(ray.collider.transform);
-                            npcAI.targetInSight = true;
+                            if (npcAI.playerVisibility.lightLevel / distance >= npcAI.lightLevelThreshold)
+                            {
+                                npcAI.SetTarget(ray.collider.transform);
+                                npcAI.TargetSetTargetInSight(true);
+                                npcAI.lastKnownPosition = npcAI.currentTarget.position;
+                                npcAI.colorIndicator.SetAngry();
+                                npcAI.currentlySearching = false;
+                                return true;
+                            }
                             //chase_target = currentTarget.transform;
-                            npcAI.lastKnownPosition = npcAI.currentTarget.position;
                             //vision.GetComponent<EnemyVision>().idle = false;
-                            npcAI.animator.SetBool("Alert", true);
-                            npcAI.npcQuip.Quip(npcAI.targetSightedQuip);
+                            //npcAI.animator.SetBool("Alert", true);
+                            //npcAI.npcQuip.Quip(npcAI.targetSightedQuip);
                             //npcAI.source.PlayOneShot(npcAI.targetSightedQuip);
-                            return true;
                             //}
                         }
                         else if (ray.collider.GetComponent<DamageLocation>() && ray.collider.transform.root != npcAI.transform)
                         {
                             npcAI.SetTarget(ray.collider.transform);
                             npcAI.lastKnownPosition = npcAI.currentTarget.transform.position;
-                            npcAI.npcQuip.Quip(npcAI.targetSightedQuip);
+                            npcAI.colorIndicator.SetAngry();
+                            npcAI.currentlySearching = false;
+                            //npcAI.npcQuip.Quip(npcAI.targetSightedQuip);
                             return true;
                         }
                     }
                 }
             }
             //npcOpinion.ClearModifiers();
-            npcAI.animator.SetBool("Alert", false);
-            npcAI.animator.SetBool("WalkingAlert", false);
+            //npcAI.animator.SetBool("Alert", false);
+            //npcAI.animator.SetBool("WalkingAlert", false);
             return false;
         }
         else if (npcAI.currentTarget != null)
         {
             Vector3 direction = npcAI.currentTarget.position - npcAI.visionTransform.position;
-            RaycastHit ray;
-            Debug.DrawRay(npcAI.visionTransform.position, direction * 20, Color.red);
-            if (Physics.Raycast(npcAI.visionTransform.position, direction, out ray, npcAI.visionDistance))
+            float angle = Vector3.Angle(direction, npcAI.visionTransform.forward);
+            if (Mathf.Abs(angle) <= npcAI.visionAngle * 0.75f)
             {
-                Debug.DrawRay(npcAI.visionTransform.position, direction * 4, Color.red);
-                if (ray.transform == npcAI.currentTarget)
+                Debug.Log("Player detected in angle");
+                RaycastHit ray;
+                Debug.DrawRay(npcAI.visionTransform.position, direction * 20, Color.red);
+                if (Physics.Raycast(npcAI.visionTransform.position, direction, out ray, npcAI.visionDistance))
                 {
-                    if (npcAI.currentTarget.GetComponent<Health>() && npcAI.currentTarget.GetComponent<Health>().currentHealth > 0)
+                    Debug.DrawRay(npcAI.visionTransform.position, direction * 4, Color.red);
+                    if (ray.transform == npcAI.currentTarget)
                     {
-                        npcAI.lastKnownPosition = npcAI.currentTarget.transform.position;
-                        npcAI.targetInSight = true;
-                        return true;
-                    }
-                    else if (npcAI.currentTarget.root.GetComponent<Health>() && npcAI.currentTarget.root.GetComponent<Health>().currentHealth > 0)
-                    {
-                        npcAI.lastKnownPosition = npcAI.currentTarget.transform.position;
-                        npcAI.targetInSight = true;
-                        return true;
+                        if (npcAI.currentTarget.GetComponent<Health>() && npcAI.currentTarget.GetComponent<Health>().currentHealth > 0)
+                        {
+                            //if (npcAI.playerVisibility.lightLevel >= npcAI.minLightLevelSight)
+                            //{
+                            npcAI.TargetSetTargetInSight(true);
+                            npcAI.lastKnownPosition = npcAI.currentTarget.position;
+                            npcAI.colorIndicator.SetAngry();
+                            npcAI.currentlySearching = false;
+                            return true;
+                            //}
+                        }
+                        else if (npcAI.currentTarget.root.GetComponent<Health>() && npcAI.currentTarget.root.GetComponent<Health>().currentHealth > 0)
+                        {
+                            npcAI.lastKnownPosition = npcAI.currentTarget.transform.position;
+                            npcAI.TargetSetTargetInSight(true);
+                            npcAI.colorIndicator.SetAngry();
+                            npcAI.currentlySearching = false;
+                            return true;
+                        }
                     }
                 }
-                npcAI.targetInSight = false;
-                return true;
             }
-            
-            else
-            {
-                //Debug.Log(npcAI.currentTarget + " Current Target Dead");
-                npcAI.SetTarget(null);
-                npcAI.animator.SetBool("Alert", false);
-                //npcAI.source.PlayOneShot(npcAI.targetDownQuip);
-                npcAI.npcQuip.Quip(npcAI.targetDownQuip);
-                //npcOpinion.ClearModifiers();
-                return false;
-            }
+            npcAI.TargetSetTargetInSight(false);
+            return false;
         }
         else
         {
-            npcAI.animator.SetBool("Alert", false);
+            //npcAI.animator.SetBool("Alert", false);
             //npcAI.source.PlayOneShot(npcAI.allClearQuip);
-            npcAI.npcQuip.Quip(npcAI.allClearQuip);
+            //npcAI.npcQuip.Quip(npcAI.allClearQuip);
             return false;
         }
     }

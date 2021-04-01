@@ -9,12 +9,21 @@ public class NPCAI : MonoBehaviour
     public List<Transform> patrolPoints;
     public Health npcHealth;
     public NavMeshAgent agent;
+    public PlayerIllumination playerVisibility;
     public NPCWeaponManager weaponManager;
     public NodeSequence attackSequence;
     public NodeSequence patrolSequence;
     public NodeSequence reloadSequence;
+    public NodeSequence chaseSequence;
+    public NodeSequence searchSequence;
+    public NodeSequence investigateSequence;
     public NodeSelector topNode;
+    public NodeSelector hasTargetSelector;
+    public NodeSelector searchOptions;
     public NodeRepeater baseRepeat;
+    public CanPatrolDecoratorNode hasPatrolNode;
+    public HasTargetDecoratorNode hasTarget;
+    public SearchingForTargetDecorator searching;
     public Transform currentTarget;
     public Transform patrolTarget;
     public Vector3 lastKnownPosition;
@@ -34,12 +43,27 @@ public class NPCAI : MonoBehaviour
     public FindCoverTask findCover;
     public NPCColliders colliders;
     public AudioSource source;
+    public GameMenu gameMenu;
+    public NPCColorChange colorIndicator;
     public float visionDistance;
     public bool targetInSight = false;
     public bool waiting = false;
+    public bool targetReached = false;
+    public bool staggered = false;
+    public bool attacking = false;
+    public bool currentlySearching = false;
     public GameObject head;
     public GameObject spine;
     public int patrolNum;
+    public float minLightLevelSight = 20.0f;
+    public float lightLevelThreshold = 40.0f;
+    public float meleeAttackTime = 3.0f;
+    public float timeBetweenAttacks = 3.0f;
+    public float awarenessTimer = 30.0f;
+    public float currentAwarenessTime = 0.0f;
+    public float suspicion = 0.0f;
+    public float investigateSuspiciousThreshold = 10.0f;
+    public float minHearingVolume = 2.0f;
 
     [Header("Vocal Quips")]
     public NPCQuip npcQuip;
@@ -52,6 +76,7 @@ public class NPCAI : MonoBehaviour
     public AudioClip allClearQuip;
     public AudioClip foundTargetQuip;
     public AudioClip reloadingQuip;
+
     //public AudioClip 
 
     // Start is called before the first frame update
@@ -70,8 +95,18 @@ public class NPCAI : MonoBehaviour
         {
             targetDestination = patrolPoints[0].position;
         }
-        patrolSequence = new NodeSequence(new List<BTNode> { new FindNextPointTask(patrolPoints, this), new WaitForTimeTask(this, 3.0f),  new MoveToTargetTask(this, agent.stoppingDistance) });
-        topNode = new NodeSelector(new List<BTNode> { patrolSequence });
+        colorIndicator.SetNormal();
+        patrolSequence = new NodeSequence(new List<BTNode> { new FindNextPointTask(patrolPoints, this), new MoveToTargetTask(this, agent.stoppingDistance), new WaitForTimeTask(this, 3.0f) });
+        hasPatrolNode = new CanPatrolDecoratorNode(this, patrolSequence);
+        searchSequence = new NodeSequence(new List<BTNode> { new FindRandomPoint(10, this, -1), new MoveToTargetTask(this, agent.stoppingDistance), new WaitForTimeTask(this, 1.0f) });
+        searchOptions = new NodeSelector(new List<BTNode> { new CheckForEnemiesTask(this), new NodeSequence(new List<BTNode> { new FindLastKnownTargetPositionTask(this), new MoveToTargetTask(this, agent.stoppingDistance), new WaitForTimeTask(this, 1.0f) }), searchSequence });
+        searching = new SearchingForTargetDecorator(this, new NodeRepeater(-1, searchOptions) );
+        chaseSequence = new NodeSequence(new List<BTNode> { new CheckForEnemiesTask(this), new ChaseTask(this), new MoveToTargetTask(this, agent.stoppingDistance) });
+        attackSequence = new NodeSequence(new List<BTNode> { new WithinRangeDecoratorNode(this, agent.stoppingDistance), new MeleeAttackTask(this) });
+        investigateSequence = new NodeSequence(new List<BTNode> { new FindLastKnownTargetPositionTask(this), new MoveToTargetTask(this, agent.stoppingDistance), new WaitForTimeTask(this, 1.0f) });
+        hasTargetSelector = new NodeSelector(new List<BTNode> { attackSequence, chaseSequence, searching });
+        hasTarget = new HasTargetDecoratorNode(this, hasTargetSelector);
+        topNode = new NodeSelector(new List<BTNode> { hasTarget, hasPatrolNode });
         baseRepeat = new NodeRepeater(-1, topNode);
     }
 
@@ -80,8 +115,15 @@ public class NPCAI : MonoBehaviour
     {
         //if (npcHealth.currentHealth > 0)
         //{
-            NodeState state = topNode.Evaluate();
-            Debug.Log(topNode);
+        if (!gameMenu.gamePaused)
+        {
+            topNode.Evaluate();
+            if (targetInSight)
+            {
+                transform.LookAt(currentTarget);
+            }
+        }
+        Debug.DrawRay(visionTransform.position, visionTransform.forward * visionDistance, Color.red);
         //}
         //Debug.Log(state);
         //if (Input.GetKeyDown(KeyCode.O))
@@ -134,8 +176,26 @@ public class NPCAI : MonoBehaviour
             lastKnownPosition = target.position;
     }
 
-    public void DamageCharacter(int amount)
+    public void TargetSetTargetInSight(bool value)
     {
-        npcQuip.Quip(painQuip, true);
+        Debug.Log("Setting target in sight to " + value);
+        targetInSight = value;
     }
+
+    public void HeardSound(Vector3 position, float volume)
+    {
+        float distance = Vector3.Distance(position, transform.position);
+        //Debug.Log((volume / distance) * 10 + " " + volume + " " + distance);
+        if (volume/distance * 10 > minHearingVolume)
+        {
+            lastKnownPosition = position;
+            suspicion = 10.0f;
+            Debug.Log("Heard something");
+        }
+    }
+
+    //public void DamageCharacter(int amount)
+    //{
+    //    npcQuip.Quip(painQuip, true);
+    //}
 }

@@ -10,6 +10,7 @@ public class ImpactSounds : MonoBehaviour
     public bool collided = false;
     public float threshold;
     public Vector3 prevVelocity;
+    public float loudness = 1.0f;
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
@@ -56,6 +57,7 @@ public class ImpactSounds : MonoBehaviour
             impactSounds[0] = source.clip;
             source.volume = rb.velocity.magnitude;
             source.PlayOneShot(source.clip);
+            AIDirector.GenerateSound(transform.position, source.volume * loudness);
         }
         collided = true;
     }

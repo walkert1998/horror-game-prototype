@@ -29,7 +29,7 @@ public class HelpText : MonoBehaviour
         routine = StartCoroutine(DisplayTextUntilInput(time));
     }
 
-    public static void _DisplayHelpText(string helpMessage, KeyCode keyRequired, List<KeyCode> keysRequired = null, float time = 3.0f)
+    public static void _DisplayHelpText(string helpMessage, KeyCode keyRequired = KeyCode.None, List<KeyCode> keysRequired = null, float time = 3.0f)
     {
         instance.DisplayHelpText(helpMessage, keyRequired, keysRequired, time);
     }
@@ -55,7 +55,7 @@ public class HelpText : MonoBehaviour
             }
             //Debug.Log("A key has been pressed");
         }
-        else
+        else if (keyPressRequired != KeyCode.None)
         {
             while (!Input.GetKeyDown(keyPressRequired))
             {

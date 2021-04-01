@@ -4,16 +4,19 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.UI;
 
 public class GameSettings : MonoBehaviour
 {
-
+    FilmGrain filmGrain = null;
     public AudioMixer audioMixer;
-
+    public Volume postProcessingObject;
     private bool headbobEnabled;
     private bool gunSmokeEnabled;
     private bool healthBarEnabled;
+    private static bool filmGrainOn;
     private static CursorSetting cursorSetting;
     private static VisibilityMeterSetting visibilityMeterSetting;
     private bool interactionPromptsEnabled;
@@ -30,6 +33,7 @@ public class GameSettings : MonoBehaviour
     public Slider visibilityBar;
     public Image visibilityIcon;
     public Material visibilityLight;
+    public Toggle filmGrainToggle;
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +62,16 @@ public class GameSettings : MonoBehaviour
         healthBarEnabled = true;
         interactionPromptsEnabled = true;
         audioMixer.GetFloat("Volume", out volume);
+        FilmGrain grain;
+        if (postProcessingObject != null)
+        {
+            if (postProcessingObject.profile.TryGet<FilmGrain>(out grain))
+            {
+                filmGrain = grain;
+                filmGrain.active = filmGrainOn;
+            }
+        }
+        filmGrainToggle.isOn = filmGrainOn;
         if (volumeSlider != null)
         {
             volumeSlider.value = volume;
@@ -65,10 +79,10 @@ public class GameSettings : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    //void Update()
+    //{
         
-    }
+    //}
 
     public void PopulateResolutionOptions()
     {
@@ -136,33 +150,65 @@ public class GameSettings : MonoBehaviour
         {
             case 0:
                 visibilityMeterSetting = VisibilityMeterSetting.Icon;
-                visibilityIcon.gameObject.SetActive(true);
-                visibilityBar.gameObject.SetActive(false);
-                visibilityLight.SetFloat("_EmissiveExposureWeight", 1.0f);
-                visibilityLight.SetFloat("_EmissiveIntensity", 1);
-                Color newColor = visibilityLight.GetColor("_EmissiveColorLDR");
-                visibilityLight.SetColor("_EmissiveColor", newColor * visibilityLight.GetFloat("_EmissiveIntensity"));
+                if (visibilityIcon)
+                {
+                    visibilityIcon.gameObject.SetActive(true);
+                }
+                if (visibilityBar)
+                {
+                    visibilityBar.gameObject.SetActive(false);
+                }
+                if (visibilityLight)
+                {
+                    visibilityLight.SetFloat("_EmissiveExposureWeight", 1.0f);
+                    visibilityLight.SetFloat("_EmissiveIntensity", 1);
+                    Color newColor = visibilityLight.GetColor("_EmissiveColorLDR");
+                    visibilityLight.SetColor("_EmissiveColor", newColor * visibilityLight.GetFloat("_EmissiveIntensity"));
+                }
                 visibilitySettingOption = 0;
                 Debug.Log(visibilitySettingOption);
                 break;
             case 1:
                 visibilityMeterSetting = VisibilityMeterSetting.Light;
-                visibilityIcon.gameObject.SetActive(false);
-                visibilityBar.gameObject.SetActive(false);
+                if (visibilityIcon)
+                    visibilityIcon.gameObject.SetActive(false);
+                if (visibilityBar)
+                    visibilityBar.gameObject.SetActive(false);
                 visibilitySettingOption = 1;
                 Debug.Log(visibilitySettingOption);
                 break;
             case 2:
                 visibilityMeterSetting = VisibilityMeterSetting.Bar;
-                visibilityBar.gameObject.SetActive(true);
-                visibilityIcon.gameObject.SetActive(false);
-                visibilityLight.SetFloat("_EmissiveExposureWeight", 1.0f);
-                visibilityLight.SetFloat("_EmissiveIntensity", 1);
-                newColor = visibilityLight.GetColor("_EmissiveColorLDR");
-                visibilityLight.SetColor("_EmissiveColor", newColor * visibilityLight.GetFloat("_EmissiveIntensity"));
+                if (visibilityBar)
+                    visibilityBar.gameObject.SetActive(true);
+                if (visibilityIcon)
+                    visibilityIcon.gameObject.SetActive(false);
+                if (visibilityLight)
+                {
+                    visibilityLight.SetFloat("_EmissiveExposureWeight", 1.0f);
+                    visibilityLight.SetFloat("_EmissiveIntensity", 1);
+                    Color newColor = visibilityLight.GetColor("_EmissiveColorLDR");
+                    visibilityLight.SetColor("_EmissiveColor", newColor * visibilityLight.GetFloat("_EmissiveIntensity"));
+                }
                 visibilitySettingOption = 2;
                 Debug.Log(visibilitySettingOption);
                 break;
+        }
+    }
+
+    public void ToggleFilmGrain()
+    {
+        if (filmGrainToggle.isOn)
+        {
+            filmGrainOn = true;
+        }
+        else
+        {
+            filmGrainOn = false;
+        }
+        if (filmGrain != null)
+        {
+            filmGrain.active = filmGrainOn;
         }
     }
 

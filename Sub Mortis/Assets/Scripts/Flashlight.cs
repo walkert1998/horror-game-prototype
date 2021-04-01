@@ -43,6 +43,7 @@ public class Flashlight : MonoBehaviour
     public void TurnFlashlightOn ()
     {
         lightSource.enabled = true;
+        AIDirector.SetPlayerFlashight(true);
         lightDetectionObject.SetActive(false);
         flashlightOn = true;
     }
@@ -50,6 +51,7 @@ public class Flashlight : MonoBehaviour
     public void TurnFlashlightOff ()
     {
         lightSource.enabled = false;
+        AIDirector.SetPlayerFlashight(false);
         lightDetectionObject.SetActive(true);
         flashlightOn = false;
     }

@@ -240,7 +240,7 @@ public class WeaponManager : MonoSOObserver
                         if (shot.transform.GetComponent<Lock>().key.Equals(currentItem))
                         {
                             source.PlayOneShot(currentItem.onUseSound);
-                            shot.transform.SendMessage("Unlock", shot.transform, SendMessageOptions.DontRequireReceiver);
+                            shot.transform.SendMessage("Interact", currentItem, SendMessageOptions.DontRequireReceiver);
                             if (currentItem.destroyOnUse)
                             {
                                 if (itemToDrop.quantity == 1)

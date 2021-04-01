@@ -49,7 +49,7 @@ public class TutorialSequence : MonoBehaviour
         {
             yield return null;
         }
-        HelpText._DisplayHelpText("The lock screen displays vital info in the form of 'Widgets', such as your health, current objective, and any messages. You can either click the button at the bottom of the lock screen, or press [Q] to navigate to the home screen.", KeyCode.Q, widgetKeys, 2.0f);
+        HelpText._DisplayHelpText("The lock screen displays vital info in the form of 'Widgets', such as your health, visibility, loudness, current objective, and any messages. You can either click the button at the bottom of the lock screen, or press [Q] to navigate to the home screen.", KeyCode.Q, widgetKeys, 2.0f);
         while (InventoryManager.IsInventoryOpen_Static())
         {
             yield return null;

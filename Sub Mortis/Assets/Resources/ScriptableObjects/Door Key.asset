@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 4
   itemName: Key
-  description: A key, might be for that locked door
+  description: A key, might be for that locked door.
   horizontalIcon: {fileID: 21300000, guid: 49a9aa48c65446c4a9436b84fd24a48a, type: 3}
   verticalIcon: {fileID: 0}
   img: {fileID: 0}

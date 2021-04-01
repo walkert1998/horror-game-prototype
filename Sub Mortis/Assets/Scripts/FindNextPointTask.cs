@@ -26,6 +26,7 @@ public class FindNextPointTask : BTNode
         {
             npcAI.patrolTarget = patrolPoints[currTarget];
             npcAI.targetDestination = patrolPoints[currTarget].position;
+            return NodeState.SUCCESS;
         }
         else if (npcAI.patrolTarget != null)
         {
@@ -40,7 +41,7 @@ public class FindNextPointTask : BTNode
             {
                 currTarget = 0;
             }
-            Debug.Log(npcAI.patrolTarget);
+            //Debug.Log(npcAI.patrolTarget);
             return NodeState.SUCCESS;
         }
         return NodeState.RUNNING;

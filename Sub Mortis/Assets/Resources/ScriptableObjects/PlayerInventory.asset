@@ -12,8 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec4678c99b73e1445a80501998ee8083, type: 3}
   m_Name: PlayerInventory
   m_EditorClassIdentifier: 
-  items: []
+  items:
+  - item: {fileID: 11400000, guid: 050a65a2ec443ac4883acef6afcd3b4b, type: 2}
+    quantity: 1
+    position:
+      x: 0
+      y: 0
+    orientation: 0
   size:
     x: 4
     y: 6
   assignedCharacter: {fileID: 0}
+  firstTimePickup: 1

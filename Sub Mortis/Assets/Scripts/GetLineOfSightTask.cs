@@ -35,7 +35,7 @@ public class GetLineOfSightTask : BTNode
                     npcAI.animator.SetBool("WalkingNormal", false);
                     npcAI.animator.SetBool("WalkingAlert", false);
                     npcAI.npcQuip.Quip(npcAI.foundTargetQuip);
-                    npcAI.targetInSight = true;
+                    npcAI.TargetSetTargetInSight(true);
                     npcAI.lastKnownPosition = npcAI.currentTarget.position;
                     return NodeState.SUCCESS;
                 }
@@ -45,7 +45,7 @@ public class GetLineOfSightTask : BTNode
         float distance = Vector3.Distance(npcAI.transform.position, npcAI.agent.destination);
         if (distance > 1)
         {
-            npcAI.targetInSight = false;
+            npcAI.TargetSetTargetInSight(false);
             npcAI.animator.SetBool("WalkingNormal", false);
             npcAI.animator.SetBool("WalkingAlert", true);
             //npcAI.source.PlayOneShot(npcAI.outOfRangeQuip);
@@ -55,7 +55,7 @@ public class GetLineOfSightTask : BTNode
         }
         else
         {
-            npcAI.targetInSight = false;
+            npcAI.TargetSetTargetInSight(false);
             npcAI.animator.SetBool("WalkingNormal", false);
             npcAI.animator.SetBool("WalkingAlert", false);
             //npcAI.animator.SetBool("Alert", false);

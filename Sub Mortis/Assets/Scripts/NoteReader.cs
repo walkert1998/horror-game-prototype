@@ -38,6 +38,7 @@ public class NoteReader : MonoBehaviour
     public void ReadNote(Note note)
     {
         currentPage = 1;
+        noteContent.pageToDisplay = currentPage;
         activeNote = note;
         source.PlayOneShot(openNoteSound);
         //pauseMenu.Pause();
@@ -65,15 +66,18 @@ public class NoteReader : MonoBehaviour
             source.PlayOneShot(markLocationSound);
         }
         */
-        app.AddNote(activeNote);
+        if (InventoryManager.hasPhone)
+        {
+            app.AddNote(activeNote);
+        }
         activeNote = null;
+        currentPage = 1;
         notePanel.SetActive(false);
         firstPersonController.GetMouseLook().SetCursorLock(true);
         firstPersonController.m_CanMove = true;
         firstPersonController.m_CanLook = true;
         PlayerInteraction.UnlockInteraction();
         //noteName.text = "";
-        currentPage = 1;
         readingNote = false;
     }
 

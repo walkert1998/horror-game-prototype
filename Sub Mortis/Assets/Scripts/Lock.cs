@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lock : MonoBehaviour
+public class Lock : MonoBehaviour, IItemInteraction
 {
     public bool locked = true;
     public Item key;
-    public void Unlock()
+
+    public void Interact(Item itemUsed = null)
     {
-        locked = false;
-        Destroy(this);
+        if (itemUsed == key || itemUsed == null)
+        {
+            locked = false;
+            Destroy(this);
+        }
     }
 }

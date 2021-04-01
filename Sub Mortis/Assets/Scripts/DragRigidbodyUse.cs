@@ -407,7 +407,7 @@ public class DragRigidbodyUse : MonoBehaviour
         else
 		{
 			Vector3 rotationVel = (playerCam.transform.up + playerCam.transform.forward) * Input.GetAxis("Mouse Y") + playerCam.transform.right * Input.GetAxis("Mouse X");
-			rotationVel = Vector3.ClampMagnitude(rotationVel, maxSpeed);
+			rotationVel = Vector3.ClampMagnitude(rotationVel, maxSpeed * 2);
             objectHeld.GetComponent<Rigidbody>().velocity = rotationVel;
             //objectHeld.GetComponent<Rigidbody>().AddForce(rotationVel, ForceMode.VelocityChange);
 

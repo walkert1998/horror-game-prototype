@@ -108,7 +108,7 @@ public class ComputerInteraction : MonoBehaviour
             doorItem.GetComponentInChildren<Button>().onClick.AddListener(
                 () =>
                 {
-                    lockedItem.Unlock();
+                    lockedItem.Interact();
                     source.PlayOneShot(unlockDoorSound);
                     doorItem.GetComponentInChildren<Button>().GetComponentInChildren<TMP_Text>().text = "Lock";
                     doorItem.transform.Find("DoorLockStatusText").GetComponent<TMP_Text>().text = "Unlocked";

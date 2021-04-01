@@ -20,6 +20,7 @@ public class InventoryManager : MonoBehaviour
     {
         instance = this;
         playerInventory.gameObject.SetActive(false);
+        playerInventory.inventory.firstTimePickup = true;
         inventoryOpen = false;
         hasPhone = false;
         phoneBlocked = false;

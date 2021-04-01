@@ -25,21 +25,22 @@ public class MoveToTargetTask : BTNode
             return NodeState.FAILURE;
         }
         float distance = Vector3.Distance(npcAI.transform.position, npcAI.targetDestination);
-        if (distance > stoppingDistance)
+        if (distance > stoppingDistance && !npcAI.waiting)
         {
             //npcAI.animator.SetBool("WalkingNormal", true);
-            //Debug.Log(distance + " " + range);
+            //Debug.Log(distance);
+            npcAI.targetReached = false;
             npcAI.agent.isStopped = false;
             //Debug.Log(npcAI.agent.destination);
             bool check = npcAI.agent.SetDestination(npcAI.targetDestination);
-            //Debug.Log(check);
             return NodeState.RUNNING;
         }
         else
         {
             npcAI.agent.isStopped = true;
+            npcAI.targetReached = true;
             //npcAI.animator.SetBool("WalkingNormal", false);
-            Debug.Log("Point " + npcAI.targetDestination + " reached");
+            //Debug.Log("Point " + npcAI.targetDestination + " reached");
             return NodeState.SUCCESS;
         }
     }

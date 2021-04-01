@@ -16,16 +16,16 @@ public class WaitForTimeTask : BTNode
 
     public override NodeState Evaluate()
     {
-        Debug.Log("Wait reached");
         if (timer >= timeInSeconds)
         {
             timer = 0;
             npcAI.waiting = false;
             return NodeState.SUCCESS;
         }
-        else if (timer < timeInSeconds)
+        else if (npcAI.agent.isStopped && timer < timeInSeconds)
         {
             timer += Time.deltaTime;
+            //Debug.Log(timer);
             npcAI.waiting = true;
             return NodeState.RUNNING;
         }

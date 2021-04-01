@@ -16,28 +16,25 @@ public class NodeSequence : BTNode
         foreach (BTNode node in nodes)
         {
             NodeState state = node.Evaluate();
+            Debug.Log(node + " " + state);
             switch (state)
             {
                 case NodeState.FAILURE:
                     _nodeState = NodeState.FAILURE;
-                    Debug.Log(node + " " + state);
                     return _nodeState;
                 case NodeState.SUCCESS:
-                    Debug.Log(node + " " + state);
                     continue;
                 case NodeState.RUNNING:
                     nodeRunning = true;
                     _nodeState = NodeState.RUNNING;
-                    Debug.Log(node + " " + state);
                     return _nodeState;
                 default:
-                    Debug.Log(node + " " + state);
                     _nodeState = NodeState.SUCCESS;
                     return _nodeState;
             }
         }
         _nodeState = nodeRunning ? NodeState.RUNNING : NodeState.SUCCESS;
-        Debug.Log(_nodeState);
+        //Debug.Log(_nodeState);
         return _nodeState;
     }
 }

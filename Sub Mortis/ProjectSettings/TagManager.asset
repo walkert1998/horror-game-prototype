@@ -7,6 +7,11 @@ TagManager:
   - PickUp
   - Door
   - Interact
+  - wood
+  - concrete
+  - mud
+  - dirt
+  - metal
   layers:
   - Default
   - TransparentFX

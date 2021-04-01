@@ -17,30 +17,11 @@ public class ChaseTask : BTNode
         {
             return NodeState.FAILURE;
         }
-        float distance = Vector3.Distance(npcAI.transform.position, npcAI.lastKnownPosition);
-        RaycastHit hit;
-        if (Physics.Raycast(npcAI.visionTransform.position, npcAI.visionTransform.forward, out hit))
+        if (npcAI.waiting)
         {
-            if (hit.transform == npcAI.currentTarget)
-            {
-                npcAI.lastKnownPosition = npcAI.currentTarget.position;
-                Debug.Log("Player seen at " + npcAI.lastKnownPosition);
-            }
+            npcAI.waiting = false;
         }
-        if (distance > 20)
-        {
-            npcAI.agent.isStopped = false;
-            //npcAI.animator.SetBool("WalkingNormal", true);
-            npcAI.animator.SetBool("WalkingAlert", true);
-            npcAI.agent.SetDestination(npcAI.lastKnownPosition);
-            return NodeState.RUNNING;
-        }
-        else
-        {
-            npcAI.agent.isStopped = true;
-            //npcAI.animator.SetBool("WalkingNormal", false);
-            npcAI.animator.SetBool("WalkingAlert", false);
-            return NodeState.SUCCESS;
-        }
+        npcAI.targetDestination = npcAI.lastKnownPosition;
+        return NodeState.SUCCESS;
     }
 }

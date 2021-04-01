@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemInteractableObject : MonoBehaviour
+public class ItemInteractableObject : MonoBehaviour, IItemInteraction
 {
-    ItemWorldInteraction interaction;
+    [SerializeField]
+    public List<ItemInteractionPair> interactions;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +16,10 @@ public class ItemInteractableObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+    public void Interact(Item itemUsed)
+    {
+        throw new System.NotImplementedException();
     }
 }
