@@ -41,6 +41,7 @@ public class DynamicCursor : MonoBehaviour
     public void ChangeCursor(CursorType type)
     {
         //Sprite newSprite;
+        Debug.Log("Setting cursor to");
         if (type.Equals(CursorType.Target))
         {
             if (GameSettings.GetCursorSetting().Equals(CursorSetting.InteractOnly))
@@ -118,6 +119,7 @@ public class DynamicCursor : MonoBehaviour
 
     public void HideCursor()
     {
+        Debug.Log("Setting cursor to none");
         staticCursor.gameObject.SetActive(false);
     }
 

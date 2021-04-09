@@ -17,7 +17,7 @@ public class InteractionSounds : MonoBehaviour
     public bool atMax = false;
     public bool atMin = false;
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
         rb = GetComponent<Rigidbody>();
         if (GetComponent<HingeJoint>())

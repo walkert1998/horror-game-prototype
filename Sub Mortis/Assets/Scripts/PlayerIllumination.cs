@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -91,7 +92,13 @@ public class PlayerIllumination : MonoBehaviour
             Debug.Log(request.ToString());
             return;
         }
-        temp2D.LoadRawTextureData(request.GetData<uint>());
+        NativeArray<uint> texData = request.GetData<uint>();
+        if (texData.Length <= 0)
+        {
+            Debug.Log("Texture destroyed");
+            return;
+        }
+        temp2D.LoadRawTextureData(texData);
         temp2D.Apply();
         Color32[] colors = temp2D.GetPixels32();
         float max = 0;

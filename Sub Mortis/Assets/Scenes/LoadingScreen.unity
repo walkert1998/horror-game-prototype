@@ -6922,7 +6922,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingBar: {fileID: 1435436905}
   loadingText: {fileID: 659963549}
-  levelToLoad: NewDemo
+  levelToLoad: TestLevel
 --- !u!1 &513384003
 GameObject:
   m_ObjectHideFlags: 0

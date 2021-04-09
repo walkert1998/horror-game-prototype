@@ -64,6 +64,8 @@ public class NPCAI : MonoBehaviour
     public float suspicion = 0.0f;
     public float investigateSuspiciousThreshold = 10.0f;
     public float minHearingVolume = 2.0f;
+    public float walkSpeed = 3.0f;
+    public float runSpeed = 10.0f;
 
     [Header("Vocal Quips")]
     public NPCQuip npcQuip;
@@ -102,7 +104,7 @@ public class NPCAI : MonoBehaviour
         searchOptions = new NodeSelector(new List<BTNode> { new CheckForEnemiesTask(this), new NodeSequence(new List<BTNode> { new FindLastKnownTargetPositionTask(this), new MoveToTargetTask(this, agent.stoppingDistance), new WaitForTimeTask(this, 1.0f) }), searchSequence });
         searching = new SearchingForTargetDecorator(this, new NodeRepeater(-1, searchOptions) );
         chaseSequence = new NodeSequence(new List<BTNode> { new CheckForEnemiesTask(this), new ChaseTask(this), new MoveToTargetTask(this, agent.stoppingDistance) });
-        attackSequence = new NodeSequence(new List<BTNode> { new WithinRangeDecoratorNode(this, agent.stoppingDistance), new MeleeAttackTask(this) });
+        attackSequence = new NodeSequence(new List<BTNode> { new WithinRangeDecoratorNode(this, 1.5f), new MeleeAttackTask(this) });
         investigateSequence = new NodeSequence(new List<BTNode> { new FindLastKnownTargetPositionTask(this), new MoveToTargetTask(this, agent.stoppingDistance), new WaitForTimeTask(this, 1.0f) });
         hasTargetSelector = new NodeSelector(new List<BTNode> { attackSequence, chaseSequence, searching });
         hasTarget = new HasTargetDecoratorNode(this, hasTargetSelector);
@@ -180,6 +182,16 @@ public class NPCAI : MonoBehaviour
     {
         Debug.Log("Setting target in sight to " + value);
         targetInSight = value;
+    }
+
+    public void SetSpeedToWalk()
+    {
+        agent.speed = walkSpeed;
+    }
+
+    public void SetSpeedToRun()
+    {
+        agent.speed = runSpeed;
     }
 
     public void HeardSound(Vector3 position, float volume)

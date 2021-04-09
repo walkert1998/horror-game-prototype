@@ -54,6 +54,7 @@ public class HasTargetDecoratorNode : BTNode
                             {
                                 npcAI.SetTarget(ray.collider.transform);
                                 npcAI.TargetSetTargetInSight(true);
+                                npcAI.SetSpeedToRun();
                                 npcAI.lastKnownPosition = npcAI.currentTarget.position;
                                 return true;
                             }
@@ -61,6 +62,7 @@ public class HasTargetDecoratorNode : BTNode
                             {
                                 npcAI.SetTarget(ray.collider.transform);
                                 npcAI.TargetSetTargetInSight(true);
+                                npcAI.SetSpeedToRun();
                                 npcAI.lastKnownPosition = npcAI.currentTarget.position;
                                 return true;
                             }

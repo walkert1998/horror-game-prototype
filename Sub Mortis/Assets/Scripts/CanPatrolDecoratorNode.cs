@@ -17,6 +17,7 @@ public class CanPatrolDecoratorNode : BTNode
     {
         if (npcAI.patrolPoints.Count > 0 && npcAI.currentTarget == null)
         {
+            npcAI.SetSpeedToWalk();
             patrolSequence.Evaluate();
             return NodeState.SUCCESS;
         }

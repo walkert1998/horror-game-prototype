@@ -71,7 +71,7 @@ public class DragRigidbodyUse : MonoBehaviour
 	public float maxSpeed = 3.0f;
 
 	private Ray playerAim;
-	private GameObject objectHeld;
+	public GameObject objectHeld;
 	public bool isObjectHeld;
 	private bool tryPickupObject;
 
@@ -104,16 +104,16 @@ public class DragRigidbodyUse : MonoBehaviour
 
     private void Update()
 	{
-		if (Input.GetButton(GrabButton))
+		if (Input.GetButton(GrabButton) && isObjectHeld)
 		{
-			if (!isObjectHeld && !PlayerInteraction.interactionBlocked && !InventoryManager.IsInventoryOpen_Static())
+			holdObject();
+		}
+		else if (Input.GetMouseButtonDown(0))
+		{
+			if (!PlayerInteraction.interactionBlocked && !InventoryManager.IsInventoryOpen_Static())
 			{
 				tryPickObject();
 				tryPickupObject = true;
-			}
-			else if (isObjectHeld)
-			{
-				holdObject();
 			}
 		}
 		else if (isObjectHeld)
@@ -139,6 +139,10 @@ public class DragRigidbodyUse : MonoBehaviour
 				}
 			}
 		}
+		if (Input.GetKeyDown(KeyCode.Escape) && isObjectHeld)
+		{
+			DropObject();
+		}
 		if (Input.GetAxis("Mouse ScrollWheel") < 0)
 		{
 			MoveHeldObjectCloserToPlayer();
@@ -160,7 +164,7 @@ public class DragRigidbodyUse : MonoBehaviour
 		}
 
 
-		if (Input.GetButton(ThrowButton) && isObjectHeld)
+		if (Input.GetButtonDown(ThrowButton) && isObjectHeld)
 		{
 			isObjectHeld = false;
 			objectHeld.GetComponent<Rigidbody>().useGravity = true;
@@ -284,16 +288,23 @@ public class DragRigidbodyUse : MonoBehaviour
 
 			if (objectHeld.GetComponent<HingeJoint>())
 			{
+				isObjectHeld = true;
 				controller.m_CanLook = false;
+				PlayerInteraction.LockInteraction();
 				hinge = objectHeld.GetComponent<HingeJoint>();
 				cursor.AssignTarget(objectHeld.GetComponent<CursorConnectPoint>().connectPoint);
+				DynamicCursor.HideCursor_Static();
+				wheelCrank = objectHeld.GetComponent<WheelCrank>();
 				//controller.GetMouseLook().SetCursorLock(false);
 			}
 			else if (objectHeld.GetComponent<ConfigurableJoint>())
 			{
+				isObjectHeld = true;
 				controller.m_CanLook = false;
+				PlayerInteraction.LockInteraction();
 				configJoint = objectHeld.GetComponent<ConfigurableJoint>();
 				cursor.AssignTarget(objectHeld.GetComponent<CursorConnectPoint>().connectPoint);
+				DynamicCursor.HideCursor_Static();
 				//controller.GetMouseLook().SetCursorLock(false);
 			}
 			else if (neverPickedUpBefore)

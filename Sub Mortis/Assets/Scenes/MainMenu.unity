@@ -19977,7 +19977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0a55997c7951984381cb5f0ebf2dccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level_name: NewDemo
+  level_name: TestLevel
   player: {fileID: 0}
 --- !u!1 &1246985888
 GameObject:
