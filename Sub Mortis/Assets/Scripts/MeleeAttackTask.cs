@@ -20,6 +20,7 @@ public class MeleeAttackTask : BTNode
             timer = npcAI.timeBetweenAttacks;
             return NodeState.FAILURE;
         }
+        npcAI.animator.SetBool("Running", false);
         //Debug.Log(timer);
         if (timer < npcAI.timeBetweenAttacks && !npcAI.attacking)
         {
@@ -29,6 +30,7 @@ public class MeleeAttackTask : BTNode
         else if (timer >= npcAI.timeBetweenAttacks && !npcAI.attacking)
         {
             npcAI.attacking = true;
+            npcAI.animator.SetBool("Attack1", true);
             npcAI.agent.isStopped = true;
             npcAI.colorIndicator.SetAngry();
             npcAI.currentlySearching = false;
@@ -41,6 +43,7 @@ public class MeleeAttackTask : BTNode
             timer += Time.deltaTime;
             if (timer >= npcAI.meleeAttackTime)
             {
+                npcAI.animator.SetBool("Attack1", false);
                 npcAI.attacking = false;
                 npcAI.agent.isStopped = false;
                 timer = 0;

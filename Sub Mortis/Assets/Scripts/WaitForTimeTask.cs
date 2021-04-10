@@ -24,6 +24,16 @@ public class WaitForTimeTask : BTNode
         }
         else if (npcAI.agent.isStopped && timer < timeInSeconds)
         {
+            if (npcAI.currentTarget != null)
+            {
+                npcAI.animator.SetBool("Aggressive", true);
+                npcAI.animator.SetBool("Running", false);
+            }
+            else
+            {
+                //npcAI.animator.SetBool("Aggressive", true);
+                npcAI.animator.SetBool("Walking", false);
+            }
             timer += Time.deltaTime;
             //Debug.Log(timer);
             npcAI.waiting = true;

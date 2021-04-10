@@ -27,6 +27,17 @@ public class MoveToTargetTask : BTNode
         float distance = Vector3.Distance(npcAI.transform.position, npcAI.targetDestination);
         if (distance > stoppingDistance && !npcAI.waiting)
         {
+            if (npcAI.currentTarget != null)
+            {
+                npcAI.animator.SetBool("Aggressive", true);
+                npcAI.animator.SetBool("Running", true);
+                npcAI.animator.SetBool("Walking", false);
+            }
+            else
+            {
+                //npcAI.animator.SetBool("Aggressive", true);
+                npcAI.animator.SetBool("Walking", true);
+            }
             //npcAI.animator.SetBool("WalkingNormal", true);
             //Debug.Log(distance);
             npcAI.targetReached = false;
@@ -37,6 +48,16 @@ public class MoveToTargetTask : BTNode
         }
         else
         {
+            if (npcAI.currentTarget != null)
+            {
+                npcAI.animator.SetBool("Aggressive", true);
+                npcAI.animator.SetBool("Running", false);
+            }
+            else
+            {
+                //npcAI.animator.SetBool("Aggressive", true);
+                npcAI.animator.SetBool("Walking", false);
+            }
             npcAI.agent.isStopped = true;
             npcAI.targetReached = true;
             //npcAI.animator.SetBool("WalkingNormal", false);

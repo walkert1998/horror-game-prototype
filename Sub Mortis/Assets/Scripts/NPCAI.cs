@@ -122,7 +122,7 @@ public class NPCAI : MonoBehaviour
             topNode.Evaluate();
             if (targetInSight)
             {
-                transform.LookAt(currentTarget);
+                transform.LookAt(new Vector3(currentTarget.position.x, transform.position.y, currentTarget.position.z));
             }
         }
         Debug.DrawRay(visionTransform.position, visionTransform.forward * visionDistance, Color.red);
@@ -203,6 +203,14 @@ public class NPCAI : MonoBehaviour
             lastKnownPosition = position;
             suspicion = 10.0f;
             Debug.Log("Heard something");
+        }
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            SetTarget(collision.transform);
         }
     }
 

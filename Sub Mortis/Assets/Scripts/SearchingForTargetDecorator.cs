@@ -30,6 +30,8 @@ public class SearchingForTargetDecorator : BTNode
         if (npcAI.currentAwarenessTime >= npcAI.awarenessTimer)
         {
             npcAI.SetTarget(null);
+            npcAI.animator.SetBool("Aggressive", false);
+            npcAI.animator.SetBool("Running", false);
             npcAI.currentlySearching = false;
             npcAI.colorIndicator.SetNormal();
             return NodeState.FAILURE;
